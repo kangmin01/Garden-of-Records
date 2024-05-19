@@ -4,7 +4,7 @@ import FloatingButton from "../components/ui/FloatingButton";
 
 export default function Home() {
   return (
-    <div className="bg-pink-50 max-w-[360px] mx-auto h-screen relative">
+    <div className="bg-pink-50 max-w-[360px] mx-auto h-dvh relative">
       <nav className="bg-pink-100 max-w-[360px] mx-auto flex justify-between px-5 py-3 items-center text-h1">
         <div>기록의 정원</div>
         <div>
@@ -37,6 +37,16 @@ export default function Home() {
         </div>
         <section className="divide-y-[1px]">
           {/* <section className="divide-y-[1px] h-[330px] overflow-scroll"> */}
+          <EventListCard />
+          <EventListCard />
+          <EventListCard />
+          <EventListCard />
+          <EventListCard />
+          <EventListCard />
+          <EventListCard />
+          <EventListCard />
+          <EventListCard />
+          <EventListCard />
           <EventListCard />
           <EventListCard />
           <EventListCard />
