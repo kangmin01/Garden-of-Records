@@ -9,7 +9,7 @@ export default function BackButton() {
   };
 
   return (
-    <button onClick={handleBackClick}>
+    <button onClick={handleBackClick} className="absolute">
       <BackArrow />
     </button>
   );

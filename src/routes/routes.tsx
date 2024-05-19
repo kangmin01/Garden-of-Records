@@ -5,6 +5,7 @@ import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import Home from "../pages/Home";
 import AddEvent from "../pages/AddEvent";
+import Search from "../pages/Search";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "/event/add ",
     element: <AddEvent />,
+  },
+  {
+    path: "/search",
+    element: <Search />,
   },
 ]);
 
