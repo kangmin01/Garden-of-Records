@@ -4,6 +4,7 @@ import NotFound from "../pages/NotFound";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import Home from "../pages/Home";
+import AddEvent from "../pages/AddEvent";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUp />,
+  },
+  {
+    path: "/event/add ",
+    element: <AddEvent />,
   },
 ]);
 

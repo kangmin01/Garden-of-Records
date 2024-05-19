@@ -17,7 +17,7 @@ export default function Input({
 }: Props) {
   return (
     <input
-      className={`w-11/12 min-w-70 p-4 border-[1.8px] rounded-xl border-gray1 focus:outline-none ${hasError ? "focus:border-darkRed" : "focus:border-main"}`}
+      className={`w-full min-w-70 p-4 border-[1.8px] rounded-xl border-gray1 focus:outline-none ${hasError ? "focus:border-darkRed" : "focus:border-main"}`}
       id={id}
       type={type}
       placeholder={placeholder}
