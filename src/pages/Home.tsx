@@ -1,6 +1,7 @@
 import HamburgerIcon from "../components/ui/icons/HamburgerIcon";
 import EventListCard from "../components/EventListCard";
 import FloatingButton from "../components/ui/FloatingButton";
+import RecordCard from "../components/RecordCard";
 
 export default function Home() {
   return (
@@ -18,16 +19,8 @@ export default function Home() {
           <span className="text-h1 mt-[22px]">최진영님</span>
         </div>
         <div className="flex justify-between px-4">
-          <div className="flex flex-col w-[158px] h-[120px] p-3.5 text-gray2 bg-gray0 rounded-2xl">
-            <span className="mb-[23px] text-h2">보낸 기록</span>
-            <span className="text-right text-p">10 명</span>
-            <span className="text-right text-p">1,000,000,000원</span>
-          </div>
-          <div className="flex flex-col w-[158px] h-[120px] p-3.5 text-gray2 bg-gray0 rounded-2xl">
-            <span className="mb-[23px] text-h2">보낸 기록</span>
-            <span className="text-right text-p">10 명</span>
-            <span className="text-right text-p">1,000,000,000원</span>
-          </div>
+          <RecordCard type="send" totalCount={10} totalAmount={1000000000} />
+          <RecordCard type="receive" totalCount={10} totalAmount={1000000000} />
         </div>
       </div>
       <div className="pt-[429px] w-full px-5">
@@ -36,13 +29,7 @@ export default function Home() {
           <span className="text-h1"> 다가오는 일정</span>
         </div>
         <section className="divide-y-[1px]">
-          {/* <section className="divide-y-[1px] h-[330px] overflow-scroll"> */}
-          <EventListCard />
-          <EventListCard />
-          <EventListCard />
-          <EventListCard />
-          <EventListCard />
-          <EventListCard />
+          {/* <section className="divide-y-[1px] h-[280px] overflow-y-auto"> */}
           <EventListCard />
           <EventListCard />
           <EventListCard />

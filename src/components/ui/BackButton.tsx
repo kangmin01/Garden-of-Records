@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import BackArrow from "./icons/BackArrow";
+import BackArrow from "./icons/LeftChevron";
 
 export default function BackButton() {
   const navigate = useNavigate();
