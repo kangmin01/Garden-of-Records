@@ -26,7 +26,7 @@ body {
   }
 
   .inputContainer {
-    @apply w-full flex flex-col items-center;
+    @apply w-full px-5 flex flex-col items-center;
   }
 
   .errorText {
@@ -34,10 +34,10 @@ body {
   }
 
   .authenticationButtonDiv {
-    @apply flex flex-col min-w-80 font-bold items-center space-y-4;
+    @apply w-full px-5 flex flex-col min-w-80 font-bold items-center space-y-3;
   }
 
   .authenticationButton {
-    @apply w-11/12 min-w-80 p-4 bg-main text-white rounded-xl;
+    @apply w-full min-w-80 p-4 bg-main text-white rounded-xl;
   }
 }

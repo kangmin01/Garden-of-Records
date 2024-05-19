@@ -64,8 +64,8 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="authenticationPage py-8">
-      <h2 className="authenticationPageTitle place-self-start ml-4 mb-12">
+    <div className="authenticationPage pt-5">
+      <h2 className="authenticationPageTitle place-self-start ml-5 mb-10">
         기록의 정원에<br></br> 당신을 기록해주세요
       </h2>
       <form

@@ -20,7 +20,7 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="authenticationPage py-28">
+    <div className="authenticationPage pt-[68px]">
       <h2 className="authenticationPageTitle mb-14">기록의 정원</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -56,21 +56,21 @@ const SignIn: React.FC = () => {
             )}
           </div>
         </div>
-        <div className="authenticationButtonDiv mt-28">
+        <div className="authenticationButtonDiv mt-[108px]">
           <button type="submit" className="authenticationButton">
             로그인
           </button>
           <Link
-            className="w-11/12 min-w-70 p-4 bg-gray0 text-gray2 rounded-xl text-center"
+            className="w-full min-w-70 p-4 bg-gray0 text-gray2 rounded-xl text-center"
             to="/signup"
           >
             회원가입
           </Link>
         </div>
         <div className="w-full text-center">
-          <button className="text-p mt-8 text-gray3 underline underline-offset-1">
-            로그인 없이 둘러보기
-          </button>
+          <div className="text-p mt-6 text-gray3 underline underline-offset-1">
+            <Link to="/">로그인 없이 둘러보기</Link>
+          </div>
         </div>
       </form>
     </div>
