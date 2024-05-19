@@ -20,7 +20,7 @@ const App: React.FC = () => {
       {/* {isSplashVisible && <SplashScreen />} */}
       {!isSplashVisible && (
         <div className="App">
-          <Navbar />
+          {/* <Navbar /> */}
           <Outlet />
         </div>
       )}

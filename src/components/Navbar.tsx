@@ -1,13 +1,17 @@
 import { Link } from "react-router-dom";
 import HamburgerIcon from "./ui/icons/HamburgerIcon";
 
-export default function Navbar() {
+type Props = {
+  title: string;
+  icon: string;
+};
+
+export default function Navbar({ title, icon }: Props) {
   return (
     <nav className="bg-blue-300 max-w-[360px] mx-auto">
-      <Link to="/">기록의 정원</Link>
-      <Link to="/signin">로그인</Link>
+      <span>{title}</span>
       {/* react-burger-menu */}
-      {/* <HamburgerIcon /> */}
+      {icon}
     </nav>
   );
 }
