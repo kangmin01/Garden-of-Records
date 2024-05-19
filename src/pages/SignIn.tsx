@@ -13,7 +13,7 @@ const SignIn: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInFormType>();
+  } = useForm<SignInFormType>({ mode: "onBlur" });
   const onSubmit: SubmitHandler<SignInFormType> = (data) => {
     console.log(data);
     // 로그인 처리 로직 추가
@@ -35,6 +35,10 @@ const SignIn: React.FC = () => {
               hasError={!!errors.email}
               register={register("email", {
                 required: "이메일을 입력해주세요.",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "유효한 이메일 주소를 입력해주세요.",
+                },
               })}
             />
             {errors.email && (
@@ -46,7 +50,7 @@ const SignIn: React.FC = () => {
               id="password"
               type="password"
               placeholder="비밀번호"
-              hasError={!!errors.email}
+              hasError={!!errors.password}
               register={register("password", {
                 required: "비밀번호를 입력해주세요.",
               })}

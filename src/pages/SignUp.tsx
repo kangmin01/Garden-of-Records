@@ -23,21 +23,55 @@ const inputFields = [
     type: "number",
     name: "연락처",
     placeholder: "ex) 01012345678",
-    validation: { required: "연락처를 입력해주세요." },
+    validation: {
+      required: "연락처를 입력해주세요.",
+      pattern: {
+        value: /^010\d{8}$/,
+        message: "숫자만 입력해주세요.",
+      },
+      minLength: {
+        value: 11,
+        message: "11자리를 입력해주세요.",
+      },
+      maxLength: {
+        value: 11,
+        message: "11자리를 입력해주세요.",
+      },
+    },
   },
   {
     id: "email",
     type: "email",
     name: "이메일",
-    placeholder: "ex) abc@gmail.com",
-    validation: { required: "이메일을 입력해주세요." },
+    placeholder: "ex) record@garden.com",
+    validation: {
+      required: "이메일을 입력해주세요.",
+      pattern: {
+        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        message: "유효한 이메일 주소를 입력해주세요.",
+      },
+    },
   },
   {
     id: "password",
     type: "password",
     name: "비밀번호",
     placeholder: "영어+숫자 조합 10자 이내",
-    validation: { required: "영어+숫자 조합 10자 이내" },
+    validation: {
+      required: "비밀번호를 입력해주세요.",
+      minLength: {
+        value: 6,
+        message: "비밀번호는 최소 6자 이상이어야 합니다.",
+      },
+      maxLength: {
+        value: 10,
+        message: "비밀번호는 최대 10자 이내여야 합니다.",
+      },
+      pattern: {
+        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,10}$/,
+        message: "비밀번호는 영어, 숫자를 포함한 10자 이내여야 합니다.",
+      },
+    },
   },
   {
     id: "confirmPassword",
@@ -45,9 +79,12 @@ const inputFields = [
     name: "비밀번호 확인",
     placeholder: "비밀번호를 한번 더 입력해주세요.",
     validation: {
-      required: "비밀번호가 일치하지 않습니다.",
-      validate: (value: string, allValues: SignUpFormType) =>
-        value === allValues.password || "Passwords do not match",
+      required: "비밀번호를 입력해주세요.",
+      validate: (value: string, allValues: SignUpFormType) => {
+        if (value !== allValues.password) {
+          return "비밀번호가 일치하지 않습니다.";
+        }
+      },
     },
   },
 ];
@@ -57,7 +94,8 @@ const SignUp: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpFormType>();
+  } = useForm<SignUpFormType>({ mode: "onBlur" });
+
   const onSubmit: SubmitHandler<SignUpFormType> = (data) => {
     console.log(data);
     // 회원가입 처리 로직 추가

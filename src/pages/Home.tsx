@@ -2,12 +2,15 @@ import HamburgerIcon from "../components/ui/icons/HamburgerIcon";
 import EventListCard from "../components/EventListCard";
 import FloatingButton from "../components/ui/FloatingButton";
 import RecordCard from "../components/RecordCard";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
     <div className="bg-pink-50 max-w-[360px] mx-auto h-dvh relative">
       <nav className="bg-pink-100 max-w-[360px] mx-auto flex justify-between px-5 py-3 items-center text-h1">
-        <div>기록의 정원</div>
+        <div>
+          <Link to="/">기록의 정원</Link>
+        </div>
         <div>
           <HamburgerIcon />
         </div>
