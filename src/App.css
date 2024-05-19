@@ -3,3 +3,41 @@
 @tailwind utilities;
 
 @import "./css/base/_reset.css";
+
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+
+body {
+  min-width: 320px;
+}
+
+.authenticationPage {
+  @apply bg-neutral-50 max-w-[360px] min-w-80 mx-auto h-screen flex flex-col items-center;
+
+  .authenticationPageTitle {
+    @apply font-bold text-[24px];
+  }
+
+  .authenticationPageForm {
+    @apply w-full min-w-80;
+  }
+
+  .inputContainerDiv {
+    @apply space-y-5 min-w-80;
+  }
+
+  .inputContainer {
+    @apply w-full flex flex-col items-center;
+  }
+
+  .errorText {
+    @apply text-darkRed text-[14px] w-11/12 mt-1;
+  }
+
+  .authenticationButtonDiv {
+    @apply flex flex-col min-w-80 font-bold items-center space-y-4;
+  }
+
+  .authenticationButton {
+    @apply w-11/12 min-w-80 p-4 bg-main text-white rounded-xl;
+  }
+}

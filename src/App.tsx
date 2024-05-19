@@ -10,22 +10,21 @@ const App: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsSplashVisible(false);
-    }, 1000);
+    }, 100);
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <>
-      {isSplashVisible && <SplashScreen />}
+    <div>
+      {/* {isSplashVisible && <SplashScreen />} */}
       {!isSplashVisible && (
         <div className="App">
-          <h1 className="bg-red-100 w-[900px]">test</h1>
           <Navbar />
           <Outlet />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

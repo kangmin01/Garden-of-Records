@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
+import Input from "../components/ui/Input";
 
 interface SignInFormType {
   email: string;
@@ -19,33 +20,57 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div>
-      <h2>기록의 정원</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          {/* <label htmlFor="email">Email</label> */}
-          <input
-            id="email"
-            type="email"
-            placeholder="이메일"
-            {...register("email", { required: "Email is required" })}
-          />
-          {errors.email && <p>{errors.email.message}</p>}
+    <div className="authenticationPage py-28">
+      <h2 className="authenticationPageTitle mb-14">기록의 정원</h2>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="authenticationPageForm"
+      >
+        <div className="inputContainerDiv">
+          <div className="inputContainer">
+            <Input
+              id="email"
+              type="email"
+              placeholder="이메일"
+              hasError={!!errors.email}
+              register={register("email", {
+                required: "이메일을 입력해주세요.",
+              })}
+            />
+            {errors.email && (
+              <p className="errorText">{errors.email.message}</p>
+            )}
+          </div>
+          <div className="inputContainer">
+            <Input
+              id="password"
+              type="password"
+              placeholder="비밀번호"
+              hasError={!!errors.email}
+              register={register("password", {
+                required: "비밀번호를 입력해주세요.",
+              })}
+            />
+            {errors.password && (
+              <p className="errorText">{errors.password.message}</p>
+            )}
+          </div>
         </div>
-        <div>
-          {/* <label htmlFor="password">Password</label> */}
-          <input
-            id="password"
-            type="password"
-            placeholder="비밀번호"
-            {...register("password", { required: "Password is required" })}
-          />
-          {errors.password && <p>{errors.password.message}</p>}
+        <div className="authenticationButtonDiv mt-28">
+          <button type="submit" className="authenticationButton">
+            로그인
+          </button>
+          <Link
+            className="w-11/12 min-w-70 p-4 bg-gray0 text-gray2 rounded-xl text-center"
+            to="/signup"
+          >
+            회원가입
+          </Link>
         </div>
-        <button type="submit">로그인</button>
-        <Link to="/signup">회원가입</Link>
-        <div>
-          <button>로그인 없이 둘러보기</button>
+        <div className="w-full text-center">
+          <button className="text-p mt-8 text-gray3 underline underline-offset-1">
+            로그인 없이 둘러보기
+          </button>
         </div>
       </form>
     </div>
