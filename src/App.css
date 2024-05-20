@@ -27,21 +27,46 @@ input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
 }
 
+/* input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field,
+input[type="date"]::-webkit-inner-spin-button,
+input[type="time"]::-webkit-inner-spin-button,
+input[type="time"]::-webkit-datetime-edit-text,
+input[type="time"]::-webkit-datetime-edit-hour-field,
+input[type="time"]::-webkit-datetime-edit-minute-field,
+input[type="time"]::-webkit-datetime-edit-ampm-field {
+  -webkit-appearance: none;
+  display: none;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-color: red;
+  color: white;
+  /* opacity: 0; */
+/* }  */
+
 .shadow1 {
   -webkit-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.25);
   box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.25);
 }
 
-.authenticationPage {
+.pageContainer {
+  @apply bg-pink-50 max-w-[360px] mx-auto h-dvh relative;
+}
+
+.formPage {
   @apply bg-neutral-50 max-w-[360px] min-w-80 mx-auto h-screen flex flex-col items-center;
 
-  .authenticationPageTitle {
+  .formPageTitle {
     @apply font-bold text-[24px];
   }
 
-  .authenticationPageForm {
-    @apply w-full min-w-80;
+  .formPageForm {
+    @apply w-full min-w-80  px-5;
   }
 
   .inputContainerDiv {
@@ -49,22 +74,35 @@ input:-webkit-autofill:active {
   }
 
   .inputContainer {
-    @apply w-full px-5 flex relative;
+    @apply w-full h-[64px] flex relative;
   }
 
-  .formLabel {
-    @apply absolute w-[60px] min-w-[60px] h-[64px] flex items-center mr-9 text-gray2 text-p;
-  }
-
-  .errorText {
-    @apply absolute top-[36px] text-darkRed text-sm w-11/12 mt-1;
+  .formLabelRadio {
+    @apply cursor-pointer py-2 px-3 border-solid border-[1px] border-gray1 text-gray1 rounded-lg;
   }
 
   .authenticationButtonDiv {
-    @apply w-full px-5 flex flex-col min-w-80 font-bold items-center space-y-3;
+    @apply w-full flex flex-col min-w-80 font-bold items-center space-y-3;
+    /* @apply w-full px-5 flex flex-col min-w-80 font-bold items-center space-y-3; */
   }
 
   .authenticationButton {
     @apply w-full min-w-80 p-4 bg-main text-white rounded-xl;
   }
+
+  .submitButton {
+    @apply w-full min-w-80 p-4 rounded-xl text-center;
+  }
+}
+
+.formLabel {
+  @apply absolute w-[60px] min-w-[60px] h-[64px] flex items-center mr-9 text-gray2 text-p;
+}
+
+.errorText {
+  @apply absolute top-[36px] text-darkRed text-sm w-11/12 mt-1;
+}
+
+.selectButton {
+  @apply w-[68px] h-[36px] text-p border-[1px] rounded-lg border-gray1 text-gray1;
 }

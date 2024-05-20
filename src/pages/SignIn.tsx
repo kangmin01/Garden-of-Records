@@ -20,12 +20,9 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="authenticationPage pt-[68px]">
-      <h2 className="authenticationPageTitle mb-14">기록의 정원</h2>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="authenticationPageForm"
-      >
+    <div className="formPage pt-[68px]">
+      <h2 className="formPageTitle mb-14">기록의 정원</h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="formPageForm">
         <div className="inputContainerDiv">
           <div className="inputContainer">
             <Input

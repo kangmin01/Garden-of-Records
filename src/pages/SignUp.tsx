@@ -103,15 +103,12 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="authenticationPage">
+    <div className="formPage">
       <Header title="회원가입" />
-      <h2 className="authenticationPageTitle place-self-start ml-5 my-6">
+      <h2 className="formPageTitle place-self-start ml-5 my-6">
         기록의 정원에<br></br> 당신을 기록해주세요
       </h2>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="authenticationPageForm"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="formPageForm">
         <div className="inputContainerDiv">
           {inputFields.map(({ id, type, name, placeholder, validation }) => (
             <div key={id} className="inputContainer">

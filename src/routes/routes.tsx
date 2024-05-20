@@ -4,9 +4,10 @@ import NotFound from "../pages/NotFound";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import Home from "../pages/Home";
-import AddEvent from "../pages/AddEvent";
+import AddEvent from "../pages/AddRecord";
 import Search from "../pages/Search";
 import RecordList from "../pages/RecordList";
+import AddRecord from "../pages/AddRecord";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/event/add ",
-    element: <AddEvent />,
+    element: <AddRecord />,
   },
   {
     path: "/search",
