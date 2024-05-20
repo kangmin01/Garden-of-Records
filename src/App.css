@@ -18,6 +18,15 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-text-fill-color: #000 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 .shadow1 {
   -webkit-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.25);
@@ -40,11 +49,15 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 
   .inputContainer {
-    @apply w-full px-5 flex flex-col items-center;
+    @apply w-full px-5 flex relative;
+  }
+
+  .formLabel {
+    @apply absolute w-[60px] min-w-[60px] h-[64px] flex items-center mr-9 text-gray2 text-p;
   }
 
   .errorText {
-    @apply text-darkRed text-[14px] w-11/12 mt-1;
+    @apply absolute top-[36px] text-darkRed text-sm w-11/12 mt-1;
   }
 
   .authenticationButtonDiv {

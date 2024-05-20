@@ -32,6 +32,7 @@ const SignIn: React.FC = () => {
               id="email"
               type="email"
               placeholder="이메일"
+              hasLabel={false}
               hasError={!!errors.email}
               register={register("email", {
                 required: "이메일을 입력해주세요.",
@@ -42,7 +43,7 @@ const SignIn: React.FC = () => {
               })}
             />
             {errors.email && (
-              <p className="errorText">{errors.email.message}</p>
+              <p className="errorText left-[34px]">{errors.email.message}</p>
             )}
           </div>
           <div className="inputContainer">
@@ -50,13 +51,14 @@ const SignIn: React.FC = () => {
               id="password"
               type="password"
               placeholder="비밀번호"
+              hasLabel={false}
               hasError={!!errors.password}
               register={register("password", {
                 required: "비밀번호를 입력해주세요.",
               })}
             />
             {errors.password && (
-              <p className="errorText">{errors.password.message}</p>
+              <p className="errorText left-[34px]">{errors.password.message}</p>
             )}
           </div>
         </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "../components/ui/Input";
+import Header from "../components/Header";
 
 interface SignUpFormType {
   name: string;
@@ -102,8 +103,9 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="authenticationPage pt-5">
-      <h2 className="authenticationPageTitle place-self-start ml-5 mb-10">
+    <div className="authenticationPage">
+      <Header title="회원가입" />
+      <h2 className="authenticationPageTitle place-self-start ml-5 my-6">
         기록의 정원에<br></br> 당신을 기록해주세요
       </h2>
       <form
@@ -113,10 +115,7 @@ const SignUp: React.FC = () => {
         <div className="inputContainerDiv">
           {inputFields.map(({ id, type, name, placeholder, validation }) => (
             <div key={id} className="inputContainer">
-              <label
-                htmlFor={id}
-                className="place-self-start ml-3 text-gray2 text-p"
-              >
+              <label htmlFor={id} className="formLabel">
                 {name}
               </label>
               <Input
@@ -127,7 +126,7 @@ const SignUp: React.FC = () => {
                 register={register(id as keyof SignUpFormType, validation)}
               />
               {errors[id as keyof SignUpFormType] && (
-                <p className="errorText">
+                <p className="errorText left-[108px]">
                   {errors[id as keyof SignUpFormType]?.message}
                 </p>
               )}

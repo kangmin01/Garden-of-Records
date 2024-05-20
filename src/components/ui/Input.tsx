@@ -5,6 +5,7 @@ type Props = {
   type: string;
   placeholder: string;
   register: UseFormRegisterReturn;
+  hasLabel?: boolean;
   hasError: boolean;
 };
 
@@ -13,11 +14,12 @@ export default function Input({
   type,
   placeholder,
   register,
+  hasLabel = true,
   hasError,
 }: Props) {
   return (
     <input
-      className={`w-full min-w-70 p-4 border-[1.8px] rounded-xl border-gray1 focus:outline-none ${hasError ? "border-darkRed focus:border-darkRed" : "focus:border-main"}`}
+      className={`w-full min-w-70 p-4 h-[64px] text-[16px] bg-white outline-none border-b-[1px] focus:outline-none ${hasLabel ? "pl-[90px]" : ""} ${hasError ? "border-darkRed focus:border-darkRed pb-10" : " border-gray0 focus:border-main"}`}
       id={id}
       type={type}
       placeholder={placeholder}

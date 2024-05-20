@@ -9,7 +9,7 @@ export default function Home() {
     <div className="bg-pink-50 max-w-[360px] mx-auto h-dvh relative">
       <nav className="bg-pink-100 max-w-[360px] mx-auto flex justify-between px-5 py-3 items-center text-h1">
         <div>
-          <Link to="/">기록의 정원</Link>
+          <Link to="/signin">기록의 정원</Link>
         </div>
         <div>
           <HamburgerIcon />
