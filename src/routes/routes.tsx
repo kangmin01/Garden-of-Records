@@ -6,6 +6,7 @@ import SignUp from "../pages/SignUp";
 import Home from "../pages/Home";
 import AddEvent from "../pages/AddEvent";
 import Search from "../pages/Search";
+import RecordList from "../pages/RecordList";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "/search",
     element: <Search />,
+  },
+  {
+    path: "/list/:type",
+    element: <RecordList />,
   },
 ]);
 

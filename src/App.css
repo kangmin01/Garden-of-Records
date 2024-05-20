@@ -18,6 +18,12 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+.shadow1 {
+  -webkit-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.25);
+}
+
 .authenticationPage {
   @apply bg-neutral-50 max-w-[360px] min-w-80 mx-auto h-screen flex flex-col items-center;
 
