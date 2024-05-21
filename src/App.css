@@ -27,14 +27,14 @@ input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
 }
 
-input[type="date"]::-webkit-datetime-edit-text,
+/* input[type="date"]::-webkit-datetime-edit-text,
 input[type="date"]::-webkit-datetime-edit-month-field,
 input[type="date"]::-webkit-datetime-edit-day-field,
 input[type="date"]::-webkit-datetime-edit-year-field,
 input[type="date"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   display: none;
-}
+} */
 
 /* input[type="time"]::-webkit-inner-spin-button,
 input[type="time"]::-webkit-datetime-edit-text,
@@ -110,5 +110,27 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .selectButton {
-  @apply w-[68px] h-[36px] text-p border-[1px] rounded-lg border-gray1 text-gray1;
+  @apply w-[70px] h-[30px] text-p border-[1px] rounded-lg border-gray1 text-gray1;
+}
+
+.selectedButton {
+  @apply border-[1px] border-main text-main;
+}
+
+#addRecord {
+  input {
+    @apply placeholder:text-gray1 text-p text-gray4;
+  }
+
+  input::-webkit-datetime-edit {
+    @apply text-p text-gray4;
+  }
+}
+
+input[type="date"]::placeholder {
+  color: red;
+}
+
+input[type="date"]:valid {
+  color: black;
 }

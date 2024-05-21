@@ -2,6 +2,8 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "../components/ui/Input";
 import Header from "../components/Header";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface SignUpFormType {
   name: string;
@@ -68,10 +70,10 @@ const inputFields = [
         value: 10,
         message: "비밀번호는 최대 10자 이내여야 합니다.",
       },
-      pattern: {
-        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,10}$/,
-        message: "비밀번호는 영어, 숫자를 포함한 10자 이내여야 합니다.",
-      },
+      // pattern: {
+      //   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,10}$/,
+      //   message: "비밀번호는 영어, 숫자를 포함한 10자 이내여야 합니다.",
+      // },
     },
   },
   {
@@ -94,12 +96,36 @@ const SignUp: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<SignUpFormType>({ mode: "onBlur" });
 
-  const onSubmit: SubmitHandler<SignUpFormType> = (data) => {
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<SignUpFormType> = async (data) => {
     console.log(data);
-    // 회원가입 처리 로직 추가
+    // try {
+    //   const response = await axios.post(
+    //     `http://tikitakaapi.site:8000/user/signup`,
+    //     {
+    //       user_name: data.name,
+    //       email: data.email,
+    //       user_password: data.password,
+    //       phone: data.contact,
+    //     },
+    //     {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         // "Access-Control-Allow-Origin": `http://localhost:3000`,
+    //         // "Access-Control-Allow-Credentials": "true",
+    //       },
+    //     }
+    //   );
+    //   console.log("가입 성공", response);
+    //   // navigate("/signin");
+    // } catch (error) {
+    //   console.error("회원가입 오류:", error);
+    //   // 오류 처리 로직 추가 (예: 사용자에게 오류 알림)
+    // }
   };
 
   return (
@@ -123,7 +149,7 @@ const SignUp: React.FC = () => {
                 register={register(id as keyof SignUpFormType, validation)}
               />
               {errors[id as keyof SignUpFormType] && (
-                <p className="errorText left-[108px]">
+                <p className="errorText left-[90px]">
                   {errors[id as keyof SignUpFormType]?.message}
                 </p>
               )}
@@ -131,7 +157,11 @@ const SignUp: React.FC = () => {
           ))}
         </div>
         <div className="authenticationButtonDiv mt-10">
-          <button type="submit" className="authenticationButton">
+          <button
+            type="submit"
+            className={`w-full min-w-80 p-4 rounded-xl text-[18px] font-bold ${isValid ? "bg-main text-white cursor-pointer" : "bg-gray0 text-gray2"}`}
+            disabled={!isValid}
+          >
             회원가입
           </button>
         </div>

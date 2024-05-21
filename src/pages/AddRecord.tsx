@@ -1,11 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import React, { useRef, useState } from "react";
+import {
+  useForm,
+  SubmitHandler,
+  Controller,
+  ControllerFieldState,
+} from "react-hook-form";
 import Header from "../components/Header";
 import Input from "../components/ui/Input";
-import { formatNumber } from "../util/formatNumber";
+import { formatNumber, todayFormat } from "../util/formatNumber";
 
 type FormValues = {
-  type: string;
   name: string;
   relation: string;
   mobileLink: string;
@@ -13,6 +17,14 @@ type FormValues = {
   time: string;
   attendance: boolean;
   amount: string;
+};
+
+type FocusState = {
+  [key in keyof FormValues]?: boolean;
+};
+
+type InvalidState = {
+  [key in keyof FormValues]?: boolean;
 };
 
 const urlPattern = new RegExp(
@@ -25,73 +37,62 @@ const urlPattern = new RegExp(
   "i"
 );
 
+const relationArray = ["가족", "친구", "직장"];
+const amountArray = ["50000", "1000000", "150000"];
+
 export default function AddRecord() {
   const {
     register,
     handleSubmit,
     control,
     clearErrors,
-    watch,
     setValue,
     setError,
     formState: { errors },
   } = useForm<FormValues>({ mode: "onBlur" });
+  const [selectedRelation, setSelectedRelation] = useState<string | null>(null);
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
+
+  const handleItemClick = (item: keyof FormValues, value: string) => {
+    setValue(item, value);
+    clearErrors(`${item}`);
+    setSelectedRelation(value);
+  };
+
+  const dateInputRef = useRef<HTMLInputElement>(null);
+  const timeInputRef = useRef<HTMLInputElement>(null);
+  const handleDateLabelClick = () => {
+    if (dateInputRef.current) {
+      dateInputRef.current.showPicker();
+    }
+  };
+  const handleTimeLabelClick = () => {
+    if (timeInputRef.current) {
+      timeInputRef.current.showPicker();
+    }
+  };
+
+  const [isFocused, setIsFocused] = useState<FocusState>({});
+  const [isInvalid, setIsInvalid] = useState<InvalidState>({});
+  const handleFocus = (name: keyof FormValues) => {
+    setIsFocused((prev) => ({ ...prev, [name]: true }));
+  };
+  const handleBlur = (
+    name: keyof FormValues,
+    fieldState: ControllerFieldState
+  ) => {
+    setIsFocused((prev) => ({ ...prev, [name]: false }));
+    setIsInvalid((prev) => ({ ...prev, [name]: fieldState.invalid }));
+  };
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data);
   };
 
-  const handleItemClick = (item: keyof FormValues, value: string) => {
-    setValue(item, value);
-    clearErrors(`${item}`);
-  };
-
-  const dateInputRef = useRef<HTMLInputElement>(null);
-  const selectedDate = watch("date", "");
-  const handleLabelClick = () => {
-    if (dateInputRef.current) {
-      dateInputRef.current.showPicker();
-    }
-  };
-
-  const [isFocused, setIsFocused] = useState(false);
-
   return (
-    <section className="formPage">
+    <section className="formPage" id="addRecord">
       <Header title="기록 등록" />
       <form onSubmit={handleSubmit(onSubmit)} className="formPageForm mt-6">
-        {/* Type */}
-        <div
-          className={`w-full h-[64px] flex relative bg-white min-w-80 border-solid border-b-[1px] border-gray0 ${errors.type ? "border-darkRed" : ""}`}
-        >
-          <label htmlFor="type" className="formLabel">
-            분류
-          </label>
-          <div className="absolute top-5 left-[88px]">
-            <label className="formLabelRadio mr-2">
-              <Input
-                id="type1"
-                type="radio"
-                hide={true}
-                hasError={!!errors.type}
-                register={register("type", { required: true })}
-              />
-              낸 기록
-            </label>
-            <label className="formLabelRadio">
-              <Input
-                id="type2"
-                type="radio"
-                hide={true}
-                hasError={!!errors.type}
-                register={register("type", { required: true })}
-              />
-              보낸 기록
-            </label>
-          </div>
-          {errors.type && <p>분류를 선택해주세요.</p>}
-        </div>
-
         {/* Name */}
         <div className="inputContainer">
           <label
@@ -109,9 +110,9 @@ export default function AddRecord() {
               required: "이름을 입력해주세요.",
             })}
           />
-          {errors.name && (
+          {/* {errors.name && (
             <p className="errorText left-[90px]">{errors.name.message}</p>
-          )}
+          )} */}
         </div>
 
         {/* Relation*/}
@@ -119,7 +120,7 @@ export default function AddRecord() {
           <div>
             <label
               htmlFor="relation"
-              className="text-gray2 text-p absolute top-5"
+              className="text-gray2 text-p absolute top-[35px]"
             >
               관계
             </label>
@@ -139,6 +140,9 @@ export default function AddRecord() {
                       field.onChange(e.target.value);
                       if (e.target.value) {
                         clearErrors("relation");
+                        if (!(e.target.value in relationArray)) {
+                          setSelectedRelation(null);
+                        }
                       }
                     }}
                     onBlur={() => {
@@ -149,36 +153,28 @@ export default function AddRecord() {
                         });
                       }
                     }}
-                    className={`w-full border-b pl-[90px] pb-10 h-[100px] outline-none ${fieldState.error ? "border-darkRed focus:border-darkRed" : "border-gray0 focus:border-main"}`}
+                    className={`w-full border-b placeholder:text-gray1 pl-[90px] pb-10 h-[100px] outline-none focus:border-main ${!fieldState.error ? "border-gray0" : isButtonClicked ? "border-main" : "border-darkRed focus:border-darkRed"}`}
                     placeholder="관계를 선택해주세요"
                   />
+                  <div className="w-full flex space-x-2 justify-end absolute bottom-3">
+                    {relationArray.map((relation) => (
+                      <button
+                        key={relation}
+                        type="button"
+                        onMouseDown={() => setIsButtonClicked(true)}
+                        onMouseUp={() => setIsButtonClicked(false)}
+                        onClick={() => handleItemClick("relation", relation)}
+                        className={`selectButton ${
+                          selectedRelation === relation ? "selectedButton" : ""
+                        }`}
+                      >
+                        {relation}
+                      </button>
+                    ))}
+                  </div>
                 </>
               )}
             />
-          </div>
-          {/* Relation Buttons */}
-          <div className="w-full flex space-x-2 justify-end absolute bottom-3">
-            <button
-              type="button"
-              onClick={() => handleItemClick("relation", "가족")}
-              className="selectButton"
-            >
-              가족
-            </button>
-            <button
-              type="button"
-              onClick={() => handleItemClick("relation", "친구")}
-              className="selectButton"
-            >
-              친구
-            </button>
-            <button
-              type="button"
-              onClick={() => handleItemClick("relation", "직장")}
-              className="selectButton"
-            >
-              직장
-            </button>
           </div>
         </section>
 
@@ -193,7 +189,7 @@ export default function AddRecord() {
           <input
             id="mobileLink"
             type="text"
-            className={`w-full min-w-80 text-p p-4 placeholder:text-p placeholder:text-gray1 h-[64px] text-gray1 bg-white outline-none border-b-[1px] focus:outline-none pl-[90px] ${errors.mobileLink ? "border-darkRed focus:border-darkRed pb-10" : "border-gray0 focus:border-main"}`}
+            className={`w-full min-w-80 placeholder:text-gray1 text-p p-4 h-[64px] text-gray1 bg-white outline-none border-b-[1px] focus:outline-none pl-[90px] focus:border-main ${errors.mobileLink ? "border-darkRed" : "border-gray0 "}`}
             placeholder="URL을 입력하세요."
             {...register("mobileLink", {
               required: "URL을 입력하세요.",
@@ -203,95 +199,88 @@ export default function AddRecord() {
               },
             })}
           />
-          {errors.mobileLink && (
+          {/* {errors.mobileLink && (
             <p className="errorText left-[90px]">{errors.mobileLink.message}</p>
-          )}
+          )} */}
         </div>
 
         {/* Date */}
-        <div
-          onClick={() => {
-            setIsFocused(true);
-            handleLabelClick();
-          }}
-          className={`w-full h-[65px] flex relative border-b-[1px] border-solid ${errors.date ? "border-darkRed focus:border-darkRed" : isFocused ? "border-main" : "border-gray0"}`}
-        >
-          <label htmlFor="date" className="formLabel z-20 w-[90px]">
+        <div className="w-full h-[65px] flex relative">
+          <label
+            htmlFor="date"
+            className="absolute h-[64px] w-[90px] flex items-center text-gray2 text-p z-20"
+            onClick={handleDateLabelClick}
+          >
             날짜
           </label>
           <Controller
             name="date"
             control={control}
-            defaultValue=""
-            rules={{
-              required: "필수 입력요소",
-            }}
-            render={({ field }) => (
+            defaultValue={todayFormat()}
+            rules={{ required: "필수 입력요소" }}
+            render={({ field, fieldState }) => (
               <input
                 {...field}
+                id="date"
                 type="date"
                 ref={dateInputRef}
-                className={`w-full absolute z-0 h-[64px] max-h-[64px] outline-none`}
+                className={`w-full border-b-[1px] absolute pl-[90px] z-0 h-[64px] max-h-[64px] outline-none ${
+                  isFocused["date"]
+                    ? "border-main"
+                    : fieldState.invalid
+                      ? "border-darkRed"
+                      : "border-gray0"
+                }`}
                 onChange={(e) => {
                   setValue("date", e.target.value);
+                  setIsInvalid((prev) => ({
+                    ...prev,
+                    time: fieldState.invalid,
+                  }));
                 }}
-                onBlur={() => {
-                  field.onBlur();
-                  setIsFocused(false);
-                }}
+                onBlur={() => handleBlur("date", fieldState)}
+                onFocus={() => handleFocus("date")}
               />
             )}
           />
-          {selectedDate ? (
-            <span
-              className="absolute text-gray4 text-p z-30 top-[21px] left-[92px]"
-              onClick={handleLabelClick}
-            >
-              {new Date(selectedDate).toLocaleDateString()}
-            </span>
-          ) : (
-            <span
-              className="absolute text-gray1 text-p z-30 top-[21px] left-[92px]"
-              onClick={handleLabelClick}
-            >
-              날짜를 선택해주세요.
-            </span>
-          )}
         </div>
 
         {/* Time */}
-        <div
-          className={`w-full h-[65px] flex relative border-b-[1px] border-solid ${errors.date ? "border-darkRed focus:border-darkRed" : isFocused ? "border-main" : "border-gray0"}`}
-        >
-          <label htmlFor="time" className="formLabel z-20 w-[90px]">
+        <div className="w-full h-[65px] flex relative">
+          <label
+            htmlFor="time"
+            className="absolute h-[64px] w-[90px] flex items-center text-gray2 text-p z-20"
+            onClick={handleTimeLabelClick}
+          >
             시간
           </label>
           <Controller
             name="time"
             control={control}
-            defaultValue=""
-            rules={{ required: "시간을 입력해주세요." }}
+            defaultValue="11:00"
+            rules={{ required: "필수 입력요소" }}
             render={({ field, fieldState }) => (
               <input
                 {...field}
                 id="time"
                 type="time"
-                value={field.value}
+                ref={timeInputRef}
+                className={`w-full placeholder:text-gray0 border-b-[1px] absolute pl-[90px] z-0 h-[64px] max-h-[64px] outline-none ${
+                  isFocused["time"]
+                    ? "border-main"
+                    : fieldState.invalid
+                      ? "border-darkRed"
+                      : "border-gray0"
+                } `}
                 onChange={(e) => {
-                  field.onChange(e.target.value);
-                  if (e.target.value) {
-                    clearErrors("time");
-                  }
+                  setValue("time", e.target.value);
+                  setIsInvalid((prev) => ({
+                    ...prev,
+                    time: fieldState.invalid,
+                  }));
                 }}
-                onBlur={() => {
-                  if (!field.value) {
-                    setError("relation", {
-                      type: "manual",
-                      message: "시간을 입력해주세요.",
-                    });
-                  }
-                }}
-                className={`w-full border-b h-[64px] pl-[91px] text-p text-gray2 outline-none ${fieldState.error ? "border-darkRed focus:border-darkRed" : "border-gray0 focus:border-main"}`}
+                onBlur={() => handleBlur("time", fieldState)}
+                onFocus={() => handleFocus("time")}
               />
             )}
           />
@@ -308,7 +297,7 @@ export default function AddRecord() {
           <div>
             <label
               htmlFor="amount"
-              className="text-gray2 text-p absolute top-[18px]"
+              className="text-gray2 text-p absolute top-[35px]"
             >
               축의금
             </label>
@@ -325,7 +314,7 @@ export default function AddRecord() {
               }}
               render={({ field, fieldState }) => (
                 <>
-                  <input
+                  {/* <input
                     id="amount"
                     type="text"
                     {...field}
@@ -352,39 +341,51 @@ export default function AddRecord() {
                     }}
                     className={`w-full border-b pl-[90px] pb-10 h-[100px] outline-none ${fieldState.error ? "border-darkRed focus:border-darkRed" : "border-gray0 focus:border-main"}`}
                     placeholder="숫자만 입력해주세요"
+                  /> */}
+                  <input
+                    id="amount"
+                    type="text"
+                    {...field}
+                    value={field.value}
+                    onChange={(e) => {
+                      field.onChange(e.target.value);
+                      if (e.target.value) {
+                        clearErrors("amount");
+                        if (!(e.target.value in amountArray)) {
+                          setSelectedRelation(null);
+                        }
+                      }
+                    }}
+                    onBlur={() => {
+                      if (!field.value) {
+                        setError("amount", {
+                          type: "manual",
+                          message: "관계를 입력해주세요.",
+                        });
+                      }
+                    }}
+                    className={`w-full border-b placeholder:text-gray1 pl-[90px] pb-10 h-[100px] outline-none focus:border-main ${!fieldState.error ? "border-gray0" : isButtonClicked ? "border-main" : "border-darkRed focus:border-darkRed"}`}
+                    placeholder="숫자만 입력해주세요."
                   />
-                  {/* {fieldState.error && (
-                    <span className="text-darkRed">
-                      {fieldState.error.message}
-                    </span>
-                  )} */}
+                  <div className="w-full flex space-x-2 justify-end absolute bottom-3">
+                    {amountArray.map((amount) => (
+                      <button
+                        key={amount}
+                        type="button"
+                        onMouseDown={() => setIsButtonClicked(true)}
+                        onMouseUp={() => setIsButtonClicked(false)}
+                        onClick={() => handleItemClick("amount", amount)}
+                        className={`selectButton ${
+                          selectedRelation === amount ? "selectedButton" : ""
+                        }`}
+                      >
+                        {amount}
+                      </button>
+                    ))}
+                  </div>
                 </>
               )}
             />
-          </div>
-          {/* Amount Buttons */}
-          <div className="w-full flex space-x-2 justify-end absolute bottom-3">
-            <button
-              type="button"
-              onClick={() => handleItemClick("amount", formatNumber(50000))}
-              className="selectButton"
-            >
-              {formatNumber(50000)}
-            </button>
-            <button
-              type="button"
-              onClick={() => handleItemClick("amount", formatNumber(100000))}
-              className="selectButton"
-            >
-              {formatNumber(100000)}
-            </button>
-            <button
-              type="button"
-              onClick={() => handleItemClick("amount", formatNumber(150000))}
-              className="selectButton"
-            >
-              {formatNumber(150000)}
-            </button>
           </div>
         </section>
 
