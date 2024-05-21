@@ -1,8 +1,10 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import Header from "../components/Header";
 import Input from "../components/ui/Input";
 import { formatNumber } from "../util/formatNumber";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 type FormValues = {
   type: string;
@@ -16,7 +18,7 @@ type FormValues = {
 };
 
 const urlPattern = new RegExp(
-  "^(https?:\\/\\/)?" + // protocol
+  "^(https?:\\/\\/)?" +
     "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" +
     "((\\d{1,3}\\.){3}\\d{1,3}))" +
     "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
@@ -31,6 +33,7 @@ export default function AddRecord() {
     handleSubmit,
     control,
     clearErrors,
+    watch,
     setValue,
     setError,
     formState: { errors },
@@ -46,10 +49,14 @@ export default function AddRecord() {
   };
 
   const dateInputRef = useRef<HTMLInputElement>(null);
-
-  const handleButtonClick = () => {
-    dateInputRef.current?.showPicker();
+  const selectedDate = watch("date", "");
+  const handleLabelClick = () => {
+    if (dateInputRef.current) {
+      dateInputRef.current.showPicker();
+    }
   };
+
+  const [isFocused, setIsFocused] = useState(false);
 
   return (
     <section className="formPage">
@@ -57,7 +64,7 @@ export default function AddRecord() {
       <form onSubmit={handleSubmit(onSubmit)} className="formPageForm mt-6">
         {/* Type */}
         <div
-          className={`inputContainer bg-white w-full min-w-80 h-[64px] border-solid border-b-[1px] border-gray0 ${errors.type ? "border-darkRed" : ""}`}
+          className={`w-full h-[64px] flex relative bg-white min-w-80 border-solid border-b-[1px] border-gray0 ${errors.type ? "border-darkRed" : ""}`}
         >
           <label htmlFor="type" className="formLabel">
             분류
@@ -147,11 +154,6 @@ export default function AddRecord() {
                     className={`w-full border-b pl-[90px] pb-10 h-[100px] outline-none ${fieldState.error ? "border-darkRed focus:border-darkRed" : "border-gray0 focus:border-main"}`}
                     placeholder="관계를 선택해주세요"
                   />
-                  {/* {fieldState.error && (
-                    <span className="block text-darkRed absolute z-3">
-                      {fieldState.error.message}
-                    </span>
-                  )} */}
                 </>
               )}
             />
@@ -190,13 +192,12 @@ export default function AddRecord() {
           >
             모바일<br></br>청첩장
           </label>
-          <Input
+          <input
             id="mobileLink"
             type="text"
+            className={`w-full min-w-80 text-p p-4 placeholder:text-p placeholder:text-gray1 h-[64px] text-gray1 bg-white outline-none border-b-[1px] focus:outline-none pl-[90px] ${errors.mobileLink ? "border-darkRed focus:border-darkRed pb-10" : "border-gray0 focus:border-main"}`}
             placeholder="URL을 입력하세요."
-            hasLabel={true}
-            hasError={!!errors.mobileLink}
-            register={register("mobileLink", {
+            {...register("mobileLink", {
               required: "URL을 입력하세요.",
               pattern: {
                 value: urlPattern,
@@ -210,41 +211,92 @@ export default function AddRecord() {
         </div>
 
         {/* Date */}
-        <div className="inputContainer">
-          <label
-            htmlFor="date"
-            className="formLabel w-[90px]"
-            onClick={handleButtonClick}
-          >
+        <div
+          onClick={() => {
+            setIsFocused(true);
+            handleLabelClick();
+          }}
+          className={`w-full h-[65px] flex relative border-b-[1px] border-solid ${errors.date ? "border-darkRed focus:border-darkRed" : isFocused ? "border-main" : "border-gray0"}`}
+        >
+          <label htmlFor="date" className="formLabel z-20 w-[90px]">
             날짜
           </label>
-          <Input
-            id="date"
-            type="date"
-            hide={true}
-            hasError={!!errors.date}
-            // ref={dateInputRef}
-            register={register("date", {
-              required: "시간을 입력해주세요.",
-            })}
+          <Controller
+            name="date"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: "필수 입력요소",
+            }}
+            render={({ field }) => (
+              <input
+                {...field}
+                type="date"
+                ref={dateInputRef}
+                className={`w-full absolute z-0 h-[64px] max-h-[64px] outline-none`}
+                onChange={(e) => {
+                  setValue("date", e.target.value);
+                }}
+                onBlur={() => {
+                  field.onBlur();
+                  setIsFocused(false);
+                }}
+              />
+            )}
           />
-          {errors.date && <p>날짜를 선택해주세요.</p>}
+          {selectedDate ? (
+            <span
+              className="absolute text-gray4 text-p z-30 top-[21px] left-[92px]"
+              onClick={handleLabelClick}
+            >
+              {new Date(selectedDate).toLocaleDateString()}
+            </span>
+          ) : (
+            <span
+              className="absolute text-gray1 text-p z-30 top-[21px] left-[92px]"
+              onClick={handleLabelClick}
+            >
+              날짜를 선택해주세요.
+            </span>
+          )}
         </div>
 
         {/* Time */}
-        <div>
-          <label htmlFor="time" className="formLabel">
+        <div
+          className={`w-full h-[65px] flex relative border-b-[1px] border-solid ${errors.date ? "border-darkRed focus:border-darkRed" : isFocused ? "border-main" : "border-gray0"}`}
+        >
+          <label htmlFor="time" className="formLabel z-20 w-[90px]">
             시간
           </label>
-          <Input
-            id="time"
-            type="time"
-            hasError={!!errors.time}
-            register={register("time", {
-              required: "시간을 입력해주세요.",
-            })}
+          <Controller
+            name="time"
+            control={control}
+            defaultValue=""
+            rules={{ required: "시간을 입력해주세요." }}
+            render={({ field, fieldState }) => (
+              <input
+                {...field}
+                id="time"
+                type="time"
+                value={field.value}
+                onChange={(e) => {
+                  field.onChange(e.target.value);
+                  if (e.target.value) {
+                    clearErrors("time");
+                  }
+                }}
+                onBlur={() => {
+                  if (!field.value) {
+                    setError("relation", {
+                      type: "manual",
+                      message: "시간을 입력해주세요.",
+                    });
+                  }
+                }}
+                className={`w-full border-b h-[64px] pl-[91px] text-p text-gray2 outline-none ${fieldState.error ? "border-darkRed focus:border-darkRed" : "border-gray0 focus:border-main"}`}
+              />
+            )}
           />
-          {errors.time && <p>시간을 선택해주세요.</p>}
         </div>
 
         {/* Attendance */}
