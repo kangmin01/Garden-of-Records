@@ -3,8 +3,6 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import Header from "../components/Header";
 import Input from "../components/ui/Input";
 import { formatNumber } from "../util/formatNumber";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 type FormValues = {
   type: string;
