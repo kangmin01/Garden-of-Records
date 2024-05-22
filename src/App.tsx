@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import Navbar from "./components/Navbar";
 import SplashScreen from "./components/SplashScreen";
 import { Outlet } from "react-router-dom";
 
@@ -10,7 +9,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsSplashVisible(false);
-    }, 100);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
