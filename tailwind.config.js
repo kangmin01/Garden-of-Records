@@ -32,6 +32,7 @@ module.exports = {
         textGray3: "#FFFFFF",
         main: "#37A041",
         green0: "#DFE7DD",
+        green1: "#B2D0AB",
         darkRed: "#EA000E",
         orange: "#EF9509",
       },

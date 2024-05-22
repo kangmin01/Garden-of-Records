@@ -13,6 +13,9 @@ import MinusCircleIcon from "../components/ui/icons/MinusCircleIcon";
 import PencilIcon from "../components/ui/icons/PencilIcon";
 import header_title from "../assets/image/header_title.png";
 import CalenderIcon from "../components/ui/icons/CalenderIcon";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import home_character from "../assets/image/home_character.png";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -120,7 +123,24 @@ export default function Home() {
       <div className="bg-green0 absolute h-[388px] w-[360px] rounded-b-[20px]"></div>
       <div className="w-[360px] absolute flex flex-col items-center">
         <div className="flex flex-col items-center mt-3 mb-6">
-          <div className="w-[196px] h-[196px] bg-blue-200 rounded-full"></div>
+          <CircularProgressbar
+            value={35}
+            background={true}
+            strokeWidth={2.5}
+            styles={buildStyles({
+              pathColor: "#37A041",
+              trailColor: "#B2D0AB",
+              backgroundColor: "#DFE7DD",
+            })}
+            className="absolute w-[245px] h-[245px]"
+          />
+          <div className="w-[245px] h-[245px] flex justify-center items-center rounded-full relative">
+            <img
+              src={home_character}
+              alt="캐릭터 이미지"
+              className="w-[118px] h-[160px] absolute"
+            />
+          </div>
           <span className="text-h1 mt-[22px]">최진영</span>
         </div>
         <div className="w-[320px] h-[120px] flex justify-between">
