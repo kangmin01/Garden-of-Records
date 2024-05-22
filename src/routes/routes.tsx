@@ -4,37 +4,50 @@ import NotFound from "../pages/NotFound";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import Home from "../pages/Home";
-import AddEvent from "../pages/AddRecord";
 import Search from "../pages/Search";
 import RecordList from "../pages/RecordList";
 import AddRecord from "../pages/AddRecord";
+import ProtectedRoutes from "../pages/ProtectedRoutes";
+import PublicOnlyRoutes from "../pages/PublicOnlyRoutes";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App />,
+    element: <PublicOnlyRoutes />,
     errorElement: <NotFound />,
-    children: [{ index: true, element: <Home /> }],
+    children: [
+      {
+        path: "/signin",
+        element: <SignIn />,
+      },
+      {
+        path: "/signup",
+        element: <SignUp />,
+      },
+    ],
   },
   {
-    path: "/signin",
-    element: <SignIn />,
-  },
-  {
-    path: "/signup",
-    element: <SignUp />,
-  },
-  {
-    path: "/event/add ",
-    element: <AddRecord />,
-  },
-  {
-    path: "/search",
-    element: <Search />,
-  },
-  {
-    path: "/list/:type",
-    element: <RecordList />,
+    element: <ProtectedRoutes />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        path: "/",
+        element: <App />,
+        errorElement: <NotFound />,
+        children: [{ index: true, element: <Home /> }],
+      },
+      {
+        path: "/event/add ",
+        element: <AddRecord />,
+      },
+      {
+        path: "/search",
+        element: <Search />,
+      },
+      {
+        path: "/list/:type",
+        element: <RecordList />,
+      },
+    ],
   },
 ]);
 

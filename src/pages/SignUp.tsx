@@ -102,30 +102,27 @@ const SignUp: React.FC = () => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<SignUpFormType> = async (data) => {
-    console.log(data);
-    // try {
-    //   const response = await axios.post(
-    //     `http://tikitakaapi.site:8000/user/signup`,
-    //     {
-    //       user_name: data.name,
-    //       email: data.email,
-    //       user_password: data.password,
-    //       phone: data.contact,
-    //     },
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         // "Access-Control-Allow-Origin": `http://localhost:3000`,
-    //         // "Access-Control-Allow-Credentials": "true",
-    //       },
-    //     }
-    //   );
-    //   console.log("가입 성공", response);
-    //   // navigate("/signin");
-    // } catch (error) {
-    //   console.error("회원가입 오류:", error);
-    //   // 오류 처리 로직 추가 (예: 사용자에게 오류 알림)
-    // }
+    try {
+      const response = await axios.post(
+        `/user/signup`,
+        {
+          user_name: data.name,
+          email: data.email,
+          user_password: data.password,
+          phone: data.contact,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("회원가입 성공", response);
+      navigate("/signin");
+    } catch (error) {
+      console.error("회원가입 오류:", error);
+      // 오류 처리 로직 추가 (예: 사용자에게 오류 알림)
+    }
   };
 
   return (

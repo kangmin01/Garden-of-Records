@@ -1,7 +1,9 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/ui/Input";
+import axios from "axios";
+import { useAuthContext } from "../context/AuthContext";
 
 interface SignInFormType {
   email: string;
@@ -14,9 +16,31 @@ const SignIn: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<SignInFormType>({ mode: "onBlur" });
-  const onSubmit: SubmitHandler<SignInFormType> = (data) => {
+  const { login } = useAuthContext();
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<SignInFormType> = async (data) => {
     console.log(data);
-    // 로그인 처리 로직 추가
+    try {
+      const response = await axios.post(
+        `/user/login`,
+        {
+          email: data.email,
+          user_password: data.password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("로그인 성공", response);
+      login(response.data.access_token);
+      navigate("/");
+    } catch (error) {
+      console.error("로그인 오류:", error);
+      // 오류 처리 로직 추가 (예: 사용자에게 오류 알림)
+    }
   };
 
   return (
