@@ -16,7 +16,7 @@ const App: React.FC = () => {
 
   return (
     <div>
-      {isSplashVisible && <SplashScreen />}
+      {/* {isSplashVisible && <SplashScreen />} */}
       {!isSplashVisible && (
         <div className="App">
           {/* <Navbar /> */}

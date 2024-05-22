@@ -5,7 +5,7 @@ export default function EventListCard() {
   return (
     <Link
       to={`/list/type/id`}
-      className="h-[76px] flex flex-col border-solid border-y-[1px] border-gray2 first:border-y-0"
+      className="h-[76px] flex flex-col border-solid border-y-[1px] border-gray0 first:border-y-0"
     >
       <div className="w-full flex justify-between items-center mt-[12px] mb-[8px] text-[14px] font-normal text-gray2">
         <span>2024.05.14 (토) 14:00</span>
