@@ -1,9 +1,14 @@
+import splash from "../assets/image/splash.png";
+
 export default function SplashScreen() {
   return (
-    <>
-      <h1>기록의 정원</h1>
-      <h2>사람과 사람과의 관계에서 축하 / 위로가 필요한 순간</h2>
-      <h2>우리는 그 사람을 잊지 않기 위해 마음을 기록합니다.</h2>
-    </>
+    <div className="bg-yellow max-w-[360px] mx-auto h-dvh flex justify-center items-center">
+      <img
+        id="splashImage"
+        src={splash}
+        alt="로고"
+        className="w-[212px] h-[144px] animate-fadeOut"
+      />
+    </div>
   );
 }

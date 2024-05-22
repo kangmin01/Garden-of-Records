@@ -7,7 +7,7 @@ import { useState } from "react";
 import CloseIcon from "../components/ui/icons/CloseIcon";
 import SearchBar from "../components/SearchBar";
 import RightChevron from "../components/ui/icons/RightChevron";
-import profile from "../assets/image/profile.jpg";
+import profile from "../assets/image/profile.png";
 import PlusCircleIcon from "../components/ui/icons/PlusCircleIcon";
 import MinusCircleIcon from "../components/ui/icons/MinusCircleIcon";
 import PencilIcon from "../components/ui/icons/PencilIcon";
@@ -57,11 +57,13 @@ export default function Home() {
                 to="/user/profile"
                 className="flex items-center py-[16px] pl-[20px] w-[264px] h-[80px] rounded-2xl border-solid border-[1px] border-main"
               >
-                <img
-                  src={profile}
-                  alt="캐릭터 이미지"
-                  className="w-[48px] h-[48px] object-cover rounded-full mr-[16px]"
-                />
+                <div className="flex justify-center items-center w-[48px] h-[48px] bg-yellow rounded-full border border-solid border-gray0 mr-[16px]">
+                  <img
+                    src={profile}
+                    alt="캐릭터 이미지"
+                    className="w-[29px] h-[33px] object-contain rounded-full"
+                  />
+                </div>
                 <div className="flex flex-col justify-center h-[38px] max-h-[38px] mr-[33px]">
                   <div className="flex items-center">
                     <span className="text-gray4 text-[16px] font-medium">

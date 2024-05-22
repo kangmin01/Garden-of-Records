@@ -9,14 +9,14 @@ const App: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsSplashVisible(false);
-    }, 2000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div>
-      {/* {isSplashVisible && <SplashScreen />} */}
+      {isSplashVisible && <SplashScreen />}
       {!isSplashVisible && (
         <div className="App">
           {/* <Navbar /> */}
