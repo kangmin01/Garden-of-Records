@@ -14,14 +14,22 @@ export default function RecordCard({ type, totalCount, totalAmount }: Props) {
   return (
     <Link
       to={`/list/${type}`}
-      className="flex flex-col w-[158px] h-[120px] p-3.5 text-gray2 bg-gray0 rounded-2xl"
+      className="flex flex-col w-[152px] h-[120px] px-[16px] py-[18px] bg-white rounded-2xl shadow-shadowRecordCard"
     >
-      <div className="flex items-center justify-between mb-[23px]">
-        <span className="text-h2">{title[type]}</span>
+      <div className="flex items-center justify-between mb-[16px] text-[14px] font-medium text-gray2">
+        <span>{title[type]}</span>
         <RightChevron />
       </div>
-      <span className="text-right text-p">{totalCount} 명</span>
-      <span className="text-right text-p">{formatNumber(totalAmount)} 원</span>
+      <div className="flex justify-end items-center">
+        <span className="text-[16px] font-medium mr-[6px]">{totalCount}</span>
+        <span className="text-[14px] font-normal text-gray2">명</span>
+      </div>
+      <div className="flex justify-end items-center">
+        <span className="text-[16px] font-medium mr-[6px]">
+          {formatNumber(totalAmount)}
+        </span>
+        <span className="text-[14px] font-normal text-gray2">원</span>
+      </div>
     </Link>
   );
 }

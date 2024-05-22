@@ -11,15 +11,17 @@ import profile from "../assets/image/profile.jpg";
 import PlusCircleIcon from "../components/ui/icons/PlusCircleIcon";
 import MinusCircleIcon from "../components/ui/icons/MinusCircleIcon";
 import PencilIcon from "../components/ui/icons/PencilIcon";
+import header_title from "../assets/image/header_title.png";
+import CalenderIcon from "../components/ui/icons/CalenderIcon";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="bg-pink-50 max-w-[360px] mx-auto h-dvh relative">
-      <nav className="bg-pink-100 max-w-[360px] mx-auto flex justify-between px-5 py-3 items-center text-h1">
-        <div>
-          <Link to="/signin">기록의 정원</Link>
+    <div className="bg-white border-x-[1px] border-solid border-gray0 max-w-[360px] mx-auto h-dvh relative">
+      <nav className="bg-green0 max-w-[360px] mx-auto flex justify-between px-[16px] py-3 items-center text-h1">
+        <div className="w-[86px] h-[19px]">
+          <img src={header_title} alt="헤더 제목" />
         </div>
 
         {/* 뒷배경 */}
@@ -115,23 +117,25 @@ export default function Home() {
           </div>
         </div>
       </nav>
-      <div className="bg-green-100 absolute h-[329px] w-[360px] rounded-b-[20px]"></div>
-      <div className="w-[360px] absolute">
-        <div className="bg-yellow-100 flex flex-col items-center mt-3 mb-6">
+      <div className="bg-green0 absolute h-[388px] w-[360px] rounded-b-[20px]"></div>
+      <div className="w-[360px] absolute flex flex-col items-center">
+        <div className="flex flex-col items-center mt-3 mb-6">
           <div className="w-[196px] h-[196px] bg-blue-200 rounded-full"></div>
-          <span className="text-h1 mt-[22px]">최진영님</span>
+          <span className="text-h1 mt-[22px]">최진영</span>
         </div>
-        <div className="flex justify-between px-4">
-          <RecordCard type="send" totalCount={10} totalAmount={1000000000} />
-          <RecordCard type="receive" totalCount={10} totalAmount={1000000000} />
+        <div className="w-[320px] h-[120px] flex justify-between">
+          <RecordCard type="send" totalCount={10} totalAmount={100000000} />
+          <RecordCard type="receive" totalCount={10} totalAmount={100000000} />
         </div>
       </div>
       <div className="pt-[429px] w-full px-5">
-        <div className="mb-2.5">
-          <span>📆</span>
-          <span className="text-h1"> 다가오는 일정</span>
+        <div className="mb-2.5 pl-[18px] flex items-center text-gray3">
+          <CalenderIcon />
+          <span className="text-[16px] font-medium ml-[8px]">
+            다가오는 일정
+          </span>
         </div>
-        <section className="divide-y-[1px]">
+        <section className="divide-y-[1px] px-[16px]">
           {/* <section className="divide-y-[1px] h-[280px] overflow-y-auto"> */}
           <EventListCard />
           <EventListCard />

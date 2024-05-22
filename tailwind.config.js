@@ -15,6 +15,9 @@ module.exports = {
       sm: ["12px", { fontWeight: "normal" }],
     },
     extend: {
+      boxShadow: {
+        shadowRecordCard: "0px 4px 12px 0px rgba(0,0,0,0.12)",
+      },
       fontFamily: {
         sans: ["Pretendard Variable", "sans-serif"],
       },
@@ -28,7 +31,9 @@ module.exports = {
         textGray2: "#B3B3B3",
         textGray3: "#FFFFFF",
         main: "#37A041",
+        green0: "#DFE7DD",
         darkRed: "#EA000E",
+        orange: "#EF9509",
       },
     },
   },

@@ -1,5 +1,9 @@
 import { SlMinus } from "react-icons/sl";
 
-export default function MinusCircleIcon() {
-  return <SlMinus />;
+type Props = {
+  color?: string;
+};
+
+export default function MinusCircleIcon({ color }: Props) {
+  return <SlMinus color={color} size={18} />;
 }
