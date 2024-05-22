@@ -148,7 +148,7 @@ export default function Home() {
           <RecordCard type="receive" totalCount={10} totalAmount={100000000} />
         </div>
       </div>
-      <div className="pt-[429px] w-full px-5">
+      <div className="pt-[486px] w-full px-5">
         <div className="mb-2.5 pl-[18px] flex items-center text-gray3">
           <CalenderIcon />
           <span className="text-[16px] font-medium ml-[8px]">

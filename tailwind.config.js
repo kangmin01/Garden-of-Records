@@ -17,6 +17,7 @@ module.exports = {
     extend: {
       boxShadow: {
         shadowRecordCard: "0px 4px 12px 0px rgba(0,0,0,0.12)",
+        shadowFloatingButton: "0px 4px 4px 0px rgba(0,0,0,0.25);",
       },
       fontFamily: {
         sans: ["Pretendard Variable", "sans-serif"],
