@@ -4,7 +4,8 @@ export default function SearchBar() {
   const handleClick = () => {};
 
   return (
-    <div className="w-full px-5 mt-6 mb-5">
+    <div className="w-full mt-6 mb-5 text-[14px] font-normal">
+      {/* <div className="w-full px-5 mt-6 mb-5 text-[14px] font-normal"> */}
       <div className="flex items-center w-full border-solid border-[1px] border-gray0 rounded-lg bg-gray-50">
         <input
           type="text"

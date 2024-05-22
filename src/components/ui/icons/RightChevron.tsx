@@ -1,5 +1,5 @@
-import { AiOutlineRight } from "react-icons/ai";
+import { BsChevronRight } from "react-icons/bs";
 
 export default function RightChevron() {
-  return <AiOutlineRight />;
+  return <BsChevronRight />;
 }

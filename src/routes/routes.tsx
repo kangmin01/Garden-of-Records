@@ -11,44 +11,64 @@ import ProtectedRoutes from "../pages/ProtectedRoutes";
 import PublicOnlyRoutes from "../pages/PublicOnlyRoutes";
 
 const router = createBrowserRouter([
+  // {
+  //   element: <PublicOnlyRoutes />,
+  //   errorElement: <NotFound />,
+  //   children: [
+  //     {
+  //       path: "/signin",
+  //       element: <SignIn />,
+  //     },
+  //     {
+  //       path: "/signup",
+  //       element: <SignUp />,
+  //     },
+  //   ],
+  // },
   {
-    element: <PublicOnlyRoutes />,
-    errorElement: <NotFound />,
-    children: [
-      {
-        path: "/signin",
-        element: <SignIn />,
-      },
-      {
-        path: "/signup",
-        element: <SignUp />,
-      },
-    ],
+    path: "/signin",
+    element: <SignIn />,
   },
   {
-    element: <ProtectedRoutes />,
-    errorElement: <NotFound />,
-    children: [
-      {
-        path: "/",
-        element: <App />,
-        errorElement: <NotFound />,
-        children: [{ index: true, element: <Home /> }],
-      },
-      {
-        path: "/event/add ",
-        element: <AddRecord />,
-      },
-      {
-        path: "/search",
-        element: <Search />,
-      },
-      {
-        path: "/list/:type",
-        element: <RecordList />,
-      },
-    ],
+    path: "/signup",
+    element: <SignUp />,
   },
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <NotFound />,
+    children: [{ index: true, element: <Home /> }],
+  },
+  {
+    path: "/event/add ",
+    element: <AddRecord />,
+  },
+  {
+    path: "/search",
+    element: <Search />,
+  },
+  {
+    path: "/list/:type",
+    element: <RecordList />,
+  },
+  // {
+  //   element: <ProtectedRoutes />,
+  //   errorElement: <NotFound />,
+  //   children: [
+  //     {
+  //       path: "/event/add ",
+  //       element: <AddRecord />,
+  //     },
+  //     {
+  //       path: "/search",
+  //       element: <Search />,
+  //     },
+  //     {
+  //       path: "/list/:type",
+  //       element: <RecordList />,
+  //     },
+  //   ],
+  // },
 ]);
 
 export default router;

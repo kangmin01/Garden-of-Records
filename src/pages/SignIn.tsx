@@ -16,7 +16,7 @@ const SignIn: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInFormType>({ mode: "onBlur" });
+  } = useForm<SignInFormType>({ mode: "all" });
   const { login } = useAuthContext();
   const navigate = useNavigate();
 

@@ -1,5 +1,5 @@
-import { AiOutlineLeft } from "react-icons/ai";
+import { BsChevronLeft } from "react-icons/bs";
 
 export default function BackArrow() {
-  return <AiOutlineLeft />;
+  return <BsChevronLeft />;
 }
