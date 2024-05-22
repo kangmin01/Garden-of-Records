@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/ui/Input";
 import axios from "axios";
 import { useAuthContext } from "../context/AuthContext";
+import logo_login from "../assets/image/logo_login.png";
 
 interface SignInFormType {
   email: string;
@@ -44,8 +45,10 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="formPage pt-[68px]">
-      <h2 className="formPageTitle mb-14">기록의 정원</h2>
+    <div className="formPage">
+      <div className="w-[140px] h-[74px] mt-[80px] mb-[95px]">
+        <img src={logo_login} alt="기록의 정원 로고" />
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} className="formPageForm">
         <div className="inputContainerDiv">
           <div className="inputContainer">
@@ -64,7 +67,7 @@ const SignIn: React.FC = () => {
               })}
             />
             {errors.email && (
-              <p className="errorText left-[34px]">{errors.email.message}</p>
+              <p className="errorText left-[16px]">{errors.email.message}</p>
             )}
           </div>
           <div className="inputContainer">
@@ -79,23 +82,26 @@ const SignIn: React.FC = () => {
               })}
             />
             {errors.password && (
-              <p className="errorText left-[34px]">{errors.password.message}</p>
+              <p className="errorText left-[16px]">{errors.password.message}</p>
             )}
           </div>
         </div>
-        <div className="authenticationButtonDiv mt-[108px]">
-          <button type="submit" className="authenticationButton">
+        <div className="authenticationButtonDiv mt-[112px]">
+          <button
+            type="submit"
+            className="w-full font-semibold text-[16px] min-w-70 h-[48px] flex items-center justify-center bg-main text-white rounded-xl"
+          >
             로그인
           </button>
           <Link
-            className="w-full min-w-70 p-4 bg-gray0 text-gray2 rounded-xl text-center"
+            className="w-full font-semibold text-[16px] min-w-70 h-[48px] flex items-center justify-center bg-gray0 text-gray2 rounded-xl"
             to="/signup"
           >
             회원가입
           </Link>
         </div>
         <div className="w-full text-center">
-          <div className="text-p mt-6 text-gray3 underline underline-offset-1">
+          <div className="mt-6 text-[14px] font-normal text-gray3 underline underline-offset-1">
             <Link to="/">로그인 없이 둘러보기</Link>
           </div>
         </div>

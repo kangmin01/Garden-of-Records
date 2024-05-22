@@ -65,7 +65,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .formPage {
-  @apply bg-neutral-50 max-w-[360px] min-w-80 mx-auto h-screen flex flex-col items-center;
+  @apply border-x-[1px] border-solid border-red-200 max-w-[360px] min-w-80 mx-auto h-screen flex flex-col items-center;
 
   .formPageTitle {
     @apply font-bold text-[24px];
@@ -93,11 +93,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 
   .authenticationButton {
-    @apply w-full min-w-80 p-4 bg-main text-white rounded-xl;
+    @apply w-full font-semibold text-[16px] min-w-80 p-4 bg-main text-white rounded-xl;
   }
 
   .submitButton {
-    @apply w-full min-w-80 p-4 rounded-xl text-center;
+    @apply w-full min-w-80 h-[48px] flex justify-center items-center rounded-xl;
   }
 }
 
@@ -106,7 +106,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .errorText {
-  @apply absolute top-[36px] text-darkRed text-sm w-11/12 mt-1;
+  @apply absolute top-[42px] text-darkRed text-sm;
 }
 
 .selectButton {
