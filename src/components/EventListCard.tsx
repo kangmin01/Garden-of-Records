@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import MinusCircleIcon from "./ui/icons/MinusCircleIcon";
+import PlusCircleIcon from "./ui/icons/PlusCircleIcon";
 
 export default function EventListCard() {
   return (
@@ -13,7 +14,8 @@ export default function EventListCard() {
       </div>
       <div className="w-full flex justify-between items-center">
         <div className="flex items-center">
-          <MinusCircleIcon color="orange" />
+          <MinusCircleIcon color="#EF9509" />
+          {/* <PlusCircleIcon color="#37A041" /> */}
           <span className="text-p ml-[8px]">허세민</span>
         </div>
         <span className="text-[18px] font-semibold text-gray4">

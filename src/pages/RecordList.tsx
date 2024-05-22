@@ -17,19 +17,23 @@ export default function RecordList() {
   }
 
   return (
-    <section className="bg-pink-50 max-w-[360px] mx-auto h-dvh relative">
+    <section className="bg-white max-w-[360px] mx-auto h-dvh relative">
       <Header title={titleType[type]} />
       <div className="px-5">
-        <div className="bg-blue-100 flex flex-col justify-between h-[122px] rounded-xl px-[30px] pt-8 mt-6 mb-10 pb-6 shadow1">
-          <div className="flex justify-between text-h2">
+        <div
+          className={`border-solid ${type === "send" ? "border-orange" : "border-main"}  border flex flex-col justify-between h-[108px] rounded-lg px-[20px] pt-[24px] mt-[24px] pb-6`}
+        >
+          <div className="flex justify-between h-[20px] text-[16px] font-medium mb-[16px]">
             <span className="text-gray2">총 누적 금액</span>
             <span className="text-gray4">총 10명</span>
           </div>
-          <div className="flex justify-end items-center">
-            <span className="text-main text-[24px] font-bold mr-1">
+          <div className="flex justify-end items-center h-[24px]">
+            <span
+              className={`${type === "send" ? "text-orange" : "text-main"} text-[24px] font-bold mr-1`}
+            >
               1,000,000
             </span>
-            <span className="text-gray4 text-h1">원</span>
+            <span className="text-gray4 text-[16px] font-medium">원</span>
           </div>
         </div>
       </div>
