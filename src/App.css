@@ -58,6 +58,30 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   height: 64px;
 }
 
+/* 스와이퍼 */
+.swiper {
+  width: 100%;
+  position: relative;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  margin-top: 108px;
+}
+
+.swiper-pagination-bullet {
+  background-color: #b3b3b3 !important;
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #191919 !important;
+}
+
+/* 기록등록 탭버튼 */
 .text-transition {
   transition: color 0.3s ease-in-out;
 }

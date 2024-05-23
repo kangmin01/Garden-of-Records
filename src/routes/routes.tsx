@@ -10,6 +10,7 @@ import AddRecord from "../pages/AddRecord";
 import ProtectedRoutes from "../pages/ProtectedRoutes";
 import PublicOnlyRoutes from "../pages/PublicOnlyRoutes";
 import RecordDetail from "../pages/RecordDetail";
+import Tutorial from "../pages/Tutorial";
 
 const router = createBrowserRouter([
   // {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
   {
     path: "/list/:type",
     element: <RecordList />,
+  },
+  {
+    path: "/tutorial",
+    element: <Tutorial />,
   },
   // {
   //   element: <ProtectedRoutes />,
