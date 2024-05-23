@@ -1,9 +1,15 @@
 import { useState } from "react";
 import SearchIcon from "./ui/icons/SearchIcon";
 import axios from "axios";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function SearchBar() {
   const [keyword, setKeyword] = useState("");
+
+  const { isAuthenticated } = useAuthContext();
+  // console.log(isAuthenticated);
+  const token = localStorage.getItem("access_token");
+  // console.log(token);
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -16,7 +22,10 @@ export default function SearchBar() {
         params: {
           name: keyword,
           is_invited: "all",
-          order: "desc",
+        },
+        headers: {
+          "access-token": token,
+          "Content-Type": "application/json",
         },
       });
 

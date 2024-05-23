@@ -107,7 +107,7 @@ export default function Home() {
                 <div className="flex items-center justify-between w-full h-[48px] border-solid border-b-[1px] border-gray0">
                   <div className="flex items-center">
                     <PencilIcon />
-                    <Link to="/event/add" className="pl-[8px]">
+                    <Link to="/record/add" className="pl-[8px]">
                       기록
                     </Link>
                   </div>

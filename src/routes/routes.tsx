@@ -9,6 +9,7 @@ import RecordList from "../pages/RecordList";
 import AddRecord from "../pages/AddRecord";
 import ProtectedRoutes from "../pages/ProtectedRoutes";
 import PublicOnlyRoutes from "../pages/PublicOnlyRoutes";
+import RecordDetail from "../pages/RecordDetail";
 
 const router = createBrowserRouter([
   // {
@@ -40,9 +41,14 @@ const router = createBrowserRouter([
     children: [{ index: true, element: <Home /> }],
   },
   {
-    path: "/event/add ",
+    path: "/record/:id",
+    element: <RecordDetail />,
+  },
+  {
+    path: "/record/add",
     element: <AddRecord />,
   },
+
   {
     path: "/search",
     element: <Search />,
@@ -56,7 +62,7 @@ const router = createBrowserRouter([
   //   errorElement: <NotFound />,
   //   children: [
   //     {
-  //       path: "/event/add ",
+  //       path: "/record/add ",
   //       element: <AddRecord />,
   //     },
   //     {
