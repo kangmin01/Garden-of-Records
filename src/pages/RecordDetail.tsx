@@ -29,7 +29,7 @@ export default function RecordDetail() {
             </div>
           </div>
           <div className="flex justify-center items-center h-[24px] mt-[16px]">
-            <span className="cursor-pointer text-main text-[14px] font-medium mr-[8px] cursor-pointer">
+            <span className="text-main text-[14px] font-medium mr-[8px] cursor-pointer">
               모바일 청첩장 확인
             </span>
             <RightChevron color="#37A041" size={13} />

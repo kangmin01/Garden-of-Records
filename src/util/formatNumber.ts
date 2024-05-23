@@ -9,3 +9,12 @@ export const todayFormat = () => {
   const dd = String(today.getDate()).padStart(2, "0");
   return `${yyyy}-${mm}-${dd}`;
 };
+
+export const formatDate = (date: string) => {
+  const formattedDate = date.replace(/-/g, "");
+  return formattedDate;
+};
+
+export const formatTime = (time: string) => {
+  return time.replace(/:/g, "");
+};

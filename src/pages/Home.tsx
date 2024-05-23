@@ -16,6 +16,8 @@ import CalenderIcon from "../components/ui/icons/CalenderIcon";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import home_character from "../assets/image/home_character.png";
+import axios from "axios";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

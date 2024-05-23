@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   useForm,
   SubmitHandler,
@@ -7,9 +7,20 @@ import {
 } from "react-hook-form";
 import Header from "../components/Header";
 import Input from "../components/ui/Input";
-import { formatNumber, todayFormat } from "../util/formatNumber";
+import {
+  formatDate,
+  formatNumber,
+  formatTime,
+  todayFormat,
+} from "../util/formatNumber";
+import RequiredFieldMark from "../components/ui/RequiredFieldMark";
+import { useAuthContext } from "../context/AuthContext";
+import axios from "axios";
+import { IOSSwitch } from "../components/ui/IOSWsitch";
+import { useNavigate } from "react-router-dom";
 
 type FormValues = {
+  tab: string;
   name: string;
   relation: string;
   mobileLink: string;
@@ -17,6 +28,16 @@ type FormValues = {
   time: string;
   attendance: boolean;
   amount: string;
+};
+
+type PayloadType = {
+  is_invited: string;
+  name: string;
+  event_date: string;
+  is_attended: number;
+  expense: number;
+  relation?: string;
+  mobileLink?: string;
 };
 
 type FocusState = {
@@ -38,7 +59,7 @@ const urlPattern = new RegExp(
 );
 
 const relationArray = ["가족", "친구", "직장"];
-const amountArray = ["50000", "1000000", "150000"];
+const amountArray = ["50000", "100000", "150000"];
 
 export default function AddRecord() {
   const {
@@ -48,10 +69,15 @@ export default function AddRecord() {
     clearErrors,
     setValue,
     setError,
+    watch,
     formState: { errors },
-  } = useForm<FormValues>({ mode: "onBlur" });
+  } = useForm<FormValues>({
+    mode: "all",
+  });
   const [selectedRelation, setSelectedRelation] = useState<string | null>(null);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleItemClick = (item: keyof FormValues, value: string) => {
     setValue(item, value);
@@ -85,14 +111,104 @@ export default function AddRecord() {
     setIsInvalid((prev) => ({ ...prev, [name]: fieldState.invalid }));
   };
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
+  const token = localStorage.getItem("access_token");
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    let dateTime = "";
+    if (data.time.length === 0) {
+      dateTime = formatDate(data.date) + "0000";
+    } else {
+      dateTime = formatDate(data.date) + formatTime(data.time);
+    }
+
+    const payload: PayloadType = {
+      is_invited: data.tab,
+      name: data.name,
+      event_date: dateTime,
+      is_attended: data.attendance === false ? 1 : 2,
+      expense: Number(data.amount),
+    };
+
+    if (data.relation) {
+      payload.relation = data.relation;
+    }
+
+    if (data.mobileLink) {
+      payload.mobileLink = data.mobileLink;
+    }
+
+    try {
+      const response = await axios.post(
+        "/invitation/expense",
+        {
+          is_invited: data.tab,
+          name: data.name,
+          event_date: dateTime,
+          is_attended: data.attendance === false ? 1 : 2,
+          expense: Number(data.amount),
+          relation: data.relation,
+        },
+        {
+          headers: {
+            "access-token": token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("기록 등록 결과", response.data);
+      // navigate("/");
+    } catch (error) {
+      console.log("등록 실패");
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const nameValue = watch("name");
+  const dateValue = watch("date");
+  const amountValue = watch("amount");
+  const allRequiredFieldsFilled = nameValue && dateValue && amountValue;
+
+  const [tab, setTab] = useState("invited");
+  const handleTab = () => {
+    const newTab = tab === "invited" ? "inviting" : "invited";
+    setTab(newTab);
+    setValue("tab", newTab);
   };
 
   return (
     <section className="formPage" id="addRecord">
       <Header title="기록 등록" />
       <form onSubmit={handleSubmit(onSubmit)} className="formPageForm mt-6">
+        {/* tab */}
+        <Controller
+          name="tab"
+          control={control}
+          defaultValue="invited"
+          render={({ field }) => (
+            <div className="w-full relative">
+              <div
+                className={`w-[150px] h-[36px] bg-white absolute top-[4px] left-[9.5px] rounded-lg shadow-shadowTabButton z-10 transition-transform duration-500 ${tab === "inviting" ? "translate-x-[150px]" : ""}`}
+              ></div>
+              <div className="w-[308px] mx-auto h-[44px] bg-gray0 rounded-xl z-20"></div>
+              <div
+                onClick={handleTab}
+                className={`text-[14px] font-semibold flex w-[300px] absolute z-20 top-[4px] left-[10px] cursor-pointer `}
+              >
+                <span
+                  className={`w-[150px] h-[36px] flex justify-center items-center text-transition ${tab === "invited" ? "text-gray4" : "text-gray2"}`}
+                >
+                  보낸 기록
+                </span>
+                <span
+                  className={`w-[150px] h-[36px] flex justify-center items-center text-transition ${tab === "invited" ? "text-gray2" : "text-gray4"}`}
+                >
+                  받은 기록
+                </span>
+              </div>
+            </div>
+          )}
+        />
+
         {/* Name */}
         <div className="inputContainer">
           <label
@@ -101,6 +217,7 @@ export default function AddRecord() {
           >
             이름
           </label>
+          <RequiredFieldMark />
           <Input
             id="name"
             type="text"
@@ -110,9 +227,6 @@ export default function AddRecord() {
               required: "이름을 입력해주세요.",
             })}
           />
-          {/* {errors.name && (
-            <p className="errorText left-[90px]">{errors.name.message}</p>
-          )} */}
         </div>
 
         {/* Relation*/}
@@ -128,7 +242,7 @@ export default function AddRecord() {
               name="relation"
               control={control}
               defaultValue=""
-              rules={{ required: "관계를 입력해주세요." }}
+              // rules={{ required: "관계를 입력해주세요." }}
               render={({ field, fieldState }) => (
                 <>
                   <input
@@ -153,7 +267,7 @@ export default function AddRecord() {
                         });
                       }
                     }}
-                    className={`w-full border-b placeholder:text-gray1 pl-[90px] pb-10 h-[100px] outline-none focus:border-main ${!fieldState.error ? "border-gray0" : isButtonClicked ? "border-main" : "border-darkRed focus:border-darkRed"}`}
+                    className={`w-full border-b placeholder:text-gray1 pl-[90px] pb-10 h-[100px] outline-none focus:border-main`}
                     placeholder="관계를 선택해주세요"
                   />
                   <div className="w-full flex space-x-2 justify-end absolute bottom-3">
@@ -192,16 +306,12 @@ export default function AddRecord() {
             className={`w-full min-w-80 placeholder:text-gray1 text-p p-4 h-[64px] text-gray1 bg-white outline-none border-b-[1px] focus:outline-none pl-[90px] focus:border-main ${errors.mobileLink ? "border-darkRed" : "border-gray0 "}`}
             placeholder="URL을 입력하세요."
             {...register("mobileLink", {
-              required: "URL을 입력하세요.",
               pattern: {
                 value: urlPattern,
                 message: "유효한 URL을 입력해주세요.",
               },
             })}
           />
-          {/* {errors.mobileLink && (
-            <p className="errorText left-[90px]">{errors.mobileLink.message}</p>
-          )} */}
         </div>
 
         {/* Date */}
@@ -213,6 +323,7 @@ export default function AddRecord() {
           >
             날짜
           </label>
+          <RequiredFieldMark />
           <Controller
             name="date"
             control={control}
@@ -257,8 +368,7 @@ export default function AddRecord() {
           <Controller
             name="time"
             control={control}
-            defaultValue="11:00"
-            rules={{ required: "필수 입력요소" }}
+            defaultValue=""
             render={({ field, fieldState }) => (
               <input
                 {...field}
@@ -287,10 +397,21 @@ export default function AddRecord() {
         </div>
 
         {/* Attendance */}
-        <div>
-          <label>참석여부</label>
-          <input type="checkbox" {...register("attendance")} />
-        </div>
+        <Controller
+          name="attendance"
+          control={control}
+          defaultValue={false}
+          render={({ field }) => (
+            <div className="relative flex w-full h-[60px] border-b-[1px] border-solid border-gray0 items-center justify-between">
+              <label className="text-gray2 text-p top-[35px]">참석여부</label>
+              <RequiredFieldMark top="17" left="51" />
+              <IOSSwitch
+                checked={field.value}
+                onChange={(e) => field.onChange(e.target.checked)}
+              />
+            </div>
+          )}
+        />
 
         {/* Amount*/}
         <section className="relative">
@@ -301,12 +422,12 @@ export default function AddRecord() {
             >
               축의금
             </label>
+            <RequiredFieldMark top="33" left="39" />
             <Controller
               name="amount"
               control={control}
               defaultValue=""
               rules={{
-                required: "축의금을 입력해주세요.",
                 pattern: {
                   value: /^\d*$/,
                   message: "숫자만 입력 가능합니다.",
@@ -314,45 +435,20 @@ export default function AddRecord() {
               }}
               render={({ field, fieldState }) => (
                 <>
-                  {/* <input
-                    id="amount"
-                    type="text"
-                    {...field}
-                    value={field.value}
-                    onChange={(e) => {
-                      const rawValue = e.target.value.replace(/,/g, "");
-                      if (/^\d*$/.test(rawValue)) {
-                        const formattedValue = formatNumber(Number(rawValue));
-                        field.onChange(formattedValue);
-                        clearErrors("amount");
-                      }
-                    }}
-                    onBlur={(e) => {
-                      const rawValue = e.target.value.replace(/,/g, "");
-                      if (rawValue) {
-                        field.onChange(formatNumber(Number(rawValue)));
-                      }
-                      if (!field.value) {
-                        setError("amount", {
-                          type: "manual",
-                          message: "관계를 입력해주세요.",
-                        });
-                      }
-                    }}
-                    className={`w-full border-b pl-[90px] pb-10 h-[100px] outline-none ${fieldState.error ? "border-darkRed focus:border-darkRed" : "border-gray0 focus:border-main"}`}
-                    placeholder="숫자만 입력해주세요"
-                  /> */}
                   <input
                     id="amount"
                     type="text"
                     {...field}
-                    value={field.value}
+                    value={formatNumber(+field.value)}
                     onChange={(e) => {
-                      field.onChange(e.target.value);
-                      if (e.target.value) {
-                        clearErrors("amount");
-                        if (!(e.target.value in amountArray)) {
-                          setSelectedRelation(null);
+                      const rawValue = e.target.value.replace(/,/g, "");
+                      if (/^\d*$/.test(rawValue)) {
+                        field.onChange(rawValue);
+                        if (rawValue) {
+                          clearErrors("amount");
+                          if (!(rawValue in amountArray)) {
+                            setSelectedRelation(null);
+                          }
                         }
                       }
                     }}
@@ -360,7 +456,7 @@ export default function AddRecord() {
                       if (!field.value) {
                         setError("amount", {
                           type: "manual",
-                          message: "관계를 입력해주세요.",
+                          message: "금액을 입력해주세요.",
                         });
                       }
                     }}
@@ -379,7 +475,7 @@ export default function AddRecord() {
                           selectedRelation === amount ? "selectedButton" : ""
                         }`}
                       >
-                        {amount}
+                        {formatNumber(+amount)}
                       </button>
                     ))}
                   </div>
@@ -392,9 +488,10 @@ export default function AddRecord() {
         {/* Submit Button */}
         <button
           type="submit"
-          className="submitButton bg-main text-white text-h1 mt-9"
+          className={`submitButton text-[16px] font-semibold mt-9 ${allRequiredFieldsFilled ? "bg-main text-white cursor-pointer" : "bg-gray0 text-gray2"}`}
+          disabled={!allRequiredFieldsFilled}
         >
-          정보 등록
+          기록
         </button>
       </form>
     </section>
