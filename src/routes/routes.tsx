@@ -13,6 +13,7 @@ import RecordDetail from "../pages/RecordDetail";
 import Tutorial from "../pages/Tutorial";
 import Profile from "../pages/Profile";
 import EditRecord from "../pages/EditRecord";
+import ChangePassword from "../pages/ChangePassword";
 
 const router = createBrowserRouter([
   // {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
   {
     path: "/event/:eventId/edit",
     element: <EditRecord />,
+  },
+  {
+    path: "/profile/change-password",
+    element: <ChangePassword />,
   },
   // {
   //   element: <ProtectedRoutes />,

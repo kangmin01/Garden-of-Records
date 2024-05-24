@@ -63,17 +63,17 @@ const inputFields = [
     validation: {
       required: "비밀번호를 입력해주세요.",
       minLength: {
-        value: 4,
-        message: "비밀번호는 최소 4자 이상이어야 합니다.",
+        value: 6,
+        message: "비밀번호는 최소 6자 이상이어야 합니다.",
       },
       maxLength: {
         value: 10,
         message: "비밀번호는 최대 10자 이내여야 합니다.",
       },
-      // pattern: {
-      //   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,10}$/,
-      //   message: "비밀번호는 영어, 숫자를 포함한 10자 이내여야 합니다.",
-      // },
+      pattern: {
+        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,10}$/,
+        message: "비밀번호는 영어, 숫자를 포함한 10자 이내여야 합니다.",
+      },
     },
   },
   {
