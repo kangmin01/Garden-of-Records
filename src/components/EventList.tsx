@@ -6,11 +6,15 @@ type Props = {
 };
 
 export default function EventList({ records }: Props) {
+  if (!Array.isArray(records)) {
+    records = [];
+  }
+
   return (
     <div className="w-full px-5">
       <div className="divide-y-[1px]">
-        {records.map((record) => (
-          <EventListCard record={record} key={record.event_id} />
+        {records.map((record, index) => (
+          <EventListCard record={record} key={index} />
         ))}
       </div>
     </div>

@@ -40,7 +40,7 @@ export default function Home() {
           },
         });
 
-        console.log("검색 결과", response.data);
+        // console.log("검색 결과", response.data);
         if (response.data) {
           // const futureEvents = response.data.filter(
           //   (event: recordInfoType) => new Date(event.event_date) > new Date()
@@ -57,7 +57,7 @@ export default function Home() {
 
     fetchData();
   }, [token]);
-  console.log(upcomingEvents);
+  // console.log(upcomingEvents);
 
   return (
     <>
