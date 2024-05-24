@@ -201,17 +201,17 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="pt-[486px] w-full px-5">
-          <section className="divide-y-[1px] px-[16px]">
-            {upcomingEvents.length !== 0 ? (
+        <div className="pt-[486px] px-[16px]">
+          {upcomingEvents.length !== 0 ? (
+            <div className="h-[172px] overflow-y-auto">
               <EventList records={upcomingEvents} />
-            ) : (
-              <div className="flex flex-col items-center justify-center">
-                <span>소중한 분과 주고 받은 마음을 기록해주세요.</span>
-                <span>다가오는 결혼식 일정을 알려드릴게요.</span>
-              </div>
-            )}
-          </section>
+            </div>
+          ) : (
+            <div className="pt-[44px] flex flex-col items-center justify-center text-[14px] font-normal text-gray2">
+              <span>소중한 분과 주고 받은 마음을 기록해주세요.</span>
+              <span>다가오는 결혼식 일정을 알려드릴게요.</span>
+            </div>
+          )}
         </div>
       </div>
       <FloatingButton />

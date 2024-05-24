@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import Header from "../components/Header";
 import { ChangePasswordType } from "../types/user";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function ChangePassword() {
