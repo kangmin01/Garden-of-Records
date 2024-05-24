@@ -36,11 +36,7 @@ export const formatToKoreanDateTime = (isoString: string) => {
     })
     .replace(/-/g, ".");
 
-  const formattedTime = date.toLocaleTimeString("ko-KR", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  });
+  const formattedTime = isoString.slice(11, 16);
 
   return `${formattedDate} (${dayName}) ${formattedTime}`;
 };

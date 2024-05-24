@@ -34,7 +34,6 @@ export default function RecordDetail() {
           },
         });
 
-        console.log(response.data);
         if (response.data) {
           setRecord(response.data);
         } else {

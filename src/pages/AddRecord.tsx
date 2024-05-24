@@ -17,35 +17,12 @@ import RequiredFieldMark from "../components/ui/RequiredFieldMark";
 import axios from "axios";
 import { IOSSwitch } from "../components/ui/IOSWsitch";
 import { useNavigate } from "react-router-dom";
-
-type FormValues = {
-  tab: string;
-  name: string;
-  relation: string;
-  mobileLink: string;
-  date: string;
-  time: string;
-  attendance: boolean;
-  amount: string;
-};
-
-type PayloadType = {
-  is_invited: string;
-  name: string;
-  event_date: string;
-  is_attended: number;
-  expense: number;
-  relation?: string;
-  mobileLink?: string;
-};
-
-type FocusState = {
-  [key in keyof FormValues]?: boolean;
-};
-
-type InvalidState = {
-  [key in keyof FormValues]?: boolean;
-};
+import {
+  FocusState,
+  FormValues,
+  InvalidState,
+  PayloadType,
+} from "../types/record";
 
 const urlPattern = new RegExp(
   "^(https?:\\/\\/)?" +
@@ -74,6 +51,7 @@ export default function AddRecord() {
     mode: "all",
   });
   const [selectedRelation, setSelectedRelation] = useState<string | null>(null);
+  const [selectedAmount, setSelectedAmount] = useState<string | null>(null);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const navigate = useNavigate();
@@ -81,7 +59,11 @@ export default function AddRecord() {
   const handleItemClick = (item: keyof FormValues, value: string) => {
     setValue(item, value);
     clearErrors(`${item}`);
-    setSelectedRelation(value);
+    if (item === "relation") {
+      setSelectedRelation(value);
+    } else if (item === "amount") {
+      setSelectedAmount(value);
+    }
   };
 
   const dateInputRef = useRef<HTMLInputElement>(null);
@@ -133,27 +115,17 @@ export default function AddRecord() {
     }
 
     if (data.mobileLink) {
-      payload.mobileLink = data.mobileLink;
+      payload.link = data.mobileLink;
     }
 
     try {
-      const response = await axios.post(
-        "/invitation/expense",
-        {
-          is_invited: data.tab,
-          name: data.name,
-          event_date: dateTime,
-          is_attended: data.attendance === false ? 1 : 2,
-          expense: Number(data.amount),
-          relation: data.relation,
+      console.log(payload);
+      const response = await axios.post("/invitation/expense", payload, {
+        headers: {
+          "access-token": token,
+          "Content-Type": "application/json",
         },
-        {
-          headers: {
-            "access-token": token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      });
       console.log("기록 등록 결과", response.data);
       navigate("/");
     } catch (error) {
@@ -446,7 +418,7 @@ export default function AddRecord() {
                         if (rawValue) {
                           clearErrors("amount");
                           if (!(rawValue in amountArray)) {
-                            setSelectedRelation(null);
+                            setSelectedAmount(null);
                           }
                         }
                       }
@@ -471,7 +443,7 @@ export default function AddRecord() {
                         onMouseUp={() => setIsButtonClicked(false)}
                         onClick={() => handleItemClick("amount", amount)}
                         className={`selectButton ${
-                          selectedRelation === amount ? "selectedButton" : ""
+                          selectedAmount === amount ? "selectedButton" : ""
                         }`}
                       >
                         {formatNumber(+amount)}

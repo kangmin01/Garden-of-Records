@@ -39,6 +39,13 @@ export default function Home() {
             "Content-Type": "application/json",
           },
         });
+        // const response2 = await axios.get(`/user/scroe`, {
+        //   headers: {
+        //     "access-token": token,
+        //     "Content-Type": "application/json",
+        //   },
+        // });
+        // console.log(response2);
 
         // console.log("검색 결과", response.data);
         if (response.data) {
@@ -93,7 +100,7 @@ export default function Home() {
             <div className="px-[20px] pt-[20px]">
               {/* profile */}
               <Link
-                to="/user/profile"
+                to="/profile"
                 className="flex items-center py-[16px] pl-[20px] w-[264px] h-[80px] rounded-2xl border-solid border-[1px] border-main"
               >
                 <div className="flex justify-center items-center w-[48px] h-[48px] bg-yellow rounded-full border border-solid border-gray0 mr-[16px]">
@@ -195,12 +202,6 @@ export default function Home() {
           </div>
         </div>
         <div className="pt-[486px] w-full px-5">
-          <div className="mb-2.5 pl-[18px] flex items-center text-gray3">
-            <CalenderIcon />
-            <span className="text-[16px] font-medium ml-[8px]">
-              다가오는 일정
-            </span>
-          </div>
           <section className="divide-y-[1px] px-[16px]">
             {upcomingEvents.length !== 0 ? (
               <EventList records={upcomingEvents} />

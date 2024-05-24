@@ -17,37 +17,13 @@ import RequiredFieldMark from "../components/ui/RequiredFieldMark";
 import axios from "axios";
 import { IOSSwitch } from "../components/ui/IOSWsitch";
 import { Params, useNavigate, useParams } from "react-router-dom";
-import { recordInfoType } from "../types/record";
-
-type FormValues = {
-  tab: string;
-  name: string;
-  relation: string;
-  mobileLink: string;
-  date: string;
-  time: string;
-  attendance: boolean;
-  amount: string;
-};
-
-type PayloadType = {
-  event_id: string | undefined;
-  is_invited: string;
-  name: string;
-  event_date: string;
-  is_attended: number;
-  expense: number;
-  relation?: string;
-  mobileLink?: string;
-};
-
-type FocusState = {
-  [key in keyof FormValues]?: boolean;
-};
-
-type InvalidState = {
-  [key in keyof FormValues]?: boolean;
-};
+import {
+  FocusState,
+  FormValues,
+  InvalidState,
+  PayloadType,
+  recordInfoType,
+} from "../types/record";
 
 const urlPattern = new RegExp(
   "^(https?:\\/\\/)?" +
@@ -126,6 +102,7 @@ export default function EditRecord() {
     } else {
       dateTime = formatDate(data.date) + formatTime(data.time);
     }
+    console.log("data", data);
 
     const payload: PayloadType = {
       event_id: eventId,
@@ -141,7 +118,7 @@ export default function EditRecord() {
     }
 
     if (data.mobileLink) {
-      payload.mobileLink = data.mobileLink;
+      payload.link = data.mobileLink;
     }
     console.log(payload);
 
@@ -152,19 +129,20 @@ export default function EditRecord() {
           "Content-Type": "application/json",
         },
       });
-      console.log("기록 등록 결과", response.data);
+      console.log("기록 수정 결과", response.data);
       navigate("/");
     } catch (error) {
-      console.log("등록 실패");
+      console.log("기록 수정 실패");
       console.error("Error fetching data:", error);
     }
   };
 
   const nameValue = watch("name");
   const dateValue = watch("date");
-  const relationValue = watch("relation");
   const amountValue = watch("amount");
   const allRequiredFieldsFilled = nameValue && dateValue && amountValue;
+
+  const [record, setRecord] = useState<recordInfoType | null>(null);
 
   const [tab, setTab] = useState("invited");
   const handleTab = () => {
@@ -174,8 +152,6 @@ export default function EditRecord() {
   };
 
   const { eventId } = useParams<Params>();
-
-  const [record, setRecord] = useState<recordInfoType | null>(null);
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -190,15 +166,18 @@ export default function EditRecord() {
           },
         });
 
-        console.log(response.data);
         if (response.data) {
           setRecord(response.data);
           //
+          setTab(response.data.is_invited === 1 ? "invited" : "inviting");
+          setValue(
+            "tab",
+            response.data.is_invited === 1 ? "invited" : "inviting"
+          );
           setValue("name", response.data.name);
           setValue("relation", response.data.relation);
           setValue("mobileLink", response.data.mobileLink);
           setValue("date", response.data.event_date.split("T")[0]);
-          console.log(response.data.event_date.split("T")[1].substring(0, 5));
           if (
             response.data.event_date.split("T")[1].substring(0, 5) !== "00:00"
           ) {
@@ -208,13 +187,15 @@ export default function EditRecord() {
             );
           }
           setValue("attendance", response.data.is_attended === 2);
-          setValue("amount", response.data.amount.toString());
+          setValue("amount", response.data.amount);
+          //   setSelectedRelation(response.data.relation);
+          //   setSelectedAmount(response.data.amount.toString());
 
-          if (amountArray.includes(amountValue)) {
-            setSelectedAmount(amountValue);
+          if (amountArray.includes(response.data.amount.toString())) {
+            setSelectedAmount(response.data.amount.toString());
           }
-          if (relationArray.includes(relationValue)) {
-            setSelectedRelation(relationValue);
+          if (relationArray.includes(response.data.relation)) {
+            setSelectedRelation(response.data.relation);
           }
         } else {
           setRecord(null);
@@ -226,17 +207,17 @@ export default function EditRecord() {
     };
 
     fetchAllData();
-  }, [token, eventId, setValue, amountValue, relationValue]);
+  }, [token, eventId, setValue]);
 
   return (
     <section className="formPage" id="addRecord">
-      <Header title="기록 등록" />
+      <Header title="기록 수정" />
       <form onSubmit={handleSubmit(onSubmit)} className="formPageForm mt-6">
         {/* tab */}
         <Controller
           name="tab"
           control={control}
-          defaultValue="invited"
+          defaultValue=""
           render={({ field }) => (
             <div className="w-full relative">
               <div
@@ -544,7 +525,7 @@ export default function EditRecord() {
           className={`submitButton text-[16px] font-semibold mt-9 ${allRequiredFieldsFilled ? "bg-main text-white cursor-pointer" : "bg-gray0 text-gray2"}`}
           disabled={!allRequiredFieldsFilled}
         >
-          기록
+          저장
         </button>
       </form>
     </section>
