@@ -5,7 +5,6 @@ import Input from "../components/ui/Input";
 import axios from "axios";
 import { useAuthContext } from "../context/AuthContext";
 import logo_login from "../assets/image/logo_login.png";
-import { ToastContainer, toast } from "react-toastify";
 
 interface SignInFormType {
   email: string;
