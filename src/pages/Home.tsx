@@ -3,7 +3,7 @@ import EventListCard from "../components/EventListCard";
 import FloatingButton from "../components/ui/FloatingButton";
 import RecordCard from "../components/RecordCard";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CloseIcon from "../components/ui/icons/CloseIcon";
 import SearchBar from "../components/SearchBar";
 import RightChevron from "../components/ui/icons/RightChevron";
@@ -18,9 +18,46 @@ import "react-circular-progressbar/dist/styles.css";
 import home_character from "../assets/image/home_character.png";
 import axios from "axios";
 import { useAuthContext } from "../context/AuthContext";
+import EventList from "../components/EventList";
+import { recordInfoType } from "../types/record";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [upcomingEvents, setUpcomingEvents] = useState<recordInfoType[]>([]);
+  const token = localStorage.getItem("access_token");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/invitation/expenses`, {
+          params: {
+            is_invited: "all",
+            offset: 202405250000,
+          },
+          headers: {
+            "access-token": token,
+            "Content-Type": "application/json",
+          },
+        });
+
+        console.log("검색 결과", response.data);
+        if (response.data) {
+          // const futureEvents = response.data.filter(
+          //   (event: recordInfoType) => new Date(event.event_date) > new Date()
+          // );
+          setUpcomingEvents(response.data);
+        } else {
+          setUpcomingEvents([]);
+        }
+      } catch (error) {
+        console.error("검색 실패", error);
+        setUpcomingEvents([]);
+      }
+    };
+
+    fetchData();
+  }, [token]);
+  console.log(upcomingEvents);
 
   return (
     <>
@@ -84,7 +121,7 @@ export default function Home() {
               </Link>
 
               {/* Search Bar */}
-              <SearchBar />
+              {/* <SearchBar /> */}
 
               {/* navigate */}
               <div className="text-[14px] font-normal">
@@ -165,14 +202,14 @@ export default function Home() {
             </span>
           </div>
           <section className="divide-y-[1px] px-[16px]">
-            {/* <section className="divide-y-[1px] h-[280px] overflow-y-auto"> */}
-            <EventListCard />
-            <EventListCard />
-            <EventListCard />
-            <EventListCard />
-            <EventListCard />
-            <EventListCard />
-            <EventListCard />
+            {upcomingEvents.length !== 0 ? (
+              <EventList records={upcomingEvents} />
+            ) : (
+              <div className="flex flex-col items-center justify-center">
+                <span>소중한 분과 주고 받은 마음을 기록해주세요.</span>
+                <span>다가오는 결혼식 일정을 알려드릴게요.</span>
+              </div>
+            )}
           </section>
         </div>
       </div>

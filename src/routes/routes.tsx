@@ -11,6 +11,8 @@ import ProtectedRoutes from "../pages/ProtectedRoutes";
 import PublicOnlyRoutes from "../pages/PublicOnlyRoutes";
 import RecordDetail from "../pages/RecordDetail";
 import Tutorial from "../pages/Tutorial";
+import Profile from "../pages/Profile";
+import EditRecord from "../pages/EditRecord";
 
 const router = createBrowserRouter([
   // {
@@ -42,7 +44,7 @@ const router = createBrowserRouter([
     children: [{ index: true, element: <Home /> }],
   },
   {
-    path: "/record/:id",
+    path: "/record/:eventId",
     element: <RecordDetail />,
   },
   {
@@ -61,6 +63,14 @@ const router = createBrowserRouter([
   {
     path: "/tutorial",
     element: <Tutorial />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+  },
+  {
+    path: "/event/:eventId/edit",
+    element: <EditRecord />,
   },
   // {
   //   element: <ProtectedRoutes />,

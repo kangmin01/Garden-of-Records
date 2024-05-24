@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   useForm,
   SubmitHandler,
@@ -16,7 +16,8 @@ import {
 import RequiredFieldMark from "../components/ui/RequiredFieldMark";
 import axios from "axios";
 import { IOSSwitch } from "../components/ui/IOSWsitch";
-import { useNavigate } from "react-router-dom";
+import { Params, useNavigate, useParams } from "react-router-dom";
+import { recordInfoType } from "../types/record";
 
 type FormValues = {
   tab: string;
@@ -30,6 +31,7 @@ type FormValues = {
 };
 
 type PayloadType = {
+  event_id: string | undefined;
   is_invited: string;
   name: string;
   event_date: string;
@@ -60,7 +62,7 @@ const urlPattern = new RegExp(
 const relationArray = ["가족", "친구", "직장"];
 const amountArray = ["50000", "100000", "150000"];
 
-export default function AddRecord() {
+export default function EditRecord() {
   const {
     register,
     handleSubmit,
@@ -74,6 +76,7 @@ export default function AddRecord() {
     mode: "all",
   });
   const [selectedRelation, setSelectedRelation] = useState<string | null>(null);
+  const [selectedAmount, setSelectedAmount] = useState<string | null>(null);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const navigate = useNavigate();
@@ -81,7 +84,11 @@ export default function AddRecord() {
   const handleItemClick = (item: keyof FormValues, value: string) => {
     setValue(item, value);
     clearErrors(`${item}`);
-    setSelectedRelation(value);
+    if (item === "relation") {
+      setSelectedRelation(value);
+    } else if (item === "amount") {
+      setSelectedAmount(value);
+    }
   };
 
   const dateInputRef = useRef<HTMLInputElement>(null);
@@ -121,6 +128,7 @@ export default function AddRecord() {
     }
 
     const payload: PayloadType = {
+      event_id: eventId,
       is_invited: data.tab,
       name: data.name,
       event_date: dateTime,
@@ -135,25 +143,15 @@ export default function AddRecord() {
     if (data.mobileLink) {
       payload.mobileLink = data.mobileLink;
     }
+    console.log(payload);
 
     try {
-      const response = await axios.post(
-        "/invitation/expense",
-        {
-          is_invited: data.tab,
-          name: data.name,
-          event_date: dateTime,
-          is_attended: data.attendance === false ? 1 : 2,
-          expense: Number(data.amount),
-          relation: data.relation,
+      const response = await axios.put("/invitation/expense", payload, {
+        headers: {
+          "access-token": token,
+          "Content-Type": "application/json",
         },
-        {
-          headers: {
-            "access-token": token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      });
       console.log("기록 등록 결과", response.data);
       navigate("/");
     } catch (error) {
@@ -164,6 +162,7 @@ export default function AddRecord() {
 
   const nameValue = watch("name");
   const dateValue = watch("date");
+  const relationValue = watch("relation");
   const amountValue = watch("amount");
   const allRequiredFieldsFilled = nameValue && dateValue && amountValue;
 
@@ -173,6 +172,61 @@ export default function AddRecord() {
     setTab(newTab);
     setValue("tab", newTab);
   };
+
+  const { eventId } = useParams<Params>();
+
+  const [record, setRecord] = useState<recordInfoType | null>(null);
+
+  useEffect(() => {
+    const fetchAllData = async () => {
+      try {
+        const response = await axios.get(`/invitation/expense`, {
+          params: {
+            event_id: eventId,
+          },
+          headers: {
+            "access-token": token,
+            "Content-Type": "application/json",
+          },
+        });
+
+        console.log(response.data);
+        if (response.data) {
+          setRecord(response.data);
+          //
+          setValue("name", response.data.name);
+          setValue("relation", response.data.relation);
+          setValue("mobileLink", response.data.mobileLink);
+          setValue("date", response.data.event_date.split("T")[0]);
+          console.log(response.data.event_date.split("T")[1].substring(0, 5));
+          if (
+            response.data.event_date.split("T")[1].substring(0, 5) !== "00:00"
+          ) {
+            setValue(
+              "time",
+              response.data.event_date.split("T")[1].substring(0, 5)
+            );
+          }
+          setValue("attendance", response.data.is_attended === 2);
+          setValue("amount", response.data.amount.toString());
+
+          if (amountArray.includes(amountValue)) {
+            setSelectedAmount(amountValue);
+          }
+          if (relationArray.includes(relationValue)) {
+            setSelectedRelation(relationValue);
+          }
+        } else {
+          setRecord(null);
+        }
+      } catch (error) {
+        console.error("전체 데이터 가져오기 실패", error);
+        setRecord(null);
+      }
+    };
+
+    fetchAllData();
+  }, [token, eventId, setValue, amountValue, relationValue]);
 
   return (
     <section className="formPage" id="addRecord">
@@ -446,7 +500,7 @@ export default function AddRecord() {
                         if (rawValue) {
                           clearErrors("amount");
                           if (!(rawValue in amountArray)) {
-                            setSelectedRelation(null);
+                            setSelectedAmount(null);
                           }
                         }
                       }
@@ -471,7 +525,7 @@ export default function AddRecord() {
                         onMouseUp={() => setIsButtonClicked(false)}
                         onClick={() => handleItemClick("amount", amount)}
                         className={`selectButton ${
-                          selectedRelation === amount ? "selectedButton" : ""
+                          selectedAmount === amount ? "selectedButton" : ""
                         }`}
                       >
                         {formatNumber(+amount)}

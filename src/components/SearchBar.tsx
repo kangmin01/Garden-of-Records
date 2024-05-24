@@ -1,27 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchIcon from "./ui/icons/SearchIcon";
 import axios from "axios";
-import { useAuthContext } from "../context/AuthContext";
+import EventList from "./EventList";
+import not_found from "../assets/image/not_found.png";
+import { Link } from "react-router-dom";
 
-export default function SearchBar() {
+type Props = {
+  type?: string;
+};
+
+export default function SearchBar({ type }: Props) {
   const [keyword, setKeyword] = useState("");
-
-  const { isAuthenticated } = useAuthContext();
-  // console.log(isAuthenticated);
+  const [searchResults, setSearchResults] = useState([]);
   const token = localStorage.getItem("access_token");
-  // console.log(token);
+
+  useEffect(() => {
+    const fetchAllData = async () => {
+      try {
+        const response = await axios.get(`/invitation/expense/search`, {
+          params: {
+            is_invited: !type ? "all" : type,
+          },
+          headers: {
+            "access-token": token,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.data) {
+          setSearchResults(response.data);
+        } else {
+          setSearchResults([]);
+        }
+      } catch (error) {
+        console.error("전체 데이터 가져오기 실패", error);
+        setSearchResults([]);
+      }
+    };
+
+    fetchAllData();
+  }, [token, keyword]);
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
     if (!keyword) return;
-    console.log(keyword);
 
     try {
       const response = await axios.get(`/invitation/expense/search`, {
         params: {
           name: keyword,
-          is_invited: "all",
+          is_invited: !type ? "all" : type,
         },
         headers: {
           "access-token": token,
@@ -30,30 +58,57 @@ export default function SearchBar() {
       });
 
       console.log("검색 결과", response.data);
+      if (response.data) {
+        setSearchResults(response.data);
+      } else {
+        setSearchResults([]);
+      }
     } catch (error) {
-      console.log("검색 실패");
-      console.error("Error fetching data:", error);
+      console.error("검색 실패", error);
+      setSearchResults([]);
     }
   };
 
   return (
-    <div className="w-full mt-6 mb-5 text-[14px] font-normal flex justify-center relative">
-      {/* <div className="w-full px-5 mt-6 mb-5 text-[14px] font-normal"> */}
-      {/* <div className="flex items-center w-full border-solid border-[1px] border-gray0 rounded-lg bg-gray-50"> */}
-      <input
-        type="text"
-        placeholder="이름을 검색해주세요."
-        value={keyword}
-        onChange={(e) => setKeyword(e.target.value)}
-        className="bg-gray6 w-[320px] h-[48px] border border-gray0 outline-none rounded-md p-2 text-[14px] font-normal placeholder-gray5 focus:border-main"
-      />
-      <button
-        className="absolute top-[12px] right-[36px] text-h1 text-gray5"
-        onClick={handleClick}
-      >
-        <SearchIcon />
-      </button>
-      {/* </div> */}
-    </div>
+    <section>
+      <div className="w-full mt-6 mb-5 text-[14px] font-normal flex justify-center relative">
+        <input
+          type="text"
+          placeholder="이름을 검색해주세요."
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          className="bg-gray6 w-[320px] h-[48px] border border-gray0 outline-none rounded-md p-2 text-[14px] font-normal placeholder-gray5"
+        />
+        <button
+          className="absolute top-[12px] right-[36px] text-h1 text-gray5"
+          onClick={handleClick}
+        >
+          <SearchIcon />
+        </button>
+      </div>
+      {searchResults.length !== 0 ? (
+        <EventList records={searchResults} />
+      ) : (
+        <div className="flex flex-col items-center justify-center">
+          <img
+            src={not_found}
+            alt="검색 결과 없음"
+            className="w-[96px] h-[120px] mb-[48px] mt-[44px]"
+          />
+          <div className="text-[14px] font-normal text-gray2 flex flex-col items-center">
+            <span>
+              검색결과가 없습니다.<br></br>
+            </span>
+            <span>다시 검색해주세요.</span>
+          </div>
+          <Link
+            to="/"
+            className="mt-[28px] text-[14px] font-normal text-gray4 underline underline-offset-1"
+          >
+            메인으로 가기
+          </Link>
+        </div>
+      )}
+    </section>
   );
 }

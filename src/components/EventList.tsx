@@ -1,17 +1,17 @@
+import { recordInfoType } from "../types/record";
 import EventListCard from "./EventListCard";
 
-export default function EventList() {
+type Props = {
+  records: recordInfoType[];
+};
+
+export default function EventList({ records }: Props) {
   return (
     <div className="w-full px-5">
       <div className="divide-y-[1px]">
-        {/* <div className="divide-y-[1px] h-[280px] overflow-y-auto"> */}
-        <EventListCard />
-        <EventListCard />
-        <EventListCard />
-        <EventListCard />
-        <EventListCard />
-        <EventListCard />
-        <EventListCard />
+        {records.map((record) => (
+          <EventListCard record={record} key={record.event_id} />
+        ))}
       </div>
     </div>
   );

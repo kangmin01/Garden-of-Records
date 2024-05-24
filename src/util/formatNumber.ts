@@ -1,3 +1,5 @@
+import { is } from "@react-spring/shared";
+
 export const formatNumber = (number: number) => {
   return number.toLocaleString();
 };
@@ -17,4 +19,45 @@ export const formatDate = (date: string) => {
 
 export const formatTime = (time: string) => {
   return time.replace(/:/g, "");
+};
+
+const days = ["일", "월", "화", "수", "목", "금", "토"];
+
+export const formatToKoreanDateTime = (isoString: string) => {
+  const date = new Date(isoString);
+
+  const dayName = days[date.getDay()];
+
+  const formattedDate = date
+    .toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+    .replace(/-/g, ".");
+
+  const formattedTime = date.toLocaleTimeString("ko-KR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+
+  return `${formattedDate} (${dayName}) ${formattedTime}`;
+};
+
+export const formatToKoreanDate = (isoString: string) => {
+  const date = new Date(isoString);
+
+  const days = ["일", "월", "화", "수", "목", "금", "토"];
+  const dayName = days[date.getDay()];
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day} (${dayName})`;
+};
+
+export const formatToKoreanTime = (isoString: string) => {
+  return isoString.slice(11, 16);
 };

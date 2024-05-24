@@ -3,18 +3,71 @@ import Header from "../components/Header";
 import NotFound from "./NotFound";
 import SearchBar from "../components/SearchBar";
 import EventList from "../components/EventList";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { formatNumber } from "../util/formatNumber";
 
 type Params = {
   type: "send" | "receive";
 };
 
 export default function RecordList() {
+  const [records, setRecords] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
   const { type } = useParams<Params>();
   const titleType = { send: "보낸 기록", receive: "받은 기록" };
+  const apiType = { send: "invited", receive: "inviting" };
+
+  const token = localStorage.getItem("access_token");
 
   if (!type) {
     return <NotFound />;
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [recordsResponse, totalResponse] = await Promise.all([
+          axios.get(`/invitation/expenses`, {
+            params: {
+              is_invited: apiType[type],
+            },
+            headers: {
+              "access-token": token,
+              "Content-Type": "application/json",
+            },
+          }),
+          axios.get(`/invitation/expense/total`, {
+            params: {
+              is_invited: apiType[type],
+            },
+            headers: {
+              "access-token": token,
+              "Content-Type": "application/json",
+            },
+          }),
+        ]);
+
+        if (recordsResponse.data) {
+          setRecords(recordsResponse.data);
+        } else {
+          setRecords([]);
+        }
+
+        if (totalResponse.data) {
+          setTotalAmount(totalResponse.data.total_expense);
+        } else {
+          setTotalAmount(0);
+        }
+      } catch (error) {
+        console.error("실패", error);
+        setRecords([]);
+        setTotalAmount(0);
+      }
+    };
+
+    fetchData();
+  }, [token]);
 
   return (
     <section className="bg-white max-w-[360px] mx-auto h-dvh relative">
@@ -25,20 +78,19 @@ export default function RecordList() {
         >
           <div className="flex justify-between h-[20px] text-[16px] font-medium mb-[16px]">
             <span className="text-gray2">총 누적 금액</span>
-            <span className="text-gray4">총 10명</span>
+            <span className="text-gray4">총 {records.length}명</span>
           </div>
           <div className="flex justify-end items-center h-[24px]">
             <span
               className={`${type === "send" ? "text-orange" : "text-main"} text-[24px] font-bold mr-1`}
             >
-              1,000,000
+              {formatNumber(totalAmount)}
             </span>
             <span className="text-gray4 text-[16px] font-medium">원</span>
           </div>
         </div>
       </div>
-      <SearchBar />
-      <EventList />
+      <SearchBar type={apiType[type]} />
     </section>
   );
 }
