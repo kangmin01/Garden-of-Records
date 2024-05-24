@@ -246,6 +246,9 @@ export default function Home() {
               <div className="">© T기타카</div>
             </div>
           </div>
+          <div
+            className={`absolute top-0 right-[-310px] h-dvh w-[304px] bg-white flex flex-col z-50`}
+          ></div>
         </nav>
         <div className="bg-green0 absolute h-[388px] w-[360px] rounded-b-[20px]"></div>
         <div className="w-[360px] absolute flex flex-col items-center">
