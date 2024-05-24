@@ -59,6 +59,7 @@ export default function RecordList() {
         } else {
           setTotalAmount(0);
         }
+        console.log(recordsResponse.data, totalResponse.data);
       } catch (error) {
         console.error("실패", error);
         setRecords([]);

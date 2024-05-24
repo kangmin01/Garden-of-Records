@@ -19,52 +19,94 @@ import home_character from "../assets/image/home_character.png";
 import axios from "axios";
 import { useAuthContext } from "../context/AuthContext";
 import EventList from "../components/EventList";
-import { recordInfoType } from "../types/record";
+import { recordInfoType, totalAmountType } from "../types/record";
+import { formatDate, todayFormat } from "../util/formatNumber";
+import { User } from "../types/user";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [upcomingEvents, setUpcomingEvents] = useState<recordInfoType[]>([]);
+  const [totalSendAmounts, setTotalSendAmounts] =
+    useState<totalAmountType | null>(null);
+  const [totalReceiveAmounts, setTotalReceiveAmounts] =
+    useState<totalAmountType | null>(null);
+  const [info, setInfo] = useState<User | null>(null);
   const token = localStorage.getItem("access_token");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/invitation/expenses`, {
-          params: {
-            is_invited: "all",
-            offset: 202405250000,
-          },
-          headers: {
-            "access-token": token,
-            "Content-Type": "application/json",
-          },
-        });
-        // const response2 = await axios.get(`/user/scroe`, {
-        //   headers: {
-        //     "access-token": token,
-        //     "Content-Type": "application/json",
-        //   },
-        // });
-        // console.log(response2);
+        const [res1, res2, res3, res4] = await Promise.all([
+          axios.get(`/invitation/expenses`, {
+            params: {
+              is_invited: "all",
+              offset: formatDate(todayFormat()) + "0000",
+            },
+            headers: {
+              "access-token": token,
+              "Content-Type": "application/json",
+            },
+          }),
+          axios.get(`/invitation/expense/total`, {
+            params: {
+              is_invited: "invited",
+            },
+            headers: {
+              "access-token": token,
+              "Content-Type": "application/json",
+            },
+          }),
+          axios.get(`/invitation/expense/total`, {
+            params: {
+              is_invited: "inviting",
+            },
+            headers: {
+              "access-token": token,
+              "Content-Type": "application/json",
+            },
+          }),
+          axios.get(`/user/profile`, {
+            headers: {
+              "access-token": token,
+              "Content-Type": "application/json",
+            },
+          }),
+        ]);
 
-        // console.log("검색 결과", response.data);
-        if (response.data) {
-          // const futureEvents = response.data.filter(
-          //   (event: recordInfoType) => new Date(event.event_date) > new Date()
-          // );
-          setUpcomingEvents(response.data);
+        if (res1.data) {
+          setUpcomingEvents(res1.data);
         } else {
           setUpcomingEvents([]);
+        }
+
+        if (res2.data) {
+          setTotalSendAmounts(res2.data);
+        } else {
+          setTotalSendAmounts(null);
+        }
+
+        if (res3.data) {
+          setTotalReceiveAmounts(res3.data);
+        } else {
+          setTotalReceiveAmounts(null);
+        }
+
+        if (res4.data) {
+          setInfo(res4.data);
+        } else {
+          setInfo(null);
         }
       } catch (error) {
         console.error("검색 실패", error);
         setUpcomingEvents([]);
+        setTotalReceiveAmounts(null);
+        setTotalSendAmounts(null);
       }
     };
 
     fetchData();
   }, [token]);
-  // console.log(upcomingEvents);
+  console.log(upcomingEvents);
 
   return (
     <>
@@ -113,15 +155,14 @@ export default function Home() {
                 <div className="flex flex-col justify-center h-[38px] max-h-[38px] mr-[33px]">
                   <div className="flex items-center">
                     <span className="text-gray4 text-[16px] font-medium">
-                      최진영
+                      {info?.user_name}
                     </span>
                     <span className="text-[14px] font-normal">님</span>
                   </div>
                   <span className="text-gray1 text-[12px] font-normal">
-                    minida@gmail.com
+                    {info?.email}
                   </span>
                 </div>
-
                 <div>
                   <RightChevron />
                 </div>
@@ -190,14 +231,18 @@ export default function Home() {
                 className="w-[118px] h-[160px] absolute"
               />
             </div>
-            <span className="text-h1 mt-[22px]">최진영</span>
+            <span className="text-h1 mt-[22px]">{info?.user_name}</span>
           </div>
           <div className="w-[320px] h-[120px] flex justify-between">
-            <RecordCard type="send" totalCount={10} totalAmount={100000000} />
+            <RecordCard
+              type="send"
+              totalCount={totalSendAmounts?.expense_count || 0}
+              totalAmount={totalSendAmounts?.total_expense || 0}
+            />
             <RecordCard
               type="receive"
-              totalCount={10}
-              totalAmount={100000000}
+              totalCount={totalReceiveAmounts?.expense_count || 0}
+              totalAmount={totalReceiveAmounts?.total_expense || 0}
             />
           </div>
         </div>

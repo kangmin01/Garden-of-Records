@@ -38,3 +38,9 @@ export type FocusState = {
 export type InvalidState = {
   [key in keyof FormValues]?: boolean;
 };
+
+export interface totalAmountType {
+  expense_count: number;
+  is_invited: string;
+  total_expense: number;
+}
