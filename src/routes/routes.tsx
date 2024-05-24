@@ -16,85 +16,59 @@ import EditRecord from "../pages/EditRecord";
 import ChangePassword from "../pages/ChangePassword";
 
 const router = createBrowserRouter([
-  // {
-  //   element: <PublicOnlyRoutes />,
-  //   errorElement: <NotFound />,
-  //   children: [
-  //     {
-  //       path: "/signin",
-  //       element: <SignIn />,
-  //     },
-  //     {
-  //       path: "/signup",
-  //       element: <SignUp />,
-  //     },
-  //   ],
-  // },
   {
-    path: "/signin",
-    element: <SignIn />,
-  },
-  {
-    path: "/signup",
-    element: <SignUp />,
-  },
-  {
-    path: "/",
-    element: <App />,
+    element: <PublicOnlyRoutes />,
     errorElement: <NotFound />,
-    children: [{ index: true, element: <Home /> }],
+    children: [
+      {
+        path: "/",
+        element: <App />,
+        children: [{ index: true, element: <Tutorial /> }],
+      },
+      {
+        path: "/signin",
+        element: <SignIn />,
+      },
+      {
+        path: "/signup",
+        element: <SignUp />,
+      },
+    ],
   },
   {
-    path: "/record/:eventId",
-    element: <RecordDetail />,
+    element: <ProtectedRoutes />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        path: "/record/add ",
+        element: <AddRecord />,
+      },
+      {
+        path: "/search",
+        element: <Search />,
+      },
+      {
+        path: "/list/:type",
+        element: <RecordList />,
+      },
+      {
+        path: "/record/:eventId",
+        element: <RecordDetail />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/event/:eventId/edit",
+        element: <EditRecord />,
+      },
+      {
+        path: "/profile/change-password",
+        element: <ChangePassword />,
+      },
+    ],
   },
-  {
-    path: "/record/add",
-    element: <AddRecord />,
-  },
-
-  {
-    path: "/search",
-    element: <Search />,
-  },
-  {
-    path: "/list/:type",
-    element: <RecordList />,
-  },
-  {
-    path: "/tutorial",
-    element: <Tutorial />,
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
-  },
-  {
-    path: "/event/:eventId/edit",
-    element: <EditRecord />,
-  },
-  {
-    path: "/profile/change-password",
-    element: <ChangePassword />,
-  },
-  // {
-  //   element: <ProtectedRoutes />,
-  //   errorElement: <NotFound />,
-  //   children: [
-  //     {
-  //       path: "/record/add ",
-  //       element: <AddRecord />,
-  //     },
-  //     {
-  //       path: "/search",
-  //       element: <Search />,
-  //     },
-  //     {
-  //       path: "/list/:type",
-  //       element: <RecordList />,
-  //     },
-  //   ],
-  // },
 ]);
 
 export default router;
