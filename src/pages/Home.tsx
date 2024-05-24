@@ -18,7 +18,6 @@ import EventList from "../components/EventList";
 import { recordInfoType, totalAmountType } from "../types/record";
 import { formatDate, todayFormat } from "../util/formatNumber";
 import { User } from "../types/user";
-import "react-toastify/dist/ReactToastify.css";
 import SearchIcon from "../components/ui/icons/SearchIcon";
 
 export default function Home() {
