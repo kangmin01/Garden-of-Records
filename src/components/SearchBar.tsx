@@ -7,9 +7,15 @@ import { Link } from "react-router-dom";
 
 type Props = {
   type?: string;
+  word?: string;
 };
 
-export default function SearchBar({ type }: Props) {
+interface FetchPayload {
+  is_invited: string;
+  name?: string;
+}
+
+export default function SearchBar({ type, word }: Props) {
   const [keyword, setKeyword] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const token = localStorage.getItem("access_token");
@@ -17,10 +23,16 @@ export default function SearchBar({ type }: Props) {
   useEffect(() => {
     const fetchAllData = async () => {
       try {
+        const payload: FetchPayload = {
+          is_invited: !type ? "all" : type,
+        };
+        if (word) {
+          payload.name = word;
+          setKeyword(word);
+        }
+
         const response = await axios.get(`/invitation/expense/search`, {
-          params: {
-            is_invited: !type ? "all" : type,
-          },
+          params: payload,
           headers: {
             "access-token": token,
             "Content-Type": "application/json",

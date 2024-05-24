@@ -18,8 +18,8 @@ import EventList from "../components/EventList";
 import { recordInfoType, totalAmountType } from "../types/record";
 import { formatDate, todayFormat } from "../util/formatNumber";
 import { User } from "../types/user";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SearchIcon from "../components/ui/icons/SearchIcon";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,12 +29,16 @@ export default function Home() {
   const [totalReceiveAmounts, setTotalReceiveAmounts] =
     useState<totalAmountType | null>(null);
   const [info, setInfo] = useState<User | null>(null);
+  const [score, setScore] = useState(0);
+  const [keyword, setKeyword] = useState("");
   const token = localStorage.getItem("access_token");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [res1, res2, res3, res4] = await Promise.all([
+        const [res1, res2, res3, res4, res5] = await Promise.all([
           axios.get(`/invitation/expenses`, {
             params: {
               is_invited: "all",
@@ -69,6 +73,12 @@ export default function Home() {
               "Content-Type": "application/json",
             },
           }),
+          axios.get(`/user/score`, {
+            headers: {
+              "access-token": token,
+              "Content-Type": "application/json",
+            },
+          }),
         ]);
 
         if (res1.data) {
@@ -94,27 +104,35 @@ export default function Home() {
         } else {
           setInfo(null);
         }
+
+        if (res5.data) {
+          setScore(res5.data);
+        } else {
+          setScore(0);
+        }
       } catch (error) {
         console.error("검색 실패", error);
         setUpcomingEvents([]);
         setTotalReceiveAmounts(null);
         setTotalSendAmounts(null);
+        setScore(0);
       }
     };
 
     fetchData();
   }, [token]);
 
-  const navigate = useNavigate();
-  const handleha = () => {
-    navigate("/signin", { state: { message: "회원가입이 완료 되었습니다." } });
+  const handleSearch = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    navigate("/search", {
+      state: { keyword: keyword },
+    });
   };
 
   return (
     <>
-      <button onClick={handleha}>sdfsfdf</button>
-      <div className="bg-white border-x-[1px] border-solid border-gray0 max-w-[360px] mx-auto h-dvh relative">
-        <nav className="bg-green0 max-w-[360px] mx-auto flex justify-between px-[16px] py-3 items-center text-h1">
+      <div className="bg-white max-w-[360px] min-w-[360px] mx-auto h-dvh relative">
+        <nav className="bg-green0 max-w-[360px] min-w-[360px] mx-auto flex justify-between px-[16px] py-3 items-center text-h1">
           <div className="w-[86px] h-[19px]">
             <img src={header_title} alt="헤더 제목" />
           </div>
@@ -135,7 +153,7 @@ export default function Home() {
 
           {/* 메뉴바 */}
           <div
-            className={`absolute top-0 right-0 h-full w-[304px] bg-white flex flex-col transition-transform transform ${isMenuOpen ? "translate-x-0" : "translate-x-full"} z-20`}
+            className={`absolute top-0 left-16 h-dvh w-[304px] bg-white flex flex-col transition-transform transform ${isMenuOpen ? "translate-x-0" : "translate-x-full"} z-20`}
           >
             {/* 헤더 */}
             <div className="flex items-center pl-[20px] w-[304px] h-[52px] border-solid border-b-[1px] border-gray0">
@@ -172,37 +190,54 @@ export default function Home() {
               </Link>
 
               {/* Search Bar */}
-              {/* <SearchBar /> */}
+              <div className="w-full mt-6 mb-5 text-[14px] font-normal flex justify-center relative">
+                <input
+                  type="text"
+                  placeholder="이름을 검색해주세요."
+                  value={keyword}
+                  onChange={(e) => setKeyword(e.target.value)}
+                  className="bg-gray6 w-[320px] h-[48px] border border-gray0 outline-none rounded-md p-2 text-[14px] font-normal placeholder-gray5"
+                />
+                <button
+                  className="absolute top-[12px] right-[16px] text-h1 text-gray5"
+                  onClick={handleSearch}
+                >
+                  <SearchIcon />
+                </button>
+              </div>
 
               {/* navigate */}
               <div className="text-[14px] font-normal">
-                <div className="flex items-center justify-between w-full h-[48px] border-solid border-b-[1px] border-gray0">
+                <Link
+                  to="/list/send"
+                  className="flex items-center justify-between w-full h-[48px] border-solid border-b-[1px] border-gray0"
+                >
                   <div className="flex items-center">
                     <MinusCircleIcon />
-                    <Link to="/list/record" className="pl-[8px]">
-                      보낸 기록
-                    </Link>
+                    <span className="pl-[8px]">보낸 기록</span>
                   </div>
                   <RightChevron />
-                </div>
-                <div className="flex items-center justify-between w-full h-[48px] border-solid border-b-[1px] border-gray0">
+                </Link>
+                <Link
+                  to="/list/receive"
+                  className="flex items-center justify-between w-full h-[48px] border-solid border-b-[1px] border-gray0"
+                >
                   <div className="flex items-center">
                     <PlusCircleIcon />
-                    <Link to="/list/receive" className="pl-[8px]">
-                      받은 기록
-                    </Link>
+                    <span className="pl-[8px]">보낸 기록</span>
                   </div>
                   <RightChevron />
-                </div>
-                <div className="flex items-center justify-between w-full h-[48px] border-solid border-b-[1px] border-gray0">
+                </Link>
+                <Link
+                  to="/record/add"
+                  className="flex items-center justify-between w-full h-[48px] border-solid border-b-[1px] border-gray0"
+                >
                   <div className="flex items-center">
                     <PencilIcon />
-                    <Link to="/record/add" className="pl-[8px]">
-                      기록
-                    </Link>
+                    <span className="pl-[8px]">기록</span>
                   </div>
                   <RightChevron />
-                </div>
+                </Link>
               </div>
             </div>
 
