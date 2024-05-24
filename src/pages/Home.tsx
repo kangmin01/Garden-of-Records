@@ -1,27 +1,25 @@
 import HamburgerIcon from "../components/ui/icons/HamburgerIcon";
-import EventListCard from "../components/EventListCard";
 import FloatingButton from "../components/ui/FloatingButton";
 import RecordCard from "../components/RecordCard";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CloseIcon from "../components/ui/icons/CloseIcon";
-import SearchBar from "../components/SearchBar";
 import RightChevron from "../components/ui/icons/RightChevron";
 import profile from "../assets/image/profile.png";
 import PlusCircleIcon from "../components/ui/icons/PlusCircleIcon";
 import MinusCircleIcon from "../components/ui/icons/MinusCircleIcon";
 import PencilIcon from "../components/ui/icons/PencilIcon";
 import header_title from "../assets/image/header_title.png";
-import CalenderIcon from "../components/ui/icons/CalenderIcon";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import home_character from "../assets/image/home_character.png";
 import axios from "axios";
-import { useAuthContext } from "../context/AuthContext";
 import EventList from "../components/EventList";
 import { recordInfoType, totalAmountType } from "../types/record";
 import { formatDate, todayFormat } from "../util/formatNumber";
 import { User } from "../types/user";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -106,10 +104,15 @@ export default function Home() {
 
     fetchData();
   }, [token]);
-  console.log(upcomingEvents);
+
+  const navigate = useNavigate();
+  const handleha = () => {
+    navigate("/signin", { state: { message: "회원가입이 완료 되었습니다." } });
+  };
 
   return (
     <>
+      <button onClick={handleha}>sdfsfdf</button>
       <div className="bg-white border-x-[1px] border-solid border-gray0 max-w-[360px] mx-auto h-dvh relative">
         <nav className="bg-green0 max-w-[360px] mx-auto flex justify-between px-[16px] py-3 items-center text-h1">
           <div className="w-[86px] h-[19px]">

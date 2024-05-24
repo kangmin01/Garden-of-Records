@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Input from "../components/ui/Input";
 import axios from "axios";
 import { useAuthContext } from "../context/AuthContext";
 import logo_login from "../assets/image/logo_login.png";
+import { ToastContainer, toast } from "react-toastify";
 
 interface SignInFormType {
   email: string;
@@ -19,6 +20,20 @@ const SignIn: React.FC = () => {
   } = useForm<SignInFormType>({ mode: "all" });
   const { login } = useAuthContext();
   const navigate = useNavigate();
+  const location = useLocation();
+  const message = location.state?.message;
+
+  const [showMessage, setShowMessage] = useState(false);
+
+  useEffect(() => {
+    if (message) {
+      setShowMessage(true);
+      const timer = setTimeout(() => {
+        setShowMessage(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   const onSubmit: SubmitHandler<SignInFormType> = async (data) => {
     console.log(data);
@@ -40,7 +55,6 @@ const SignIn: React.FC = () => {
       navigate("/");
     } catch (error) {
       console.error("로그인 오류:", error);
-      // 오류 처리 로직 추가 (예: 사용자에게 오류 알림)
     }
   };
 
@@ -106,6 +120,13 @@ const SignIn: React.FC = () => {
           </div>
         </div>
       </form>
+      {showMessage && (
+        <div
+          className={`fixed bottom-[36px] w-[320px] h-[48px] flex justify-center items-center bg-gray0 font-medium text-[14px] text-gray3 rounded-xl toast`}
+        >
+          {message}
+        </div>
+      )}
     </div>
   );
 };

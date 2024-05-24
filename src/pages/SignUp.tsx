@@ -118,7 +118,9 @@ const SignUp: React.FC = () => {
         }
       );
       console.log("회원가입 성공", response);
-      navigate("/signin");
+      navigate("/signin", {
+        state: { message: "회원가입이 완료 되었습니다." },
+      });
     } catch (error) {
       console.error("회원가입 오류:", error);
       // 오류 처리 로직 추가 (예: 사용자에게 오류 알림)

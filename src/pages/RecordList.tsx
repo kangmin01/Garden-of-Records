@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import NotFound from "./NotFound";
 import SearchBar from "../components/SearchBar";
@@ -14,6 +14,7 @@ type Params = {
 export default function RecordList() {
   const [records, setRecords] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const location = useLocation();
   const { type } = useParams<Params>();
   const titleType = { send: "보낸 기록", receive: "받은 기록" };
   const apiType = { send: "invited", receive: "inviting" };
@@ -23,6 +24,20 @@ export default function RecordList() {
   if (!type) {
     return <NotFound />;
   }
+
+  const message = location.state?.message;
+
+  const [showMessage, setShowMessage] = useState(false);
+
+  useEffect(() => {
+    if (message) {
+      setShowMessage(true);
+      const timer = setTimeout(() => {
+        setShowMessage(false);
+      }, 3000000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -92,6 +107,15 @@ export default function RecordList() {
         </div>
       </div>
       <SearchBar type={apiType[type]} />
+      {true && (
+        <div className="w-full max-w-[360px] min-w-80 mx-auto flex justify-center">
+          <div
+            className={`fixed bottom-[36px] w-[320px] h-[48px] flex justify-center items-center bg-gray0 font-medium text-[14px] text-gray3 rounded-xl toast`}
+          >
+            {message}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

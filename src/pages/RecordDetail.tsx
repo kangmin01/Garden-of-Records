@@ -20,7 +20,7 @@ export default function RecordDetail() {
   const navigate = useNavigate();
 
   const [record, setRecord] = useState<recordInfoType | null>(null);
-
+  console.log(record);
   useEffect(() => {
     const fetchAllData = async () => {
       try {
@@ -61,7 +61,9 @@ export default function RecordDetail() {
       });
 
       console.log("삭제 성공");
-      navigate("/");
+      navigate(`/list/${record?.is_invited === 1 ? "send" : "receive"}`, {
+        state: { message: "삭제되었습니다." },
+      });
     } catch (error) {
       console.error("삭제 실패", error);
     }
