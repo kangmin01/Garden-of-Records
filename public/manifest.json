@@ -1,7 +1,38 @@
 {
   "short_name": "React App",
   "name": "기록의 정원",
-  "icons": [],
+  "icons": [
+    {
+      "src": "48x48.jpg",
+      "sizes": "48x48",
+      "type": "image/jpg"
+    },
+    {
+      "src": "72x72.jpg",
+      "sizes": "72x72",
+      "type": "image/jpg"
+    },
+    {
+      "src": "96x96.jpg",
+      "sizes": "96x96",
+      "type": "image/jpg"
+    },
+    {
+      "src": "144x144.jpg",
+      "sizes": "144x144",
+      "type": "image/jpg"
+    },
+    {
+      "src": "192x192.jpg",
+      "sizes": "192x192",
+      "type": "image/jpg"
+    },
+    {
+      "src": "512x512.jpg",
+      "sizes": "512x512",
+      "type": "image/jpg"
+    }
+  ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",

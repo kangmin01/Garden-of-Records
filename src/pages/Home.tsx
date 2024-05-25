@@ -108,9 +108,6 @@ export default function Home() {
   const totalReceiveAmounts = totalReceiveAmountsResult?.data;
   const userInfo = userInfoResult?.data;
   const userScore = userScoreResult?.data;
-  console.log(userInfo);
-  console.log(userScore);
-
   const handleSearch = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     navigate("/search", {
