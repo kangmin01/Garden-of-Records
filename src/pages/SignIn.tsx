@@ -38,7 +38,7 @@ const SignIn: React.FC = () => {
     // console.log(data);
     try {
       const response = await axios.post(
-        `/user/login`,
+        `${process.env.REACT_APP_BASE_URL}/user/login`,
         {
           email: data.email,
           user_password: data.password,
