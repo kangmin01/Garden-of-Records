@@ -24,15 +24,18 @@ export default function RecordDetail() {
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        const response = await axios.get(`/invitation/expense`, {
-          params: {
-            event_id: eventId,
-          },
-          headers: {
-            "access-token": token,
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/invitation/expense`,
+          {
+            params: {
+              event_id: eventId,
+            },
+            headers: {
+              "access-token": token,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (response.data) {
           console.log(response.data);
@@ -51,15 +54,18 @@ export default function RecordDetail() {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/invitation/expense`, {
-        params: {
-          event_id: eventId,
-        },
-        headers: {
-          "access-token": token,
-          "Content-Type": "application/json",
-        },
-      });
+      await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}/invitation/expense`,
+        {
+          params: {
+            event_id: eventId,
+          },
+          headers: {
+            "access-token": token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       // console.log("삭제 성공");
       navigate("/", {

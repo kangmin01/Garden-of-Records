@@ -61,16 +61,19 @@ export default function SearchBar({ type, word }: Props) {
     if (!keyword) return;
 
     try {
-      const response = await axios.get(`/invitation/expense/search`, {
-        params: {
-          name: keyword,
-          is_invited: !type ? "all" : type,
-        },
-        headers: {
-          "access-token": token,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/invitation/expense/search`,
+        {
+          params: {
+            name: keyword,
+            is_invited: !type ? "all" : type,
+          },
+          headers: {
+            "access-token": token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       // console.log("검색 결과", response.data);
       if (response.data) {

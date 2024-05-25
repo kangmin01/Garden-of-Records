@@ -34,12 +34,15 @@ export default function Profile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/user/profile`, {
-          headers: {
-            "access-token": token,
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/user/profile`,
+          {
+            headers: {
+              "access-token": token,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         // console.log("프로필 결과", response.data);
         if (response.data) {

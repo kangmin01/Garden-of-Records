@@ -120,12 +120,16 @@ export default function AddRecord() {
 
     try {
       console.log(payload);
-      const response = await axios.post("/invitation/expense", payload, {
-        headers: {
-          "access-token": token,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/invitation/expense`,
+        payload,
+        {
+          headers: {
+            "access-token": token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       console.log("기록 등록 결과", response.data);
       navigate("/");
     } catch (error) {

@@ -104,7 +104,7 @@ const SignUp: React.FC = () => {
   const onSubmit: SubmitHandler<SignUpFormType> = async (data) => {
     try {
       const response = await axios.post(
-        `/user/signup`,
+        `${process.env.REACT_APP_BASE_URL}/user/signup`,
         {
           user_name: data.name,
           email: data.email,

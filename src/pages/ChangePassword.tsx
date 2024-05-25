@@ -25,7 +25,7 @@ export default function ChangePassword() {
 
     try {
       const response = await axios.put(
-        `/user/profile`,
+        `${process.env.REACT_APP_BASE_URL}/invitation/expense/user/profile`,
         {
           org_password: data.currentPassword,
           new_password: data.newPassword,

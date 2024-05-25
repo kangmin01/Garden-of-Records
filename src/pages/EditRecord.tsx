@@ -123,12 +123,16 @@ export default function EditRecord() {
     // console.log(payload);
 
     try {
-      const response = await axios.put("/invitation/expense", payload, {
-        headers: {
-          "access-token": token,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/invitation/expense`,
+        payload,
+        {
+          headers: {
+            "access-token": token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       // console.log("기록 수정 결과", response.data);
       navigate("/");
     } catch (error) {
@@ -156,15 +160,18 @@ export default function EditRecord() {
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        const response = await axios.get(`/invitation/expense`, {
-          params: {
-            event_id: eventId,
-          },
-          headers: {
-            "access-token": token,
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/invitation/expense`,
+          {
+            params: {
+              event_id: eventId,
+            },
+            headers: {
+              "access-token": token,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (response.data) {
           setRecord(response.data);
