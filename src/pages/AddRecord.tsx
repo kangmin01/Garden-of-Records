@@ -119,14 +119,14 @@ export default function AddRecord() {
     }
 
     try {
-      // console.log(payload);
+      console.log(payload);
       const response = await axios.post("/invitation/expense", payload, {
         headers: {
           "access-token": token,
           "Content-Type": "application/json",
         },
       });
-      // console.log("기록 등록 결과", response.data);
+      console.log("기록 등록 결과", response.data);
       navigate("/");
     } catch (error) {
       // console.log("등록 실패");
@@ -148,7 +148,7 @@ export default function AddRecord() {
 
   return (
     <section className="formPage" id="addRecord">
-      <Header title="기록 등록" />
+      <Header title="기록하기" />
       <form onSubmit={handleSubmit(onSubmit)} className="formPageForm mt-6">
         {/* tab */}
         <Controller
@@ -166,12 +166,12 @@ export default function AddRecord() {
                 className={`text-[14px] font-semibold flex w-[300px] absolute z-20 top-[4px] left-[10px] cursor-pointer `}
               >
                 <span
-                  className={`w-[150px] h-[36px] flex justify-center items-center text-transition ${tab === "invited" ? "text-gray4" : "text-gray2"}`}
+                  className={`w-[150px] h-[36px] flex justify-center items-center text-transition ${tab === "invited" ? "text-gray4" : "text-gray1"}`}
                 >
                   보낸 기록
                 </span>
                 <span
-                  className={`w-[150px] h-[36px] flex justify-center items-center text-transition ${tab === "invited" ? "text-gray2" : "text-gray4"}`}
+                  className={`w-[150px] h-[36px] flex justify-center items-center text-transition ${tab === "invited" ? "text-gray1" : "text-gray4"}`}
                 >
                   받은 기록
                 </span>
@@ -192,10 +192,14 @@ export default function AddRecord() {
           <Input
             id="name"
             type="text"
-            placeholder="상대방 이름"
+            placeholder={``}
             hasError={!!errors.name}
             register={register("name", {
               required: "이름을 입력해주세요.",
+              pattern: {
+                value: /^.{0,6}$/,
+                message: "숫자만 입력해주세요.",
+              },
             })}
           />
         </div>
@@ -209,6 +213,7 @@ export default function AddRecord() {
             >
               관계
             </label>
+            <RequiredFieldMark top="33" left="27" />
             <Controller
               name="relation"
               control={control}
@@ -241,7 +246,7 @@ export default function AddRecord() {
                     className={`w-full border-b placeholder:text-gray1 pl-[90px] pb-10 h-[100px] outline-none focus:border-main`}
                     placeholder="관계를 선택해주세요"
                   />
-                  <div className="w-full flex space-x-2 justify-end absolute bottom-3">
+                  <div className="w-full flex space-x-2 justify-end absolute bottom-3 right-1">
                     {relationArray.map((relation) => (
                       <button
                         key={relation}
@@ -375,7 +380,7 @@ export default function AddRecord() {
           render={({ field }) => (
             <div className="relative flex w-full h-[60px] border-b-[1px] border-solid border-gray0 items-center justify-between">
               <label className="text-gray2 text-p top-[35px]">참석여부</label>
-              <RequiredFieldMark top="17" left="51" />
+              {/* <RequiredFieldMark top="17" left="51" /> */}
               <IOSSwitch
                 checked={field.value}
                 onChange={(e) => field.onChange(e.target.checked)}
@@ -393,7 +398,7 @@ export default function AddRecord() {
             >
               축의금
             </label>
-            <RequiredFieldMark top="33" left="39" />
+            {/* <RequiredFieldMark top="17" left="51" /> */}
             <Controller
               name="amount"
               control={control}
@@ -434,7 +439,7 @@ export default function AddRecord() {
                     className={`w-full border-b placeholder:text-gray1 pl-[90px] pb-10 h-[100px] outline-none focus:border-main ${!fieldState.error ? "border-gray0" : isButtonClicked ? "border-main" : "border-darkRed focus:border-darkRed"}`}
                     placeholder="숫자만 입력해주세요."
                   />
-                  <div className="w-full flex space-x-2 justify-end absolute bottom-3">
+                  <div className="w-full flex space-x-2 justify-end absolute bottom-3 right-1">
                     {amountArray.map((amount) => (
                       <button
                         key={amount}
@@ -459,7 +464,7 @@ export default function AddRecord() {
         {/* Submit Button */}
         <button
           type="submit"
-          className={`submitButton text-[16px] font-semibold mt-9 ${allRequiredFieldsFilled ? "bg-main text-white cursor-pointer" : "bg-gray0 text-gray2"}`}
+          className={`submitButton text-[16px] font-semibold mt-9 ${allRequiredFieldsFilled ? "bg-main text-white cursor-pointer" : "bg-gray0 text-gray1"}`}
           disabled={!allRequiredFieldsFilled}
         >
           기록

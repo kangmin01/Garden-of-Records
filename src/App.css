@@ -58,6 +58,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   height: 64px;
 }
 
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
 /* 스와이퍼 */
 .swiper {
   width: 100%;

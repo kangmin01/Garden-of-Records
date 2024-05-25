@@ -22,7 +22,7 @@ module.exports = {
         },
       },
       animation: {
-        fadeOut: "fadeOut 3s forwards",
+        fadeOut: "fadeOut 4s ease-in-out",
       },
       boxShadow: {
         shadowRecordCard: "0px 4px 12px 0px rgba(0,0,0,0.12)",

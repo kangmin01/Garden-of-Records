@@ -187,7 +187,7 @@ export default function Home() {
                         className="w-[29px] h-[33px] object-contain rounded-full"
                       />
                     </div>
-                    <div className="flex flex-col justify-center h-[38px] max-h-[38px] mr-[39px]">
+                    <div className="flex flex-col justify-center h-[38px] max-h-[38px] mr-[41px]">
                       <div className="flex items-center">
                         <span className="text-gray4 text-[16px] font-medium mr-[4px]">
                           {userInfo.user_name}
@@ -200,8 +200,8 @@ export default function Home() {
                         {userInfo.email}
                       </span>
                     </div>
-                    <div className="text-gray3">
-                      <RightChevron />
+                    <div>
+                      <RightChevron color="#4C4C4C" size={14} />
                     </div>
                   </Link>
 
@@ -212,7 +212,7 @@ export default function Home() {
                       placeholder="이름을 검색해주세요."
                       value={keyword}
                       onChange={(e) => setKeyword(e.target.value)}
-                      className="bg-gray6 w-[320px] h-[48px] border border-gray0 outline-none rounded-md p-2 text-[14px] font-normal placeholder-gray5"
+                      className="bg-gray6 pl-4 w-[320px] h-[48px] border border-gray0 outline-none rounded-md p-2 text-[14px] font-normal placeholder-gray5"
                     />
                     <button
                       className="absolute top-[12px] right-[16px] text-h1 text-gray5"
@@ -240,7 +240,7 @@ export default function Home() {
                     >
                       <div className="flex items-center">
                         <PlusCircleIcon />
-                        <span className="pl-[8px]">보낸 기록</span>
+                        <span className="pl-[8px]">받은 기록</span>
                       </div>
                       <RightChevron />
                     </Link>
@@ -261,7 +261,9 @@ export default function Home() {
                 <div className="flex w-[264px] justify-between items-center absolute bottom-5 left-5 font-normal text-gray2 text-[14px]">
                   <div className="flex items-center justify-center space-x-2">
                     <HeadsetIcon />
-                    <span>고객센터</span>
+                    <Link to="https://pf.kakao.com/_ZHaLG" className="pt-[3px]">
+                      기록의 정원사
+                    </Link>
                   </div>
                   <div className="">© T키타카</div>
                 </div>
@@ -274,7 +276,7 @@ export default function Home() {
             <div className="w-[360px] absolute flex flex-col items-center">
               <div className="flex flex-col items-center mt-3 mb-6">
                 <CircularProgressbar
-                  value={35}
+                  value={66}
                   background={true}
                   strokeWidth={2.5}
                   styles={buildStyles({
@@ -288,7 +290,7 @@ export default function Home() {
                   <img
                     src={home_character}
                     alt="캐릭터 이미지"
-                    className="w-[118px] h-[160px] absolute"
+                    className="w-[180px] h-[180px] absolute"
                   />
                 </div>
                 <span className="text-h1 mt-[22px]">{userInfo.user_name}</span>

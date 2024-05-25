@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { User } from "../types/user";
 import RightChevron from "../components/ui/icons/RightChevron";
 import { useAuthContext } from "../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import RightChevronThin from "../components/ui/icons/RightChevronThin";
+import CheckIcon from "../components/ui/icons/CheckIcon";
 
 export default function Profile() {
   const token = localStorage.getItem("access_token");
@@ -12,6 +14,22 @@ export default function Profile() {
 
   const navigate = useNavigate();
   const { logout } = useAuthContext();
+
+  const location = useLocation();
+
+  const message = location.state?.message;
+
+  const [showMessage, setShowMessage] = useState(false);
+
+  useEffect(() => {
+    if (message) {
+      setShowMessage(true);
+      const timer = setTimeout(() => {
+        setShowMessage(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,7 +84,7 @@ export default function Profile() {
             비밀번호 변경
           </span>
           <span className="text-[16px] font-normal text-gray4">
-            <RightChevron />
+            <RightChevronThin />
           </span>
         </Link>
       </div>
@@ -79,6 +97,16 @@ export default function Profile() {
           <span className="cursor-pointer">회원탈퇴</span>
         </div>
       </div>
+      {showMessage && (
+        <div className="w-full max-w-[360px] min-w-80 mx-auto flex justify-center">
+          <div
+            className={`gap-2 fixed bottom-[80px] w-[320px] h-[48px] flex justify-center items-center bg-gray0 font-medium text-[14px] text-gray3 rounded-xl toast`}
+          >
+            <CheckIcon />
+            {message}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

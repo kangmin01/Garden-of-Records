@@ -38,7 +38,9 @@ export default function ChangePassword() {
         }
       );
       // console.log("비밀번호 변경 성공", response);
-      navigate("/profile");
+      navigate("/profile", {
+        state: { message: "회원가입이 완료 되었습니다." },
+      });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setShowMessage(true);
@@ -51,7 +53,7 @@ export default function ChangePassword() {
 
   return (
     <section className="bg-white max-w-[360px] mx-auto h-dvh relative">
-      <Header title="내 정보" />
+      <Header title="비밀번호 변경" />
       <div className="pt-[24px] px-[20px]">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="w-[320px] h-[64px] relative">
@@ -89,18 +91,18 @@ export default function ChangePassword() {
                 required: "새로운 비밀번호를 입력해주세요.",
                 minLength: {
                   value: 6,
-                  message: "비밀번호는 최소 6자 이상이어야 합니다.",
+                  message: "영어+숫자 조합 6~10자",
                 },
                 maxLength: {
                   value: 10,
-                  message: "비밀번호는 최대 10자 이내여야 합니다.",
+                  message: "영어+숫자 조합 6~10자",
                 },
                 pattern: {
                   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,10}$/,
-                  message: "영어와 숫자를 포함하여 10자 이내여야 합니다.",
+                  message: "영어+숫자 조합 6~10자",
                 },
               })}
-              placeholder="영어+숫자 조합 10자 이내"
+              placeholder="영어+숫자 조합 6~10자"
             />
             {errors.newPassword && (
               <span className="text-darkRed text-sm absolute w-full bottom-[4px] left-[107px]">
@@ -120,12 +122,12 @@ export default function ChangePassword() {
               id="confirmPassword"
               className={`w-full h-full outline-none pl-[106px] text-[16px] font-normal placeholder:text-gray1 border-b ${errors.confirmPassword ? "border-darkRed" : "border-gray0 focus:border-main"}`}
               {...register("confirmPassword", {
-                required: "비밀번호 확인을 입력해주세요.",
+                required: "영어+숫자 조합 6~10자",
                 validate: (value) =>
                   value === watch("newPassword") ||
                   "비밀번호가 일치하지 않습니다.",
               })}
-              placeholder="비밀번호 한 번 더 입력"
+              placeholder="비밀번호 한번 더 입력"
             />
             {errors.confirmPassword && (
               <span className="text-darkRed text-sm absolute w-full bottom-[4px] left-[107px]">

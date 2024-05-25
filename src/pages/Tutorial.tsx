@@ -24,7 +24,7 @@ export default function Tutorial() {
       const timer = setTimeout(() => {
         setIsSplashVisible(false);
         localStorage.setItem("hasSeenSplash", "true");
-      }, 3000);
+      }, 3500);
 
       return () => clearTimeout(timer);
     } else {

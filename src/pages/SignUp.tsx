@@ -18,14 +18,14 @@ const inputFields = [
     id: "name",
     type: "text",
     name: "이름",
-    placeholder: "실명을 입력해주세요.",
+    placeholder: "이름을 입력해주세요.",
     validation: { required: "이름을 입력해주세요." },
   },
   {
     id: "contact",
     type: "text",
     name: "연락처",
-    placeholder: "ex) 01012345678",
+    placeholder: "번호만 입력해주세요.",
     validation: {
       required: "연락처를 입력해주세요.",
       pattern: {
@@ -59,20 +59,20 @@ const inputFields = [
     id: "password",
     type: "password",
     name: "비밀번호",
-    placeholder: "영어+숫자 조합 10자 이내",
+    placeholder: "영어+숫자 조합 6~10자",
     validation: {
       required: "비밀번호를 입력해주세요.",
       minLength: {
         value: 6,
-        message: "비밀번호는 최소 6자 이상이어야 합니다.",
+        message: "영어+숫자 조합 6~10자",
       },
       maxLength: {
         value: 10,
-        message: "비밀번호는 최대 10자 이내여야 합니다.",
+        message: "영어+숫자 조합 6~10자",
       },
       pattern: {
         value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,10}$/,
-        message: "비밀번호는 영어, 숫자를 포함한 10자 이내여야 합니다.",
+        message: "영어+숫자 조합 6~10자",
       },
     },
   },
@@ -80,7 +80,7 @@ const inputFields = [
     id: "confirmPassword",
     type: "password",
     name: "비밀번호 확인",
-    placeholder: "비밀번호를 한번 더 입력해주세요.",
+    placeholder: "영어+숫자 조합 6~10자",
     validation: {
       required: "비밀번호를 입력해주세요.",
       validate: (value: string, allValues: SignUpFormType) => {
@@ -165,7 +165,7 @@ const SignUp: React.FC = () => {
           <button
             type="submit"
             disabled={!isValid}
-            className={`w-full min-w-80 py-[14px] rounded-xl text-[16px] font-semibold ${isValid ? "bg-main text-white cursor-pointer" : "bg-gray0 text-gray2"}`}
+            className={`w-full min-w-80 py-[14px] rounded-xl text-[16px] font-semibold ${isValid ? "bg-main text-white cursor-pointer" : "bg-gray0 text-gray1"}`}
           >
             회원가입
           </button>

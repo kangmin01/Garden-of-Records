@@ -35,6 +35,7 @@ export default function RecordDetail() {
         });
 
         if (response.data) {
+          console.log(response.data);
           setRecord(response.data);
         } else {
           setRecord(null);
@@ -65,10 +66,6 @@ export default function RecordDetail() {
         replace: true,
         state: { message: "삭제되었습니다." },
       });
-      // navigate(`/list/${record?.is_invited === 1 ? "send" : "receive"}`, {
-      //   replace: true,
-      //   state: { message: "삭제되었습니다." },
-      // });
     } catch (error) {
       console.error("삭제 실패", error);
     }
@@ -99,17 +96,20 @@ export default function RecordDetail() {
                   <span className="font-semibold text-[18px]">원</span>
                 </div>
               </div>
-              <div className="flex justify-center items-center h-[24px] mt-[16px]">
+              <Link
+                to={record.link}
+                className={`flex ${record.link === "" ? "cursor-default" : "cursor-pointer"} justify-center items-center h-[24px] mt-[16px]`}
+              >
                 <span
-                  className={`${record.is_invited === 1 ? "text-orange" : "text-main"} text-[14px] font-medium mr-[8px] cursor-pointer`}
+                  className={`${record.link === "" ? "text-gray2" : record.is_invited === 1 ? "text-orange" : "text-main"} text-[14px] font-medium mr-[8px]`}
                 >
                   모바일 청첩장 확인
                 </span>
                 <RightChevron
-                  color={`${record.is_invited === 1 ? "#EF9509" : "#37A041"}`}
+                  color={`${record.link === "" ? "#808080" : record.is_invited === 1 ? "#EF9509" : "#37A041"}`}
                   size={13}
                 />
-              </div>
+              </Link>
             </div>
           </div>
           <RecordDetailList record={record} />

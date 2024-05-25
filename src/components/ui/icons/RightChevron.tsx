@@ -1,4 +1,5 @@
-import { BsChevronRight } from "react-icons/bs";
+// import { BsChevronRight } from "react-icons/bs";
+import { FaChevronRight } from "react-icons/fa6";
 
 type Props = {
   color?: string;
@@ -6,5 +7,6 @@ type Props = {
 };
 
 export default function RightChevron({ color, size }: Props) {
-  return <BsChevronRight color={color} size={size} />;
+  // return <BsChevronRight color={color} size={size} />;
+  return <FaChevronRight color={color} size={size} />;
 }

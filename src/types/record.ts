@@ -7,6 +7,7 @@ export interface recordInfoType {
   name: string;
   relation: string;
   user_id: string;
+  link: string;
 }
 
 export type FormValues = {
