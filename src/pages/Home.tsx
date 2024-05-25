@@ -175,10 +175,12 @@ export default function Home() {
                     </div>
                     <div className="flex flex-col justify-center h-[38px] max-h-[38px] mr-[39px]">
                       <div className="flex items-center">
-                        <span className="text-gray4 text-[16px] font-medium">
+                        <span className="text-gray4 text-[16px] font-medium mr-[4px]">
                           {userInfo.user_name}
                         </span>
-                        <span className="text-[14px] font-normal">님</span>
+                        <span className="text-[14px] font-normal pt-[1px]">
+                          님
+                        </span>
                       </div>
                       <span className="text-gray1 text-[12px] font-normal">
                         {userInfo.email}
@@ -291,7 +293,7 @@ export default function Home() {
               </div>
             </div>
             <div className="pt-[486px] px-[16px]">
-              {upcomingEvents.length !== 0 ? (
+              {upcomingEvents && upcomingEvents.length !== 0 ? (
                 <div className="h-[172px] overflow-y-auto">
                   <EventList records={upcomingEvents} />
                 </div>

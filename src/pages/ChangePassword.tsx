@@ -21,7 +21,7 @@ export default function ChangePassword() {
 
   const onSubmit: SubmitHandler<ChangePasswordType> = async (data) => {
     setShowMessage(false);
-    console.log(data);
+    // console.log(data);
 
     try {
       const response = await axios.put(
@@ -37,7 +37,7 @@ export default function ChangePassword() {
           },
         }
       );
-      console.log("비밀번호 변경 성공", response);
+      // console.log("비밀번호 변경 성공", response);
       navigate("/profile");
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -143,7 +143,7 @@ export default function ChangePassword() {
           </button>
         </form>
       </div>
-      {true && (
+      {showMessage && (
         <div className="w-full max-w-[360px] min-w-80 mx-auto flex justify-center">
           <div
             className={`gap-[10px] absolute top-[600px] w-[320px] h-[48px] flex justify-center items-center bg-gray0 font-medium text-[14px] text-gray3 rounded-xl fadeInOut`}

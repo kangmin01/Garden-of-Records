@@ -69,7 +69,7 @@ export default function SearchBar({ type, word }: Props) {
         },
       });
 
-      console.log("검색 결과", response.data);
+      // console.log("검색 결과", response.data);
       if (response.data) {
         setSearchResults(response.data);
       } else {

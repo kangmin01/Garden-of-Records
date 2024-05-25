@@ -102,7 +102,7 @@ export default function EditRecord() {
     } else {
       dateTime = formatDate(data.date) + formatTime(data.time);
     }
-    console.log("data", data);
+    // console.log("data", data);
 
     const payload: PayloadType = {
       event_id: eventId,
@@ -120,7 +120,7 @@ export default function EditRecord() {
     if (data.mobileLink) {
       payload.link = data.mobileLink;
     }
-    console.log(payload);
+    // console.log(payload);
 
     try {
       const response = await axios.put("/invitation/expense", payload, {
@@ -129,10 +129,10 @@ export default function EditRecord() {
           "Content-Type": "application/json",
         },
       });
-      console.log("기록 수정 결과", response.data);
+      // console.log("기록 수정 결과", response.data);
       navigate("/");
     } catch (error) {
-      console.log("기록 수정 실패");
+      // console.log("기록 수정 실패");
       console.error("Error fetching data:", error);
     }
   };

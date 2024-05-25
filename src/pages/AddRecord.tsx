@@ -119,17 +119,17 @@ export default function AddRecord() {
     }
 
     try {
-      console.log(payload);
+      // console.log(payload);
       const response = await axios.post("/invitation/expense", payload, {
         headers: {
           "access-token": token,
           "Content-Type": "application/json",
         },
       });
-      console.log("기록 등록 결과", response.data);
+      // console.log("기록 등록 결과", response.data);
       navigate("/");
     } catch (error) {
-      console.log("등록 실패");
+      // console.log("등록 실패");
       console.error("Error fetching data:", error);
     }
   };

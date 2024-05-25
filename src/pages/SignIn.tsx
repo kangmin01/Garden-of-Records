@@ -35,7 +35,7 @@ const SignIn: React.FC = () => {
   }, [message]);
 
   const onSubmit: SubmitHandler<SignInFormType> = async (data) => {
-    console.log(data);
+    // console.log(data);
     try {
       const response = await axios.post(
         `/user/login`,
@@ -49,7 +49,7 @@ const SignIn: React.FC = () => {
           },
         }
       );
-      console.log("로그인 성공", response);
+      // console.log("로그인 성공", response);
       login(response.data.access_token);
       navigate("/");
     } catch (error) {

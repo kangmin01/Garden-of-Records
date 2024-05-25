@@ -117,7 +117,7 @@ const SignUp: React.FC = () => {
           },
         }
       );
-      console.log("회원가입 성공", response);
+      // console.log("회원가입 성공", response);
       navigate("/signin", {
         state: { message: "회원가입이 완료 되었습니다." },
       });
@@ -139,7 +139,7 @@ const SignUp: React.FC = () => {
         기록의 정원에<br></br> 당신을 기록해주세요
       </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="formPageForm">
-        <div className="inputContainerDiv">
+        <div className="min-w-80">
           {inputFields.map(({ id, type, name, placeholder, validation }) => (
             <div key={id} className="inputContainer">
               <label htmlFor={id} className="formLabel">

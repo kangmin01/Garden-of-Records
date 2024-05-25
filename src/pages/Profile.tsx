@@ -23,7 +23,7 @@ export default function Profile() {
           },
         });
 
-        console.log("프로필 결과", response.data);
+        // console.log("프로필 결과", response.data);
         if (response.data) {
           setInfo(response.data);
         } else {

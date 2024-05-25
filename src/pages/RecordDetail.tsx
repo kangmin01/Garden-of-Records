@@ -60,7 +60,7 @@ export default function RecordDetail() {
         },
       });
 
-      console.log("삭제 성공");
+      // console.log("삭제 성공");
       navigate("/", {
         replace: true,
         state: { message: "삭제되었습니다." },
