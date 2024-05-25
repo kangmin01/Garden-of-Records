@@ -3,6 +3,8 @@ import Header from "../components/Header";
 import { ChangePasswordType } from "../types/user";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import DangerIcon from "../components/ui/icons/DangerIcon";
 
 export default function ChangePassword() {
   const {
@@ -15,7 +17,10 @@ export default function ChangePassword() {
   const token = localStorage.getItem("access_token");
   const navigate = useNavigate();
 
+  const [showMessage, setShowMessage] = useState(false);
+
   const onSubmit: SubmitHandler<ChangePasswordType> = async (data) => {
+    setShowMessage(false);
     console.log(data);
 
     try {
@@ -36,6 +41,7 @@ export default function ChangePassword() {
       navigate("/profile");
     } catch (error) {
       if (axios.isAxiosError(error)) {
+        setShowMessage(true);
         console.error("비밀번호 변경 오류", error.response?.data.detail);
       } else {
         console.error("비밀번호 변경 오류", error);
@@ -137,6 +143,16 @@ export default function ChangePassword() {
           </button>
         </form>
       </div>
+      {true && (
+        <div className="w-full max-w-[360px] min-w-80 mx-auto flex justify-center">
+          <div
+            className={`gap-[10px] absolute top-[600px] w-[320px] h-[48px] flex justify-center items-center bg-gray0 font-medium text-[14px] text-gray3 rounded-xl fadeInOut`}
+          >
+            <DangerIcon />
+            현재 비밀번호가 일치하지 않습니다!
+          </div>
+        </div>
+      )}
     </section>
   );
 }
