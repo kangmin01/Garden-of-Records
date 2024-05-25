@@ -1,9 +1,8 @@
 import axios from "axios";
 import { formatDate, todayFormat } from "./util/formatNumber";
-import axiosInstance from "./util/axiosInstance";
 
 export const fetchUpcomingEvents = async (token: string) => {
-  const { data } = await axiosInstance.get(`/invitation/expenses`, {
+  const { data } = await axios.get(`/invitation/expenses`, {
     params: {
       is_invited: "invited",
       offset: formatDate(todayFormat()) + "0000",
@@ -18,7 +17,7 @@ export const fetchUpcomingEvents = async (token: string) => {
 };
 
 export const fetchTotalSendAmounts = async (token: string) => {
-  const { data } = await axiosInstance.get(`/invitation/expense/total`, {
+  const { data } = await axios.get(`/invitation/expense/total`, {
     params: {
       is_invited: "invited",
     },
@@ -31,7 +30,7 @@ export const fetchTotalSendAmounts = async (token: string) => {
 };
 
 export const fetchTotalReceiveAmounts = async (token: string) => {
-  const { data } = await axiosInstance.get(`/invitation/expense/total`, {
+  const { data } = await axios.get(`/invitation/expense/total`, {
     params: {
       is_invited: "inviting",
     },
@@ -44,7 +43,7 @@ export const fetchTotalReceiveAmounts = async (token: string) => {
 };
 
 export const fetchUserInfo = async (token: string) => {
-  const { data } = await axiosInstance.get(`/user/profile`, {
+  const { data } = await axios.get(`/user/profile`, {
     headers: {
       "access-token": token,
       "Content-Type": "application/json",
@@ -54,7 +53,7 @@ export const fetchUserInfo = async (token: string) => {
 };
 
 export const fetchUserScore = async (token: string) => {
-  const { data } = await axiosInstance.get(`/user/score`, {
+  const { data } = await axios.get(`/user/score`, {
     headers: {
       "access-token": token,
       "Content-Type": "application/json",

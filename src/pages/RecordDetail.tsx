@@ -1,4 +1,3 @@
-import axiosInstance from "../util/axiosInstance";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import RightChevron from "../components/ui/icons/RightChevron";
@@ -25,7 +24,7 @@ export default function RecordDetail() {
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        const response = await axiosInstance.get(`/invitation/expense`, {
+        const response = await axios.get(`/invitation/expense`, {
           params: {
             event_id: eventId,
           },
@@ -52,7 +51,7 @@ export default function RecordDetail() {
 
   const handleDelete = async () => {
     try {
-      await axiosInstance.delete(`/invitation/expense`, {
+      await axios.delete(`/invitation/expense`, {
         params: {
           event_id: eventId,
         },

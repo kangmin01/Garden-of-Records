@@ -1,4 +1,3 @@
-import axiosInstance from "../util/axiosInstance";
 import { useEffect, useRef, useState } from "react";
 import {
   useForm,
@@ -124,7 +123,7 @@ export default function EditRecord() {
     // console.log(payload);
 
     try {
-      const response = await axiosInstance.put("/invitation/expense", payload, {
+      const response = await axios.put("/invitation/expense", payload, {
         headers: {
           "access-token": token,
           "Content-Type": "application/json",
@@ -157,7 +156,7 @@ export default function EditRecord() {
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        const response = await axiosInstance.get(`/invitation/expense`, {
+        const response = await axios.get(`/invitation/expense`, {
           params: {
             event_id: eventId,
           },

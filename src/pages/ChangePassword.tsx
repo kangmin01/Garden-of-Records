@@ -1,4 +1,3 @@
-import axiosInstance from "../util/axiosInstance";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Header from "../components/Header";
 import { ChangePasswordType } from "../types/user";
@@ -25,7 +24,7 @@ export default function ChangePassword() {
     // console.log(data);
 
     try {
-      const response = await axiosInstance.put(
+      const response = await axios.put(
         `/user/profile`,
         {
           org_password: data.currentPassword,

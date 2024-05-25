@@ -5,7 +5,6 @@ import Input from "../components/ui/Input";
 import axios from "axios";
 import { useAuthContext } from "../context/AuthContext";
 import logo_login from "../assets/image/logo_login.png";
-import axiosInstance from "../util/axiosInstance";
 
 interface SignInFormType {
   email: string;
@@ -38,7 +37,7 @@ const SignIn: React.FC = () => {
   const onSubmit: SubmitHandler<SignInFormType> = async (data) => {
     // console.log(data);
     try {
-      const response = await axiosInstance.post(
+      const response = await axios.post(
         `/user/login`,
         {
           email: data.email,

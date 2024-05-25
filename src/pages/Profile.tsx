@@ -1,4 +1,3 @@
-import axiosInstance from "../util/axiosInstance";
 import axios from "axios";
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
@@ -35,7 +34,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get(`/user/profile`, {
+        const response = await axios.get(`/user/profile`, {
           headers: {
             "access-token": token,
             "Content-Type": "application/json",
