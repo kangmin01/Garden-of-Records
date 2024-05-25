@@ -35,7 +35,7 @@ const SignIn: React.FC = () => {
   }, [message]);
 
   const onSubmit: SubmitHandler<SignInFormType> = async (data) => {
-    // console.log(data);
+    console.log(data);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/user/login`,
