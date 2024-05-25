@@ -39,15 +39,13 @@ export default function Tutorial() {
             className="mySwiper"
           >
             {imgs.map((img, index) => (
-              <>
-                <SwiperSlide key={index}>
-                  <img
-                    src={img}
-                    alt="튜토리얼 이미지"
-                    className="w-full h-[476px] max-h-[476px] mb-[38px]"
-                  />
-                </SwiperSlide>
-              </>
+              <SwiperSlide key={index}>
+                <img
+                  src={img}
+                  alt="튜토리얼 이미지"
+                  className="w-full h-[476px] max-h-[476px] mb-[38px]"
+                />
+              </SwiperSlide>
             ))}
           </Swiper>
           <div className="mt-[38px] flex flex-col items-center px-[20px]">
