@@ -4,6 +4,7 @@ import Input from "../components/ui/Input";
 import Header from "../components/Header";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../util/axiosInstance";
 
 interface SignUpFormType {
   name: string;
@@ -103,7 +104,7 @@ const SignUp: React.FC = () => {
 
   const onSubmit: SubmitHandler<SignUpFormType> = async (data) => {
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         `/user/signup`,
         {
           user_name: data.name,

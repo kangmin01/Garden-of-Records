@@ -1,3 +1,4 @@
+import axiosInstance from "../util/axiosInstance";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import NotFound from "./NotFound";
@@ -27,7 +28,7 @@ export default function RecordList() {
     const fetchData = async () => {
       try {
         const [recordsResponse, totalResponse] = await Promise.all([
-          axios.get(`/invitation/expenses`, {
+          axiosInstance.get(`/invitation/expenses`, {
             params: {
               is_invited: apiType[type],
             },
@@ -36,7 +37,7 @@ export default function RecordList() {
               "Content-Type": "application/json",
             },
           }),
-          axios.get(`/invitation/expense/total`, {
+          axiosInstance.get(`/invitation/expense/total`, {
             params: {
               is_invited: apiType[type],
             },

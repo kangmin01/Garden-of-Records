@@ -4,6 +4,7 @@ import axios from "axios";
 import EventList from "./EventList";
 import not_found from "../assets/image/not_found.png";
 import { Link } from "react-router-dom";
+import axiosInstance from "../util/axiosInstance";
 
 type Props = {
   type?: string;
@@ -31,7 +32,7 @@ export default function SearchBar({ type, word }: Props) {
           setKeyword(word);
         }
 
-        const response = await axios.get(`/invitation/expense/search`, {
+        const response = await axiosInstance.get(`/invitation/expense/search`, {
           params: payload,
           headers: {
             "access-token": token,
@@ -58,7 +59,7 @@ export default function SearchBar({ type, word }: Props) {
     if (!keyword) return;
 
     try {
-      const response = await axios.get(`/invitation/expense/search`, {
+      const response = await axiosInstance.get(`/invitation/expense/search`, {
         params: {
           name: keyword,
           is_invited: !type ? "all" : type,

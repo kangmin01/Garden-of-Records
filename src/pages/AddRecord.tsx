@@ -1,3 +1,4 @@
+import axiosInstance from "../util/axiosInstance";
 import { useRef, useState } from "react";
 import {
   useForm,
@@ -120,12 +121,16 @@ export default function AddRecord() {
 
     try {
       console.log(payload);
-      const response = await axios.post("/invitation/expense", payload, {
-        headers: {
-          "access-token": token,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axiosInstance.post(
+        "/invitation/expense",
+        payload,
+        {
+          headers: {
+            "access-token": token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       console.log("기록 등록 결과", response.data);
       navigate("/");
     } catch (error) {
