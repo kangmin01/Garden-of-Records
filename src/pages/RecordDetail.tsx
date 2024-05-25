@@ -61,10 +61,14 @@ export default function RecordDetail() {
       });
 
       console.log("삭제 성공");
-      navigate(`/list/${record?.is_invited === 1 ? "send" : "receive"}`, {
+      navigate("/", {
         replace: true,
         state: { message: "삭제되었습니다." },
       });
+      // navigate(`/list/${record?.is_invited === 1 ? "send" : "receive"}`, {
+      //   replace: true,
+      //   state: { message: "삭제되었습니다." },
+      // });
     } catch (error) {
       console.error("삭제 실패", error);
     }
