@@ -25,6 +25,7 @@ import {
   fetchUserScore,
 } from "../api";
 import { useQueries } from "react-query";
+import { Oval } from "react-loader-spinner";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -96,7 +97,20 @@ export default function Home() {
   const isError = results.some((result) => result.isError);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex w-full justify-center mt-[250px]">
+        <Oval
+          visible={true}
+          height="40"
+          width="40"
+          strokeWidth="5"
+          color="#37A041"
+          ariaLabel="oval-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+      </div>
+    );
   }
 
   if (isError) {
