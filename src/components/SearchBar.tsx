@@ -31,13 +31,16 @@ export default function SearchBar({ type, word }: Props) {
           setKeyword(word);
         }
 
-        const response = await axios.get(`/invitation/expense/search`, {
-          params: payload,
-          headers: {
-            "access-token": token,
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/invitation/expense/search`,
+          {
+            params: payload,
+            headers: {
+              "access-token": token,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (response.data) {
           setSearchResults(response.data);
