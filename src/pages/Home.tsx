@@ -21,6 +21,7 @@ import { User } from "../types/user";
 import SearchIcon from "../components/ui/icons/SearchIcon";
 import HeadsetIcon from "../components/ui/icons/HeadsetIcon";
 import logo_ham from "../assets/image/logo_ham.png";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,96 +33,102 @@ export default function Home() {
   const [info, setInfo] = useState<User | null>(null);
   const [score, setScore] = useState(0);
   const [keyword, setKeyword] = useState("");
+  const [isTutorialVisible, setIsTutorialVisible] = useState(true);
+
   const token = localStorage.getItem("access_token");
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [res1, res2, res3, res4, res5] = await Promise.all([
-          axios.get(`/invitation/expenses`, {
-            params: {
-              is_invited: "invited",
-              offset: formatDate(todayFormat()) + "0000",
-              order: "asc",
-            },
-            headers: {
-              "access-token": token,
-              "Content-Type": "application/json",
-            },
-          }),
-          axios.get(`/invitation/expense/total`, {
-            params: {
-              is_invited: "invited",
-            },
-            headers: {
-              "access-token": token,
-              "Content-Type": "application/json",
-            },
-          }),
-          axios.get(`/invitation/expense/total`, {
-            params: {
-              is_invited: "inviting",
-            },
-            headers: {
-              "access-token": token,
-              "Content-Type": "application/json",
-            },
-          }),
-          axios.get(`/user/profile`, {
-            headers: {
-              "access-token": token,
-              "Content-Type": "application/json",
-            },
-          }),
-          axios.get(`/user/score`, {
-            headers: {
-              "access-token": token,
-              "Content-Type": "application/json",
-            },
-          }),
-        ]);
+    if (token) {
+      const fetchData = async () => {
+        try {
+          const [res1, res2, res3, res4, res5] = await Promise.all([
+            axios.get(`/invitation/expenses`, {
+              params: {
+                is_invited: "invited",
+                offset: formatDate(todayFormat()) + "0000",
+                order: "asc",
+              },
+              headers: {
+                "access-token": token,
+                "Content-Type": "application/json",
+              },
+            }),
+            axios.get(`/invitation/expense/total`, {
+              params: {
+                is_invited: "invited",
+              },
+              headers: {
+                "access-token": token,
+                "Content-Type": "application/json",
+              },
+            }),
+            axios.get(`/invitation/expense/total`, {
+              params: {
+                is_invited: "inviting",
+              },
+              headers: {
+                "access-token": token,
+                "Content-Type": "application/json",
+              },
+            }),
+            axios.get(`/user/profile`, {
+              headers: {
+                "access-token": token,
+                "Content-Type": "application/json",
+              },
+            }),
+            axios.get(`/user/score`, {
+              headers: {
+                "access-token": token,
+                "Content-Type": "application/json",
+              },
+            }),
+          ]);
 
-        if (res1.data) {
-          setUpcomingEvents(res1.data);
-        } else {
+          if (res1.data) {
+            setUpcomingEvents(res1.data);
+          } else {
+            setUpcomingEvents([]);
+          }
+
+          if (res2.data) {
+            setTotalSendAmounts(res2.data);
+          } else {
+            setTotalSendAmounts(null);
+          }
+
+          if (res3.data) {
+            setTotalReceiveAmounts(res3.data);
+          } else {
+            setTotalReceiveAmounts(null);
+          }
+
+          if (res4.data) {
+            setInfo(res4.data);
+          } else {
+            setInfo(null);
+          }
+
+          if (res5.data) {
+            setScore(res5.data);
+          } else {
+            setScore(0);
+          }
+        } catch (error) {
+          console.error("검색 실패", error);
           setUpcomingEvents([]);
-        }
-
-        if (res2.data) {
-          setTotalSendAmounts(res2.data);
-        } else {
-          setTotalSendAmounts(null);
-        }
-
-        if (res3.data) {
-          setTotalReceiveAmounts(res3.data);
-        } else {
           setTotalReceiveAmounts(null);
-        }
-
-        if (res4.data) {
-          setInfo(res4.data);
-        } else {
-          setInfo(null);
-        }
-
-        if (res5.data) {
-          setScore(res5.data);
-        } else {
+          setTotalSendAmounts(null);
           setScore(0);
         }
-      } catch (error) {
-        console.error("검색 실패", error);
-        setUpcomingEvents([]);
-        setTotalReceiveAmounts(null);
-        setTotalSendAmounts(null);
-        setScore(0);
-      }
-    };
+      };
 
-    fetchData();
+      fetchData();
+    } else {
+      navigate("/tutorial");
+    }
   }, [token]);
 
   const handleSearch = async (e: React.MouseEvent<HTMLButtonElement>) => {

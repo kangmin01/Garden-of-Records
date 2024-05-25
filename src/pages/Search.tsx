@@ -6,7 +6,6 @@ import { useState } from "react";
 export default function Search() {
   const location = useLocation();
   const keyword = location.state?.keyword;
-  console.log(keyword);
 
   return (
     <section className="max-w-[360px] mx-auto h-dvh relative">

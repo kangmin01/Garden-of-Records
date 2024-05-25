@@ -22,10 +22,14 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
+        index: true,
+        element: <Home />,
+      },
+      {
         element: <PublicOnlyRoutes />,
         children: [
           {
-            index: true,
+            path: "tutorial",
             element: <Tutorial />,
           },
           {
@@ -41,10 +45,6 @@ const router = createBrowserRouter([
       {
         element: <ProtectedRoutes />,
         children: [
-          {
-            index: true,
-            element: <Home />,
-          },
           {
             path: "record/add",
             element: <AddRecord />,
