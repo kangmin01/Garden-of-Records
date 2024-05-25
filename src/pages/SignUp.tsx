@@ -164,8 +164,8 @@ const SignUp: React.FC = () => {
         <div className="authenticationButtonDiv mt-10">
           <button
             type="submit"
-            className={`w-full min-w-80 p-4 rounded-xl text-[16px] font-semibold ${isValid ? "bg-main text-white cursor-pointer" : "bg-gray0 text-gray2"}`}
             disabled={!isValid}
+            className={`w-full min-w-80 py-[14px] rounded-xl text-[16px] font-semibold ${isValid ? "bg-main text-white cursor-pointer" : "bg-gray0 text-gray2"}`}
           >
             회원가입
           </button>

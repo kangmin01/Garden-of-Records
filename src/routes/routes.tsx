@@ -17,60 +17,63 @@ import ChangePassword from "../pages/ChangePassword";
 
 const router = createBrowserRouter([
   {
-    element: <PublicOnlyRoutes />,
+    path: "/",
+    element: <App />,
     errorElement: <NotFound />,
     children: [
       {
-        path: "/",
-        element: <App />,
-        children: [{ index: true, element: <Tutorial /> }],
+        element: <PublicOnlyRoutes />,
+        children: [
+          {
+            index: true,
+            element: <Tutorial />,
+          },
+          {
+            path: "signin",
+            element: <SignIn />,
+          },
+          {
+            path: "signup",
+            element: <SignUp />,
+          },
+        ],
       },
       {
-        path: "/signin",
-        element: <SignIn />,
-      },
-      {
-        path: "/signup",
-        element: <SignUp />,
-      },
-    ],
-  },
-  {
-    element: <ProtectedRoutes />,
-    errorElement: <NotFound />,
-    children: [
-      {
-        path: "/",
-        element: <App />,
-        children: [{ index: true, element: <Home /> }],
-      },
-      {
-        path: "/record/add ",
-        element: <AddRecord />,
-      },
-      {
-        path: "/search",
-        element: <Search />,
-      },
-      {
-        path: "/list/:type",
-        element: <RecordList />,
-      },
-      {
-        path: "/record/:eventId",
-        element: <RecordDetail />,
-      },
-      {
-        path: "/profile",
-        element: <Profile />,
-      },
-      {
-        path: "/event/:eventId/edit",
-        element: <EditRecord />,
-      },
-      {
-        path: "/profile/change-password",
-        element: <ChangePassword />,
+        element: <ProtectedRoutes />,
+        children: [
+          {
+            index: true,
+            element: <Home />,
+          },
+          {
+            path: "record/add",
+            element: <AddRecord />,
+          },
+          {
+            path: "search",
+            element: <Search />,
+          },
+          {
+            path: "list/:type",
+            element: <RecordList />,
+          },
+          {
+            path: "record/:eventId",
+            element: <RecordDetail />,
+          },
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+          {
+            path: "event/:eventId/edit",
+            element: <EditRecord />,
+          },
+          {
+            path: "profile/change-password",
+            element: <ChangePassword />,
+          },
+        ],
       },
     ],
   },

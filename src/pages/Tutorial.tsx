@@ -18,7 +18,6 @@ export default function Tutorial() {
 
   useEffect(() => {
     const hasSeenSplash = localStorage.getItem("hasSeenSplash");
-    console.log(hasSeenSplash);
 
     if (!hasSeenSplash) {
       setIsSplashVisible(true);
@@ -36,6 +35,7 @@ export default function Tutorial() {
   const handleClick = () => {
     navigate("/signup");
   };
+
   return (
     <>
       {isSplashVisible && <SplashScreen />}
