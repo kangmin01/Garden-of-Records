@@ -17,11 +17,20 @@ export default function Tutorial() {
   const [isSplashVisible, setIsSplashVisible] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsSplashVisible(false);
-    }, 3000);
+    const hasSeenSplash = localStorage.getItem("hasSeenSplash");
+    console.log(hasSeenSplash);
 
-    return () => clearTimeout(timer);
+    if (!hasSeenSplash) {
+      setIsSplashVisible(true);
+      const timer = setTimeout(() => {
+        setIsSplashVisible(false);
+        localStorage.setItem("hasSeenSplash", "true");
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    } else {
+      setIsSplashVisible(false);
+    }
   }, []);
 
   const handleClick = () => {

@@ -22,7 +22,7 @@ export default function ChangePassword() {
       const response = await axios.put(
         `/user/profile`,
         {
-          org_password: data.confirmPassword,
+          org_password: data.currentPassword,
           new_password: data.newPassword,
         },
         {

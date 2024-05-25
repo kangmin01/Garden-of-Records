@@ -40,6 +40,11 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
+        path: "/",
+        element: <App />,
+        children: [{ index: true, element: <Home /> }],
+      },
+      {
         path: "/record/add ",
         element: <AddRecord />,
       },

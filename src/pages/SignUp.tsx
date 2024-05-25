@@ -23,7 +23,7 @@ const inputFields = [
   },
   {
     id: "contact",
-    type: "number",
+    type: "text",
     name: "연락처",
     placeholder: "ex) 01012345678",
     validation: {
@@ -127,6 +127,11 @@ const SignUp: React.FC = () => {
     }
   };
 
+  const handleInput: React.FormEventHandler<HTMLInputElement> = (e) => {
+    const target = e.target as HTMLInputElement;
+    target.value = target.value.replace(/[^0-9]/g, ""); // 숫자 외 문자 제거
+  };
+
   return (
     <div className="formPage">
       <Header title="회원가입" />
@@ -144,6 +149,7 @@ const SignUp: React.FC = () => {
                 id={id}
                 type={type}
                 placeholder={placeholder}
+                onInput={id === "contact" ? handleInput : undefined}
                 hasError={!!errors[id as keyof SignUpFormType]}
                 register={register(id as keyof SignUpFormType, validation)}
               />

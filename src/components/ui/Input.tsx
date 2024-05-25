@@ -9,6 +9,7 @@ type Props = {
   hasLabel?: boolean;
   hasError?: boolean;
   errorText?: boolean;
+  onInput?: React.FormEventHandler<HTMLInputElement>;
 };
 
 export default function Input({
@@ -20,6 +21,7 @@ export default function Input({
   hasLabel = true,
   hasError,
   errorText,
+  onInput,
 }: Props) {
   return (
     <input
@@ -29,6 +31,7 @@ export default function Input({
       type={type}
       placeholder={placeholder}
       {...register}
+      onInput={onInput}
     />
   );
 }

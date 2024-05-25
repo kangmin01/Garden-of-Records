@@ -107,7 +107,7 @@ export default function RecordList() {
         </div>
       </div>
       <SearchBar type={apiType[type]} />
-      {true && (
+      {showMessage && (
         <div className="w-full max-w-[360px] min-w-80 mx-auto flex justify-center">
           <div
             className={`fixed bottom-[36px] w-[320px] h-[48px] flex justify-center items-center bg-gray0 font-medium text-[14px] text-gray3 rounded-xl toast`}

@@ -19,6 +19,8 @@ import { recordInfoType, totalAmountType } from "../types/record";
 import { formatDate, todayFormat } from "../util/formatNumber";
 import { User } from "../types/user";
 import SearchIcon from "../components/ui/icons/SearchIcon";
+import HeadsetIcon from "../components/ui/icons/HeadsetIcon";
+import logo_ham from "../assets/image/logo_ham.png";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,8 +42,9 @@ export default function Home() {
         const [res1, res2, res3, res4, res5] = await Promise.all([
           axios.get(`/invitation/expenses`, {
             params: {
-              is_invited: "all",
+              is_invited: "invited",
               offset: formatDate(todayFormat()) + "0000",
+              order: "asc",
             },
             headers: {
               "access-token": token,
@@ -135,25 +138,37 @@ export default function Home() {
           <div className="w-[86px] h-[19px]">
             <img src={header_title} alt="헤더 제목" />
           </div>
-
           {/* 뒷배경 */}
           <div
             className={`absolute top-0 left-0 w-[320px] mx-auto h-dvh bg-black bg-opacity-70 z-10 ${isMenuOpen ? "block" : "hidden"}`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           ></div>
-
           {/* 아이콘 */}
+
           <div
-            className="cursor-pointer z-30"
+            className="cursor-pointer z-30 relative"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ? <CloseIcon /> : <HamburgerIcon />}
+            {isMenuOpen ? (
+              <div className="relative top-[52px] right-[0px]">
+                <CloseIcon />
+              </div>
+            ) : (
+              <HamburgerIcon />
+            )}
           </div>
-
           {/* 메뉴바 */}
           <div
             className={`absolute top-0 left-16 h-dvh w-[304px] bg-white flex flex-col transition-transform transform ${isMenuOpen ? "translate-x-0" : "translate-x-full"} z-20`}
           >
+            {/* 로고 */}
+            <div>
+              <img
+                src={logo_ham}
+                alt="로고"
+                className="w-[91px] h-[32px] ml-[20px] mt-[16px]"
+              />
+            </div>
             {/* 헤더 */}
             <div className="flex items-center pl-[20px] w-[304px] h-[52px] border-solid border-b-[1px] border-gray0">
               <h2 className="text-gray4 text-[18px] font-medium">메뉴</h2>
@@ -172,7 +187,7 @@ export default function Home() {
                     className="w-[29px] h-[33px] object-contain rounded-full"
                   />
                 </div>
-                <div className="flex flex-col justify-center h-[38px] max-h-[38px] mr-[33px]">
+                <div className="flex flex-col justify-center h-[38px] max-h-[38px] mr-[39px]">
                   <div className="flex items-center">
                     <span className="text-gray4 text-[16px] font-medium">
                       {info?.user_name}
@@ -183,7 +198,7 @@ export default function Home() {
                     {info?.email}
                   </span>
                 </div>
-                <div>
+                <div className="text-gray3">
                   <RightChevron />
                 </div>
               </Link>
@@ -242,8 +257,11 @@ export default function Home() {
 
             {/* Footer */}
             <div className="flex w-[264px] justify-between items-center absolute bottom-5 left-5 font-normal text-gray2 text-[14px]">
-              <div className="flex items-center space-x-2">고객센터</div>
-              <div className="">© T기타카</div>
+              <div className="flex items-center justify-center space-x-2">
+                <HeadsetIcon />
+                <span>고객센터</span>
+              </div>
+              <div className="">© T키타카</div>
             </div>
           </div>
           <div
