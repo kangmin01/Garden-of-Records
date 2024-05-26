@@ -8,9 +8,17 @@ export default function FloatingButton() {
   console.log(displayHeight);
 
   useEffect(() => {
+    const handleResize = () => {
+      setDisplayHeight(window.innerHeight);
+    };
+    window.addEventListener("resize", handleResize);
+
     if (displayHeight > 0) {
       setReady(true);
     }
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, [displayHeight]);
 
   return (
