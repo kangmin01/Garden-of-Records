@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export default function FloatingButton() {
   const [displayHeight, setDisplayHeight] = useState(window.innerHeight);
   const [ready, setReady] = useState(false);
-  console.log(displayHeight);
+  // console.log(displayHeight);
 
   useEffect(() => {
     const handleResize = () => {
