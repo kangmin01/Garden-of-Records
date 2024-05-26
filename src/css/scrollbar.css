@@ -1,0 +1,17 @@
+::-webkit-scrollbar {
+  width: 2px; /* 스크롤바의 너비 */
+}
+
+::-webkit-scrollbar-track {
+  background: #f9f9f9; /* 스크롤바 트랙의 배경색 */
+  border-radius: 8px; /* 스크롤바 트랙의 라운드 처리 */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ececec; /* 스크롤바의 색상 */
+  border-radius: 16px; /* 스크롤바의 라운드 처리 */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e1e1e1; /* 스크롤바 호버 시 색상 */
+}
