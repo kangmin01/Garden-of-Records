@@ -269,6 +269,7 @@ export default function Home() {
                 className={`absolute top-0 right-[-310px] h-dvh w-[304px] bg-white flex flex-col z-50`}
               ></div>
             </nav>
+            <FloatingButton />
             <div className="bg-green0 absolute h-[388px] w-[360px] rounded-b-[20px]"></div>
             <div className="w-[360px] absolute flex flex-col items-center">
               <div className="flex flex-col items-center mt-3 mb-6">
@@ -318,7 +319,6 @@ export default function Home() {
               )}
             </div>
           </div>
-          <FloatingButton />
         </>
       )}
       {state.message && <Snackbar />}
