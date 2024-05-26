@@ -7,6 +7,8 @@ import { useAuthContext } from "../context/AuthContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import RightChevronThin from "../components/ui/icons/RightChevronThin";
 import CheckIcon from "../components/ui/icons/CheckIcon";
+import { useMessage } from "../context/MessageContext";
+import { Snackbar } from "../components/SnackBar";
 
 export default function Profile() {
   const token = localStorage.getItem("access_token");
@@ -15,21 +17,17 @@ export default function Profile() {
   const navigate = useNavigate();
   const { logout } = useAuthContext();
 
-  const location = useLocation();
-
-  const message = location.state?.message;
-
-  const [showMessage, setShowMessage] = useState(false);
+  const { state, clearMessage } = useMessage();
 
   useEffect(() => {
-    if (message) {
-      setShowMessage(true);
+    if (state.message) {
       const timer = setTimeout(() => {
-        setShowMessage(false);
+        clearMessage();
       }, 3000);
+
       return () => clearTimeout(timer);
     }
-  }, [message]);
+  }, [state]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -100,16 +98,7 @@ export default function Profile() {
           <span className="cursor-pointer">회원탈퇴</span>
         </div>
       </div>
-      {showMessage && (
-        <div className="w-full max-w-[360px] min-w-80 mx-auto flex justify-center">
-          <div
-            className={`gap-2 fixed bottom-[80px] w-[320px] h-[48px] flex justify-center items-center bg-gray0 font-medium text-[14px] text-gray3 rounded-xl toast`}
-          >
-            <CheckIcon />
-            {message}
-          </div>
-        </div>
-      )}
+      {state.message && <Snackbar />}
     </section>
   );
 }

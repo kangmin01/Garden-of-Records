@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "../components/ui/Input";
 import Header from "../components/Header";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useMessage } from "../context/MessageContext";
+import CheckIcon from "../components/ui/icons/CheckIcon";
+import DangerIcon from "../components/ui/icons/DangerIcon";
+import { Snackbar } from "../components/SnackBar";
 
 interface SignUpFormType {
   name: string;
@@ -100,6 +104,17 @@ const SignUp: React.FC = () => {
   } = useForm<SignUpFormType>({ mode: "onBlur" });
 
   const navigate = useNavigate();
+  const { state, setMessage, clearMessage } = useMessage();
+
+  useEffect(() => {
+    if (state.message) {
+      const timer = setTimeout(() => {
+        clearMessage();
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [state]);
 
   const onSubmit: SubmitHandler<SignUpFormType> = async (data) => {
     try {
@@ -118,10 +133,11 @@ const SignUp: React.FC = () => {
         }
       );
       // console.log("회원가입 성공", response);
-      navigate("/signin", {
-        state: { message: "회원가입이 완료 되었습니다." },
-      });
+      navigate("/signin");
+      setMessage("회원가입이 완료 되었습니다.", <CheckIcon />);
     } catch (error) {
+      console.log("?");
+      setMessage("이미 등록된 이메일입니다.", <DangerIcon />);
       console.error("회원가입 오류:", error);
       // 오류 처리 로직 추가 (예: 사용자에게 오류 알림)
     }
@@ -129,7 +145,7 @@ const SignUp: React.FC = () => {
 
   const handleInput: React.FormEventHandler<HTMLInputElement> = (e) => {
     const target = e.target as HTMLInputElement;
-    target.value = target.value.replace(/[^0-9]/g, ""); // 숫자 외 문자 제거
+    target.value = target.value.replace(/[^0-9]/g, "");
   };
 
   return (
@@ -161,7 +177,7 @@ const SignUp: React.FC = () => {
             </div>
           ))}
         </div>
-        <div className="authenticationButtonDiv mt-10">
+        <div className="authenticationButtonDiv mt-[170px]">
           <button
             type="submit"
             disabled={!isValid}
@@ -171,6 +187,11 @@ const SignUp: React.FC = () => {
           </button>
         </div>
       </form>
+      {state.message && state.message === "이미 등록된 이메일입니다." ? (
+        <Snackbar position="top" />
+      ) : (
+        <Snackbar />
+      )}
     </div>
   );
 };

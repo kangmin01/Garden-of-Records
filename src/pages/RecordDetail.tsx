@@ -7,6 +7,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { recordInfoType } from "../types/record";
 import { formatNumber } from "../util/formatNumber";
+import DangerIcon from "../components/ui/icons/DangerIcon";
+import { useMessage } from "../context/MessageContext";
+import { Snackbar } from "../components/SnackBar";
 
 type Params = {
   eventId: string;
@@ -18,6 +21,7 @@ export default function RecordDetail() {
   const token = localStorage.getItem("access_token");
 
   const navigate = useNavigate();
+  const { setMessage, state } = useMessage();
 
   const [record, setRecord] = useState<recordInfoType | null>(null);
 
@@ -68,10 +72,8 @@ export default function RecordDetail() {
       );
 
       // console.log("삭제 성공");
-      navigate("/", {
-        replace: true,
-        state: { message: "삭제되었습니다." },
-      });
+      navigate("/");
+      setMessage("삭제되었습니다.", <DangerIcon />);
     } catch (error) {
       console.error("삭제 실패", error);
     }
@@ -135,6 +137,7 @@ export default function RecordDetail() {
           </div>
         </>
       )}
+      {state.message && <Snackbar />}
     </section>
   );
 }

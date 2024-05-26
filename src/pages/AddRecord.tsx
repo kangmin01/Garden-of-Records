@@ -23,6 +23,8 @@ import {
   InvalidState,
   PayloadType,
 } from "../types/record";
+import { useMessage } from "../context/MessageContext";
+import CheckIcon from "../components/ui/icons/CheckIcon";
 
 const urlPattern = new RegExp(
   "^(https?:\\/\\/)?" +
@@ -55,6 +57,7 @@ export default function AddRecord() {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const navigate = useNavigate();
+  const { setMessage } = useMessage();
 
   const handleItemClick = (item: keyof FormValues, value: string) => {
     setValue(item, value);
@@ -131,10 +134,8 @@ export default function AddRecord() {
         }
       );
       console.log("기록 등록 결과", response.data);
-      // navigate("/");
-      navigate("/", {
-        state: { message: "기록이 완료되었습니다.", icon: "check" },
-      });
+      navigate("/");
+      setMessage("기록이 완료 되었습니다.", <CheckIcon />);
     } catch (error) {
       // console.log("등록 실패");
       console.error("Error fetching data:", error);

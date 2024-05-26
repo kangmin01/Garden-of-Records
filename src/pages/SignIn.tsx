@@ -5,6 +5,8 @@ import Input from "../components/ui/Input";
 import axios from "axios";
 import { useAuthContext } from "../context/AuthContext";
 import logo_login from "../assets/image/logo_login.png";
+import { useMessage } from "../context/MessageContext";
+import { Snackbar } from "../components/SnackBar";
 
 interface SignInFormType {
   email: string;
@@ -19,20 +21,17 @@ const SignIn: React.FC = () => {
   } = useForm<SignInFormType>({ mode: "all" });
   const { login } = useAuthContext();
   const navigate = useNavigate();
-  const location = useLocation();
-  const message = location.state?.message;
-
-  const [showMessage, setShowMessage] = useState(false);
+  const { state, clearMessage } = useMessage();
 
   useEffect(() => {
-    if (message) {
-      setShowMessage(true);
+    if (state.message) {
       const timer = setTimeout(() => {
-        setShowMessage(false);
+        clearMessage();
       }, 3000);
+
       return () => clearTimeout(timer);
     }
-  }, [message]);
+  }, [state]);
 
   const onSubmit: SubmitHandler<SignInFormType> = async (data) => {
     // console.log(data);
@@ -119,13 +118,7 @@ const SignIn: React.FC = () => {
           </div>
         </div>
       </form>
-      {showMessage && (
-        <div
-          className={`fixed bottom-[36px] w-[320px] h-[48px] flex justify-center items-center bg-gray0 font-medium text-[14px] text-gray3 rounded-xl toast`}
-        >
-          {message}
-        </div>
-      )}
+      {state.message && <Snackbar />}
     </div>
   );
 };

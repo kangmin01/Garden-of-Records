@@ -24,6 +24,8 @@ import {
   PayloadType,
   recordInfoType,
 } from "../types/record";
+import { useMessage } from "../context/MessageContext";
+import CheckIcon from "../components/ui/icons/CheckIcon";
 
 const urlPattern = new RegExp(
   "^(https?:\\/\\/)?" +
@@ -56,6 +58,7 @@ export default function EditRecord() {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const navigate = useNavigate();
+  const { setMessage, state } = useMessage();
 
   const handleItemClick = (item: keyof FormValues, value: string) => {
     setValue(item, value);
@@ -135,6 +138,7 @@ export default function EditRecord() {
       );
       // console.log("기록 수정 결과", response.data);
       navigate("/");
+      setMessage("수정 완료 되었습니다.", <CheckIcon />);
     } catch (error) {
       // console.log("기록 수정 실패");
       console.error("Error fetching data:", error);

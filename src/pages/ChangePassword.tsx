@@ -3,8 +3,11 @@ import Header from "../components/Header";
 import { ChangePasswordType } from "../types/user";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import DangerIcon from "../components/ui/icons/DangerIcon";
+import { useMessage } from "../context/MessageContext";
+import CheckIcon from "../components/ui/icons/CheckIcon";
+import { Snackbar } from "../components/SnackBar";
 
 export default function ChangePassword() {
   const {
@@ -17,15 +20,24 @@ export default function ChangePassword() {
   const token = localStorage.getItem("access_token");
   const navigate = useNavigate();
 
-  const [showMessage, setShowMessage] = useState(false);
+  const { setMessage, clearMessage, state } = useMessage();
+
+  useEffect(() => {
+    if (state.message) {
+      const timer = setTimeout(() => {
+        clearMessage();
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   const onSubmit: SubmitHandler<ChangePasswordType> = async (data) => {
-    setShowMessage(false);
     // console.log(data);
 
     try {
       const response = await axios.put(
-        `${process.env.REACT_APP_BASE_URL}/invitation/expense/user/profile`,
+        `${process.env.REACT_APP_BASE_URL}/user/profile`,
         {
           org_password: data.currentPassword,
           new_password: data.newPassword,
@@ -38,12 +50,11 @@ export default function ChangePassword() {
         }
       );
       // console.log("비밀번호 변경 성공", response);
-      navigate("/profile", {
-        state: { message: "회원가입이 완료 되었습니다." },
-      });
+      navigate("/profile");
+      setMessage("비밀번호가 변경되었습니다.", <CheckIcon />);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        setShowMessage(true);
+        setMessage("현재 비밀번호가 일치하지 않습니다.", <DangerIcon />);
         console.error("비밀번호 변경 오류", error.response?.data.detail);
       } else {
         console.error("비밀번호 변경 오류", error);
@@ -145,15 +156,11 @@ export default function ChangePassword() {
           </button>
         </form>
       </div>
-      {showMessage && (
-        <div className="w-full max-w-[360px] min-w-80 mx-auto flex justify-center">
-          <div
-            className={`gap-[10px] absolute top-[600px] w-[320px] h-[48px] flex justify-center items-center bg-gray0 font-medium text-[14px] text-gray3 rounded-xl fadeInOut`}
-          >
-            <DangerIcon />
-            현재 비밀번호가 일치하지 않습니다!
-          </div>
-        </div>
+      {state.message &&
+      state.message === "현재 비밀번호가 일치하지 않습니다." ? (
+        <Snackbar position="top" />
+      ) : (
+        <Snackbar />
       )}
     </section>
   );

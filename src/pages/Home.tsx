@@ -27,29 +27,15 @@ import {
 import { useQueries } from "react-query";
 import { Oval } from "react-loader-spinner";
 import CheckIcon from "../components/ui/icons/CheckIcon";
+import { Snackbar } from "../components/SnackBar";
+import { useMessage } from "../context/MessageContext";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [keyword, setKeyword] = useState("");
+  const { state, clearMessage } = useMessage();
 
   const navigate = useNavigate();
-
-  const location = useLocation();
-
-  const message = location.state?.message;
-  const icon = location.state?.icon;
-
-  const [showMessage, setShowMessage] = useState(false);
-
-  useEffect(() => {
-    if (message) {
-      setShowMessage(true);
-      const timer = setTimeout(() => {
-        setShowMessage(false);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [message]);
 
   const token = localStorage.getItem("access_token") as string;
 
@@ -58,6 +44,16 @@ export default function Home() {
       navigate("/tutorial");
     }
   }, []);
+
+  useEffect(() => {
+    if (state.message) {
+      const timer = setTimeout(() => {
+        clearMessage();
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [state]);
 
   const results = useQueries([
     {
@@ -326,16 +322,7 @@ export default function Home() {
           <FloatingButton />
         </>
       )}
-      {showMessage && (
-        <div className="w-full max-w-[360px] min-w-80 mx-auto flex justify-center">
-          <div
-            className={`gap-2 fixed bottom-[80px] w-[320px] h-[48px] flex justify-center items-center bg-gray0 font-medium text-[14px] text-gray3 rounded-xl toast`}
-          >
-            {icon === "check" ? <CheckIcon /> : ""}
-            {message}
-          </div>
-        </div>
-      )}
+      {state.message && <Snackbar />}
     </>
   );
 }
