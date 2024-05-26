@@ -26,6 +26,7 @@ import {
 } from "../api";
 import { useQueries } from "react-query";
 import { Oval } from "react-loader-spinner";
+import CheckIcon from "../components/ui/icons/CheckIcon";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,6 +37,7 @@ export default function Home() {
   const location = useLocation();
 
   const message = location.state?.message;
+  const icon = location.state?.icon;
 
   const [showMessage, setShowMessage] = useState(false);
 
@@ -327,8 +329,9 @@ export default function Home() {
       {showMessage && (
         <div className="w-full max-w-[360px] min-w-80 mx-auto flex justify-center">
           <div
-            className={`fixed bottom-[36px] w-[320px] h-[48px] flex justify-center items-center bg-gray0 font-medium text-[14px] text-gray3 rounded-xl toast`}
+            className={`gap-2 fixed bottom-[80px] w-[320px] h-[48px] flex justify-center items-center bg-gray0 font-medium text-[14px] text-gray3 rounded-xl toast`}
           >
+            {icon === "check" ? <CheckIcon /> : ""}
             {message}
           </div>
         </div>

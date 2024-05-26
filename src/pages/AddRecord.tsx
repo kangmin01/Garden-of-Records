@@ -107,7 +107,7 @@ export default function AddRecord() {
       name: data.name,
       event_date: dateTime,
       is_attended: data.attendance === false ? 1 : 2,
-      expense: Number(data.amount),
+      expense: Number(data.amount) || 0,
     };
 
     if (data.relation) {
@@ -131,7 +131,10 @@ export default function AddRecord() {
         }
       );
       console.log("기록 등록 결과", response.data);
-      navigate("/");
+      // navigate("/");
+      navigate("/", {
+        state: { message: "기록이 완료되었습니다.", icon: "check" },
+      });
     } catch (error) {
       // console.log("등록 실패");
       console.error("Error fetching data:", error);
@@ -140,8 +143,8 @@ export default function AddRecord() {
 
   const nameValue = watch("name");
   const dateValue = watch("date");
-  const amountValue = watch("amount");
-  const allRequiredFieldsFilled = nameValue && dateValue && amountValue;
+  const relationValue = watch("relation");
+  const allRequiredFieldsFilled = nameValue && dateValue && relationValue;
 
   const [tab, setTab] = useState("invited");
   const handleTab = () => {
@@ -196,8 +199,13 @@ export default function AddRecord() {
           <Input
             id="name"
             type="text"
-            placeholder={``}
+            placeholder={
+              tab === "invited"
+                ? "축의금 받으신 분의 이름"
+                : "축의금 받으실 분의 이름"
+            }
             hasError={!!errors.name}
+            maxLength={6}
             register={register("name", {
               required: "이름을 입력해주세요.",
               pattern: {
@@ -230,6 +238,7 @@ export default function AddRecord() {
                     type="text"
                     {...field}
                     value={field.value}
+                    maxLength={6}
                     onChange={(e) => {
                       field.onChange(e.target.value);
                       if (e.target.value) {
