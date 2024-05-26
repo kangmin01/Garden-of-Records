@@ -104,8 +104,10 @@ export default function RecordDetail() {
                   <span className="font-semibold text-[18px]">원</span>
                 </div>
               </div>
-              <Link
-                to={record.link}
+              <a
+                href={record.link}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`flex ${record.link === "" ? "cursor-default" : "cursor-pointer"} justify-center items-center h-[24px] mt-[16px]`}
               >
                 <span
@@ -117,7 +119,7 @@ export default function RecordDetail() {
                   color={`${record.link === "" ? "#808080" : record.is_invited === 1 ? "#EF9509" : "#37A041"}`}
                   size={13}
                 />
-              </Link>
+              </a>
             </div>
           </div>
           <RecordDetailList record={record} />
