@@ -7,6 +7,7 @@ import { useAuthContext } from "../context/AuthContext";
 import logo_login from "../assets/image/logo_login.png";
 import { useMessage } from "../context/MessageContext";
 import { Snackbar } from "../components/SnackBar";
+import FloatingButton from "../components/ui/FloatingButton";
 
 interface SignInFormType {
   email: string;
@@ -48,7 +49,7 @@ const SignIn: React.FC = () => {
           },
         }
       );
-      console.log("로그인 성공", response);
+      // console.log("로그인 성공", response);
       login(response.data.access_token);
       navigate("/");
     } catch (error) {

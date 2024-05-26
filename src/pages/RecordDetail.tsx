@@ -42,7 +42,7 @@ export default function RecordDetail() {
         );
 
         if (response.data) {
-          console.log(response.data);
+          // console.log(response.data);
           setRecord(response.data);
         } else {
           setRecord(null);

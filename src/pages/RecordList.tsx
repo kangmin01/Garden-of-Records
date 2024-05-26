@@ -5,6 +5,7 @@ import SearchBar from "../components/SearchBar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { formatNumber } from "../util/formatNumber";
+import FloatingButton from "../components/ui/FloatingButton";
 
 type Params = {
   type: "send" | "receive";
@@ -94,6 +95,7 @@ export default function RecordList() {
         </div>
       </div>
       <SearchBar type={apiType[type]} />
+      <FloatingButton />
     </section>
   );
 }

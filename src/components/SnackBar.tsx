@@ -7,7 +7,6 @@ type Props = {
 
 export const Snackbar = ({ position }: Props) => {
   const { state, clearMessage } = useMessage();
-  console.log(state);
 
   useEffect(() => {
     if (state.message) {

@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import BackButton from "../components/ui/BackButton";
-import { useState } from "react";
+import FloatingButton from "../components/ui/FloatingButton";
 
 export default function Search() {
   const location = useLocation();
@@ -14,6 +14,7 @@ export default function Search() {
         <h2 className="text-[18px] font-semibold mx-auto">검색</h2>
       </nav>
       <SearchBar word={keyword} />
+      <FloatingButton />
     </section>
   );
 }

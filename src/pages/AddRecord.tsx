@@ -122,7 +122,6 @@ export default function AddRecord() {
     }
 
     try {
-      console.log(payload);
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/invitation/expense`,
         payload,
@@ -133,7 +132,6 @@ export default function AddRecord() {
           },
         }
       );
-      console.log("기록 등록 결과", response.data);
       navigate("/");
       setMessage("기록이 완료 되었습니다.", <CheckIcon />);
     } catch (error) {
