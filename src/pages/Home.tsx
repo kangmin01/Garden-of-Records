@@ -142,7 +142,6 @@ export default function Home() {
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               ></div>
               {/* 아이콘 */}
-
               <div
                 className="cursor-pointer z-30 relative"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -157,7 +156,7 @@ export default function Home() {
               </div>
               {/* 메뉴바 */}
               <div
-                className={`absolute top-0 left-16 h-dvh w-[304px] bg-white flex flex-col transition-transform transform ${isMenuOpen ? "translate-x-0" : "translate-x-full"} z-20`}
+                className={`absolute top-0 left-16 h-dvh w-[304px] bg-white flex flex-col transition-transform transform ${isMenuOpen ? "translate-x-0" : "translate-x-full hidden"} z-20`}
               >
                 {/* 로고 */}
                 <div>

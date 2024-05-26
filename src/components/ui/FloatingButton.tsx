@@ -3,8 +3,9 @@ import PlusIcon from "./icons/PlusIcon";
 import { useEffect, useState } from "react";
 
 export default function FloatingButton() {
-  const displayHeight = window.innerHeight;
+  const [displayHeight, setDisplayHeight] = useState(window.innerHeight);
   const [ready, setReady] = useState(false);
+  console.log(displayHeight);
 
   useEffect(() => {
     if (displayHeight > 0) {
