@@ -258,9 +258,14 @@ export default function Home() {
                 <div className="flex w-[264px] justify-between items-center absolute bottom-5 left-5 font-normal text-gray2 text-[14px]">
                   <div className="flex items-center justify-center space-x-2">
                     <HeadsetIcon />
-                    <Link to="https://pf.kakao.com/_ZHaLG" className="pt-[3px]">
+                    <a
+                      href="https://pf.kakao.com/_ZHaLG"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="pt-[3px]"
+                    >
                       기록의 정원사
-                    </Link>
+                    </a>
                   </div>
                   <div className="">© T키타카</div>
                 </div>
