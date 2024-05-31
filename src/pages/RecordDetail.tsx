@@ -10,6 +10,7 @@ import { formatNumber } from "../util/formatNumber";
 import DangerIcon from "../components/ui/icons/DangerIcon";
 import { useMessage } from "../context/MessageContext";
 import { Snackbar } from "../components/SnackBar";
+import axiosInstance from "../api/axiosInstance";
 
 type Params = {
   eventId: string;
@@ -28,18 +29,15 @@ export default function RecordDetail() {
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/invitation/expense`,
-          {
-            params: {
-              event_id: eventId,
-            },
-            headers: {
-              "access-token": token,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await axiosInstance.get(`/invitation/expense`, {
+          params: {
+            event_id: eventId,
+          },
+          headers: {
+            "access-token": token,
+            "Content-Type": "application/json",
+          },
+        });
 
         if (response.data) {
           // console.log(response.data);
@@ -58,18 +56,15 @@ export default function RecordDetail() {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(
-        `${process.env.REACT_APP_BASE_URL}/invitation/expense`,
-        {
-          params: {
-            event_id: eventId,
-          },
-          headers: {
-            "access-token": token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      await axiosInstance.delete(`/invitation/expense`, {
+        params: {
+          event_id: eventId,
+        },
+        headers: {
+          "access-token": token,
+          "Content-Type": "application/json",
+        },
+      });
 
       // console.log("삭제 성공");
       navigate("/");

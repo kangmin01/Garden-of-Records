@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { formatNumber } from "../util/formatNumber";
 import FloatingButton from "../components/ui/FloatingButton";
+import axiosInstance from "../api/axiosInstance";
 
 type Params = {
   type: "send" | "receive";
@@ -28,7 +29,7 @@ export default function RecordList() {
     const fetchData = async () => {
       try {
         const [recordsResponse, totalResponse] = await Promise.all([
-          axios.get(`${process.env.REACT_APP_BASE_URL}/invitation/expenses`, {
+          axiosInstance.get(`/invitation/expenses`, {
             params: {
               is_invited: apiType[type],
             },
@@ -37,18 +38,15 @@ export default function RecordList() {
               "Content-Type": "application/json",
             },
           }),
-          axios.get(
-            `${process.env.REACT_APP_BASE_URL}/invitation/expense/total`,
-            {
-              params: {
-                is_invited: apiType[type],
-              },
-              headers: {
-                "access-token": token,
-                "Content-Type": "application/json",
-              },
-            }
-          ),
+          axiosInstance.get(`/invitation/expense/total`, {
+            params: {
+              is_invited: apiType[type],
+            },
+            headers: {
+              "access-token": token,
+              "Content-Type": "application/json",
+            },
+          }),
         ]);
 
         if (recordsResponse.data) {

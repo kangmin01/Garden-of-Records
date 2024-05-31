@@ -9,6 +9,7 @@ import RightChevronThin from "../components/ui/icons/RightChevronThin";
 import CheckIcon from "../components/ui/icons/CheckIcon";
 import { useMessage } from "../context/MessageContext";
 import { Snackbar } from "../components/SnackBar";
+import axiosInstance from "../api/axiosInstance";
 
 export default function Profile() {
   const token = localStorage.getItem("access_token");
@@ -32,15 +33,12 @@ export default function Profile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/user/profile`,
-          {
-            headers: {
-              "access-token": token,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await axiosInstance.get(`/user/profile`, {
+          headers: {
+            "access-token": token,
+            "Content-Type": "application/json",
+          },
+        });
 
         // console.log("프로필 결과", response.data);
         if (response.data) {

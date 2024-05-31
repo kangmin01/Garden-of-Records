@@ -8,6 +8,7 @@ import logo_login from "../assets/image/logo_login.png";
 import { useMessage } from "../context/MessageContext";
 import { Snackbar } from "../components/SnackBar";
 import FloatingButton from "../components/ui/FloatingButton";
+import axiosInstance from "../api/axiosInstance";
 
 interface SignInFormType {
   email: string;
@@ -37,8 +38,8 @@ const SignIn: React.FC = () => {
   const onSubmit: SubmitHandler<SignInFormType> = async (data) => {
     // console.log(data);
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/user/login`,
+      const response = await axiosInstance.post(
+        `/user/login`,
         {
           email: data.email,
           user_password: data.password,
@@ -49,8 +50,8 @@ const SignIn: React.FC = () => {
           },
         }
       );
-      // console.log("로그인 성공", response);
-      login(response.data.access_token);
+      console.log("로그인 성공", response);
+      login(response.data.access_token, response.data.refresh_token);
       navigate("/");
     } catch (error) {
       console.error("로그인 오류:", error);

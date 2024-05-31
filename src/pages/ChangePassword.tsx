@@ -8,6 +8,7 @@ import DangerIcon from "../components/ui/icons/DangerIcon";
 import { useMessage } from "../context/MessageContext";
 import CheckIcon from "../components/ui/icons/CheckIcon";
 import { Snackbar } from "../components/SnackBar";
+import axiosInstance from "../api/axiosInstance";
 
 export default function ChangePassword() {
   const {
@@ -36,8 +37,8 @@ export default function ChangePassword() {
     // console.log(data);
 
     try {
-      const response = await axios.put(
-        `${process.env.REACT_APP_BASE_URL}/user/profile`,
+      const response = await axiosInstance.put(
+        `/user/profile`,
         {
           org_password: data.currentPassword,
           new_password: data.newPassword,

@@ -8,6 +8,7 @@ import { useMessage } from "../context/MessageContext";
 import CheckIcon from "../components/ui/icons/CheckIcon";
 import DangerIcon from "../components/ui/icons/DangerIcon";
 import { Snackbar } from "../components/SnackBar";
+import axiosInstance from "../api/axiosInstance";
 
 interface SignUpFormType {
   name: string;
@@ -118,8 +119,8 @@ const SignUp: React.FC = () => {
 
   const onSubmit: SubmitHandler<SignUpFormType> = async (data) => {
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/user/signup`,
+      const response = await axiosInstance.post(
+        `/user/signup`,
         {
           user_name: data.name,
           email: data.email,

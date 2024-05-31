@@ -25,6 +25,7 @@ import {
 } from "../types/record";
 import { useMessage } from "../context/MessageContext";
 import CheckIcon from "../components/ui/icons/CheckIcon";
+import axiosInstance from "../api/axiosInstance";
 
 const urlPattern = new RegExp(
   "^(https?:\\/\\/)?" +
@@ -122,8 +123,8 @@ export default function AddRecord() {
     }
 
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/invitation/expense`,
+      const response = await axiosInstance.post(
+        `/invitation/expense`,
         payload,
         {
           headers: {

@@ -7,7 +7,7 @@ type Props = {
 
 const AuthContext = createContext({
   isAuthenticated: false,
-  login: (token: string) => {},
+  login: (access: string, refresh: string) => {},
   logout: () => {},
 });
 
@@ -16,8 +16,9 @@ export function AuthContextProvider({ children }: Props) {
     !!localStorage.getItem("access_token")
   );
 
-  const login = (token: string) => {
-    localStorage.setItem("access_token", token);
+  const login = (access: string, refresh: string) => {
+    localStorage.setItem("access_token", access);
+    localStorage.setItem("refresh_token", refresh);
     setIsAuthenticated(true);
   };
 

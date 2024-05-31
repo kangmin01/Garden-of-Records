@@ -4,6 +4,7 @@ import axios from "axios";
 import EventList from "./EventList";
 import not_found from "../assets/image/not_found.png";
 import { Link } from "react-router-dom";
+import axiosInstance from "../api/axiosInstance";
 
 type Props = {
   type?: string;
@@ -31,16 +32,13 @@ export default function SearchBar({ type, word }: Props) {
           setKeyword(word);
         }
 
-        const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/invitation/expense/search`,
-          {
-            params: payload,
-            headers: {
-              "access-token": token,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await axiosInstance.get(`/invitation/expense/search`, {
+          params: payload,
+          headers: {
+            "access-token": token,
+            "Content-Type": "application/json",
+          },
+        });
 
         if (response.data) {
           setSearchResults(response.data);
@@ -61,19 +59,16 @@ export default function SearchBar({ type, word }: Props) {
     if (!keyword) return;
 
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/invitation/expense/search`,
-        {
-          params: {
-            name: keyword,
-            is_invited: !type ? "all" : type,
-          },
-          headers: {
-            "access-token": token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axiosInstance.get(`/invitation/expense/search`, {
+        params: {
+          name: keyword,
+          is_invited: !type ? "all" : type,
+        },
+        headers: {
+          "access-token": token,
+          "Content-Type": "application/json",
+        },
+      });
 
       // console.log("검색 결과", response.data);
       if (response.data) {
