@@ -17,18 +17,18 @@ import EventList from "../components/EventList";
 import SearchIcon from "../components/ui/icons/SearchIcon";
 import HeadsetIcon from "../components/ui/icons/HeadsetIcon";
 import logo_ham from "../assets/image/logo_ham.png";
-import {
-  fetchUpcomingEvents,
-  fetchTotalSendAmounts,
-  fetchTotalReceiveAmounts,
-  fetchUserInfo,
-  fetchUserScore,
-} from "../api";
 import { useQueries } from "react-query";
 import { Oval } from "react-loader-spinner";
 import CheckIcon from "../components/ui/icons/CheckIcon";
 import { Snackbar } from "../components/SnackBar";
 import { useMessage } from "../context/MessageContext";
+import {
+  fetchTotalReceiveAmounts,
+  fetchTotalSendAmounts,
+  fetchUpcomingEvents,
+  fetchUserInfo,
+  fetchUserScore,
+} from "../api/api";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
