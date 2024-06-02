@@ -38,10 +38,15 @@ export default function Home() {
   const navigate = useNavigate();
 
   const token = localStorage.getItem("access_token") as string;
+  const hasSeenSplash = localStorage.getItem("hasSeenSplash") as string;
 
   useEffect(() => {
     if (!token) {
-      navigate("/tutorial");
+      if (hasSeenSplash === "true") {
+        navigate("/signin");
+      } else {
+        navigate("/tutorial");
+      }
     }
   }, []);
 

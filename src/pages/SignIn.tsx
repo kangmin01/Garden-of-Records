@@ -9,6 +9,7 @@ import { useMessage } from "../context/MessageContext";
 import { Snackbar } from "../components/SnackBar";
 import FloatingButton from "../components/ui/FloatingButton";
 import axiosInstance from "../api/axiosInstance";
+import DangerIcon from "../components/ui/icons/DangerIcon";
 
 interface SignInFormType {
   email: string;
@@ -23,7 +24,7 @@ const SignIn: React.FC = () => {
   } = useForm<SignInFormType>({ mode: "all" });
   const { login } = useAuthContext();
   const navigate = useNavigate();
-  const { state, clearMessage } = useMessage();
+  const { state, clearMessage, setMessage } = useMessage();
 
   useEffect(() => {
     if (state.message) {
@@ -34,6 +35,19 @@ const SignIn: React.FC = () => {
       return () => clearTimeout(timer);
     }
   }, [state]);
+
+  useEffect(() => {
+    const tokenExpired = localStorage.getItem("token_expired");
+    if (tokenExpired === "true") {
+      setMessage("토큰이 만료되었습니다.", <DangerIcon />);
+      const timer = setTimeout(() => {
+        localStorage.removeItem("token_expired");
+        clearMessage();
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   const onSubmit: SubmitHandler<SignInFormType> = async (data) => {
     // console.log(data);

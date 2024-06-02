@@ -1,4 +1,6 @@
 import Axios, { AxiosError } from "axios";
+import { useMessage } from "../context/MessageContext";
+import CheckIcon from "../components/ui/icons/CheckIcon";
 
 const axiosInstance = Axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
@@ -34,30 +36,34 @@ axiosInstance.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    console.log("error.config", error.config);
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      console.log("응답 401");
-      // const refreshToken = localStorage.getItem("refresh_token");
-      // if (refreshToken) {
-      //   try {
-      //     const { data } = await axiosInstance.post("/user/token", {
-      //       token: refreshToken,
-      //     });
-      //     localStorage.setItem("access_token", data.accessToken);
-      //     originalRequest.headers["access-token"] = data.accessToken;
-      //     return axiosInstance(originalRequest);
-      //   } catch (refreshError) {
-      //     const axiosError = refreshError as AxiosError;
-      //     if (axiosError.response && axiosError.response.status === 401) {
-      //       localStorage.removeItem("accessToken");
-      //       localStorage.removeItem("refreshToken");
-      //       window.location.href = "/signin";
-      //     }
-      //   }
-      // } else {
-      //   window.location.href = "/signin";
-      // }
+      const refreshToken = localStorage.getItem("refresh_token");
+      if (refreshToken) {
+        try {
+          const { data } = await axiosInstance.post("/user/token", null);
+          // const { data } = await axiosInstance.post("/user/token", null, {
+          //   headers: {
+          //     "refresh-token": refreshToken,
+          //     "Content-Type": "application/json",
+          //   },
+          // });
+          localStorage.setItem("access_token", data.access_token);
+          localStorage.setItem("refresh_token", data.refresh_token);
+          originalRequest.headers["access-token"] = data.accessToken;
+          return axiosInstance(originalRequest);
+        } catch (refreshError) {
+          const axiosError = refreshError as AxiosError;
+          if (axiosError.response) {
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token");
+            localStorage.setItem("token_expired", "true");
+            window.location.href = "/signin";
+          }
+        }
+      } else {
+        window.location.href = "/signin";
+      }
     }
     return Promise.reject(error);
   }
