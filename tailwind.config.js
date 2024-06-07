@@ -49,6 +49,7 @@ module.exports = {
         darkRed: "#EA000E",
         orange: "#EF9509",
         yellow: "#F8FFF0",
+        kakao: "#FEE500",
       },
     },
   },
