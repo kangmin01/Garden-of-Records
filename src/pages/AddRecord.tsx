@@ -26,6 +26,7 @@ import {
 import { useMessage } from "../context/MessageContext";
 import CheckIcon from "../components/ui/icons/CheckIcon";
 import axiosInstance from "../api/axiosInstance";
+import ExcelIcon from "../components/ui/ExcelIcon";
 
 const urlPattern = new RegExp(
   "^(https?:\\/\\/)?" +
@@ -155,7 +156,7 @@ export default function AddRecord() {
 
   return (
     <section className="formPage" id="addRecord">
-      <Header title="기록하기" />
+      <Header title="기록하기" rightIcon={<ExcelIcon />} />
       <form onSubmit={handleSubmit(onSubmit)} className="formPageForm mt-6">
         {/* tab */}
         <Controller

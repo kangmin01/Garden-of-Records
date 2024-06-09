@@ -36,18 +36,19 @@ axiosInstance.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
+    console.log(error);
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const refreshToken = localStorage.getItem("refresh_token");
       if (refreshToken) {
         try {
-          const { data } = await axiosInstance.post("/user/token", null);
-          // const { data } = await axiosInstance.post("/user/token", null, {
-          //   headers: {
-          //     "refresh-token": refreshToken,
-          //     "Content-Type": "application/json",
-          //   },
-          // });
+          // const { data } = await axiosInstance.post("/user/token", null);
+          const { data } = await axiosInstance.post("/user/token", null, {
+            headers: {
+              "refresh-token": refreshToken,
+              "Content-Type": "application/json",
+            },
+          });
           localStorage.setItem("access_token", data.access_token);
           localStorage.setItem("refresh_token", data.refresh_token);
           originalRequest.headers["access-token"] = data.accessToken;

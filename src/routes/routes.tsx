@@ -65,15 +65,19 @@ const router = createBrowserRouter([
             path: "/find-password/success",
             element: <FindPasswordSuccess />,
           },
+          {
+            path: "record/add",
+            element: <AddRecord />,
+          },
         ],
       },
       {
         element: <ProtectedRoutes />,
         children: [
-          {
-            path: "record/add",
-            element: <AddRecord />,
-          },
+          // {
+          //   path: "record/add",
+          //   element: <AddRecord />,
+          // },
           {
             path: "search",
             element: <Search />,
