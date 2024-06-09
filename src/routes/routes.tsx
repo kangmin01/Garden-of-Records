@@ -15,6 +15,7 @@ import Profile from "../pages/Profile";
 import EditRecord from "../pages/EditRecord";
 import ChangePassword from "../pages/ChangePassword";
 import UploadExcel from "../pages/UploadExcel";
+import FindEmail from "../pages/FindEmail";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
           {
             path: "record/excel/upload",
             element: <UploadExcel />,
+          },
+          {
+            path: "/find-email",
+            element: <FindEmail />,
           },
         ],
       },
