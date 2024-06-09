@@ -152,7 +152,10 @@ const SignIn: React.FC = () => {
           이메일 찾기
         </Link>
         <span className="font-normal text-[12px] text-gray1 mx-[10px]">|</span>
-        <Link to="/" className="font-normal text-[14px] text-gray3">
+        <Link
+          to="/find-password"
+          className="font-normal text-[14px] text-gray3"
+        >
           비밀번호 찾기
         </Link>
         <span className="font-normal text-[12px] text-gray1 mx-[10px]">|</span>

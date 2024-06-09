@@ -26,6 +26,7 @@ export default function SubmitButton({
     </Link>
   ) : (
     <button
+      type="submit"
       className={`${bgColor ? bgColor : "bg-main"} ${textColor ? textColor : "text-white"} w-[320px] h-[48px] font-semibold text-[16px] flex items-center justify-center rounded-xl`}
     >
       {title}

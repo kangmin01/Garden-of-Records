@@ -17,6 +17,8 @@ import ChangePassword from "../pages/ChangePassword";
 import UploadExcel from "../pages/UploadExcel";
 import FindEmail from "../pages/FindEmail";
 import FindEmailSuccess from "../pages/FindEmailSuccess";
+import FindPassword from "../pages/FindPassword";
+import FindPasswordSuccess from "../pages/FindPasswordSuccess";
 
 const router = createBrowserRouter([
   {
@@ -52,8 +54,16 @@ const router = createBrowserRouter([
             element: <FindEmail />,
           },
           {
+            path: "/find-password",
+            element: <FindPassword />,
+          },
+          {
             path: "/find-email/success",
             element: <FindEmailSuccess />,
+          },
+          {
+            path: "/find-password/success",
+            element: <FindPasswordSuccess />,
           },
         ],
       },
