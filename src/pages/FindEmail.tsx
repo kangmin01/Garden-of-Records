@@ -42,9 +42,9 @@ export default function FindEmail() {
                 required: "이름을 입력해주세요.",
               })}
             />
-            {errors.name && (
+            {/* {errors.name && (
               <p className="errorText left-[90px]">{errors.name.message}</p>
-            )}
+            )} */}
           </div>
           <div className="inputContainer">
             <label htmlFor="contact" className="formLabel">
@@ -59,9 +59,9 @@ export default function FindEmail() {
                 required: "번호만 입력해주세요.",
               })}
             />
-            {errors.contact && (
+            {/* {errors.contact && (
               <p className="errorText left-[90px]">{errors.contact.message}</p>
-            )}
+            )} */}
           </div>
         </div>
         <div className="w-full text-center">
@@ -81,7 +81,7 @@ export default function FindEmail() {
               />
             </svg>
             <Link
-              to="/tutorial"
+              to="/signin"
               className="ml-[13px] text-[14px] font-normal text-gray3 underline underline-offset-[1.5px]"
             >
               로그인 하러가기
