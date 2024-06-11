@@ -71,7 +71,7 @@ export default function UploadExcel() {
           <button
             className={`w-full min-w-80 py-[14px] rounded-xl text-[16px] font-semibold bg-gray0 text-gray1`}
           >
-            기록하기
+            기록
           </button>
         </form>
       </div>
