@@ -46,10 +46,6 @@ const router = createBrowserRouter([
             element: <SignUp />,
           },
           {
-            path: "record/excel/upload",
-            element: <UploadExcel />,
-          },
-          {
             path: "/find-email",
             element: <FindEmail />,
           },
@@ -65,19 +61,19 @@ const router = createBrowserRouter([
             path: "/find-password/success",
             element: <FindPasswordSuccess />,
           },
-          {
-            path: "record/add",
-            element: <AddRecord />,
-          },
         ],
       },
       {
         element: <ProtectedRoutes />,
         children: [
-          // {
-          //   path: "record/add",
-          //   element: <AddRecord />,
-          // },
+          {
+            path: "record/add",
+            element: <AddRecord />,
+          },
+          {
+            path: "record/excel/upload",
+            element: <UploadExcel />,
+          },
           {
             path: "search",
             element: <Search />,

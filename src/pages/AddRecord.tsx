@@ -156,7 +156,10 @@ export default function AddRecord() {
 
   return (
     <section className="formPage" id="addRecord">
-      <Header title="기록하기" rightIcon={<ExcelIcon />} />
+      <Header
+        title="기록하기"
+        rightIcon={tab === "invited" ? "" : <ExcelIcon />}
+      />
       <form onSubmit={handleSubmit(onSubmit)} className="formPageForm mt-6">
         {/* tab */}
         <Controller

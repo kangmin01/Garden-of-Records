@@ -1,14 +1,43 @@
 import { useRef, useState } from "react";
 import Header from "../components/Header";
 import DownloadIcon from "../components/ui/icons/DownloadIcon";
+import axiosInstance from "../api/axiosInstance";
 
 export default function UploadExcel() {
   const [fileName, setFileName] = useState("");
 
   const inputValue = useRef<HTMLInputElement | null>(null);
 
-  const handleClick = () => {
+  const downloadForm = async () => {
+    // const response = await axiosInstance.get(`/downloadForm`, {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // if (response.ok) {
+    //   const blob = await response.blob();
+    //   const url = window.URL.createObjectURL(blob);
+    //   const a = document.createElement("a");
+    //   a.href = url;
+    //   a.download = "example.xlsx";
+    //   document.body.appendChild(a);
+    //   a.click();
+    //   a.remove();
+    // } else {
+    //   console.error("File download failed");
+    // }
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     inputValue.current?.click();
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      setFileName(files[0].name);
+    }
   };
 
   return (
@@ -31,9 +60,12 @@ export default function UploadExcel() {
         <div className="flex justify-center">
           <div className="w-[102px] flex items-center border-b-[1px] border-solid border-main">
             <DownloadIcon />
-            <span className="font-semibold text-[14px] text-main ml-[8px]">
+            <button
+              onClick={downloadForm}
+              className="font-semibold text-[14px] text-main ml-[8px]"
+            >
               양식 다운로드
-            </span>
+            </button>
           </div>
         </div>
       </div>
@@ -52,7 +84,7 @@ export default function UploadExcel() {
               </span>
               <button
                 onClick={handleClick}
-                className="basis-5/12 bg-main text-white font-semibold text-[16px] flex justify-center items-center"
+                className={`basis-5/12 ${fileName ? "bg-gray2" : "bg-main"} text-white font-semibold text-[16px] flex justify-center items-center`}
               >
                 업로드
               </button>
@@ -62,14 +94,12 @@ export default function UploadExcel() {
             type="file"
             accept=".csv"
             id="file"
-            className=""
+            className="hidden"
             ref={inputValue}
-            // onChange={(e) => {
-            //   setFileName(inputValue.current?.files?.[0]);
-            // }}
+            onChange={handleChange}
           />
           <button
-            className={`w-full min-w-80 py-[14px] rounded-xl text-[16px] font-semibold bg-gray0 text-gray1`}
+            className={`w-full min-w-80 py-[14px] rounded-xl text-[16px] font-semibold  ${fileName ? "bg-main text-white" : "bg-gray0 text-gray1"}`}
           >
             기록
           </button>
