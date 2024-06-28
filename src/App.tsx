@@ -17,9 +17,8 @@ const App: React.FC = () => {
 
   const handleSearch = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    navigate("/search", {
-      state: { keyword: keyword },
-    });
+    navigate(`/search?keyword=${keyword}`);
+    window.location.reload();
   };
 
   const [fileName, setFileName] = useState("");

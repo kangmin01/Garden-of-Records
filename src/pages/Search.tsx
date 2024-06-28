@@ -1,11 +1,12 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import BackButton from "../components/ui/BackButton";
 import FloatingButton from "../components/ui/FloatingButton";
 
 export default function Search() {
   const location = useLocation();
-  const keyword = location.state?.keyword;
+  const [searchParams] = useSearchParams();
+  const keyword = searchParams.get("keyword") || "";
 
   return (
     <section className="bg-white max-w-[360px] mx-auto h-dvh relative">

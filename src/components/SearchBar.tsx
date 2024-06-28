@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import SearchIcon from "./ui/icons/SearchIcon";
-import axios from "axios";
 import EventList from "./EventList";
 import not_found from "../assets/image/not_found.png";
 import { Link } from "react-router-dom";
@@ -17,7 +16,7 @@ interface FetchPayload {
 }
 
 export default function SearchBar({ type, word }: Props) {
-  const [keyword, setKeyword] = useState("");
+  const [keyword, setKeyword] = useState(word || "");
   const [searchResults, setSearchResults] = useState([]);
   const token = localStorage.getItem("access_token");
 
@@ -27,9 +26,9 @@ export default function SearchBar({ type, word }: Props) {
         const payload: FetchPayload = {
           is_invited: !type ? "all" : type,
         };
+
         if (word) {
-          payload.name = word;
-          setKeyword(word);
+          payload.name = keyword;
         }
 
         const response = await axiosInstance.get(`/invitation/expense/search`, {
@@ -52,7 +51,7 @@ export default function SearchBar({ type, word }: Props) {
     };
 
     fetchAllData();
-  }, [token, keyword]);
+  }, [token, keyword, word]);
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
