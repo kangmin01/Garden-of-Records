@@ -28,6 +28,13 @@ module.exports = {
         shadowRecordCard: "0px 4px 12px 0px rgba(0,0,0,0.12)",
         shadowFloatingButton: "0px 4px 4px 0px rgba(0,0,0,0.25);",
         shadowTabButton: "0px 3px 8px 0px rgba(0,0,0,0.12);",
+        shadowSearchBar: "0px 10.44px 10.44px 0px rgba(0, 0, 0, 0.08);",
+        shadowPhone: "-12.87px 25.75px 42.91px 0px rgba(1, 0, 35, 0.1);",
+        shadowExcelBox: "0px 8px 30px 0px rgba(0, 0, 0, 0.25);",
+      },
+      backgroundImage: {
+        phone: "url('./assets/image/phone.png')",
+        background: "url('./assets/image/background.png')",
       },
       fontFamily: {
         sans: ["Pretendard Variable", "sans-serif"],
@@ -50,6 +57,7 @@ module.exports = {
         orange: "#EF9509",
         yellow: "#F8FFF0",
         kakao: "#FEE500",
+        backgroundColor: "#F6F6F6",
       },
     },
   },
