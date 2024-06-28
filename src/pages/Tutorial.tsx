@@ -40,7 +40,7 @@ export default function Tutorial() {
     <>
       {isSplashVisible && <SplashScreen />}
       {!isSplashVisible && (
-        <div className="max-w-[360px] mx-auto h-dvh relative">
+        <div className="bg-white max-w-[360px] mx-auto h-dvh relative">
           <Swiper
             pagination={true}
             modules={[Pagination]}

@@ -1,6 +1,5 @@
 import "./App.css";
 import { Outlet, useNavigate } from "react-router-dom";
-import FloatingButton from "./components/ui/FloatingButton";
 import background_text1 from "./assets/image/background_text1.png";
 import background_text2 from "./assets/image/background_text2.png";
 import volumeBtn from "./assets/image/volume_btn.png";
@@ -14,7 +13,7 @@ const App: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const { isMobile } = useDeviceSize();
+  const { isDesktop } = useDeviceSize();
 
   const handleSearch = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -41,7 +40,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      {isMobile ? (
+      {isDesktop ? (
         <div className="App bg-backgroundColor w-full h-screen flex justify-center bg-background bg-contain bg-no-repeat bg-bottom">
           <div className="flex gap-[140px] mt-[60px] w-[1082px] h-[862px]">
             <div className="w-[524px] h-[798px] min-w-[524px] min-h-[798px] pt-[64px] flex flex-col">
@@ -187,9 +186,11 @@ const App: React.FC = () => {
                 <img
                   src={statusBar}
                   alt="상태바"
-                  className="absolute w-[360px] h-[44px] min-w-[360px] min-h-[44px]"
+                  className="absolute z-50 w-[360px] h-[44px] min-w-[360px] min-h-[44px]"
                 />
-                <Outlet />
+                <div className="pt-[44px] w-[360px] min-w-[360px] h-[800px] min-h-[800px]">
+                  <Outlet />
+                </div>
               </div>
             </div>
           </div>

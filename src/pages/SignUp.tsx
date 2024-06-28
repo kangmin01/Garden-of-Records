@@ -9,6 +9,7 @@ import CheckIcon from "../components/ui/icons/CheckIcon";
 import DangerIcon from "../components/ui/icons/DangerIcon";
 import { Snackbar } from "../components/SnackBar";
 import axiosInstance from "../api/axiosInstance";
+import useDeviceSize from "../hooks/useDeviceSize";
 
 interface SignUpFormType {
   name: string;
@@ -107,6 +108,8 @@ const SignUp: React.FC = () => {
   const navigate = useNavigate();
   const { state, setMessage, clearMessage } = useMessage();
 
+  const { isDesktop } = useDeviceSize();
+
   useEffect(() => {
     if (state.message) {
       const timer = setTimeout(() => {
@@ -149,7 +152,7 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="formPage">
+    <div className={`formPage bg-white ${isDesktop ? "h-full" : ""}`}>
       <Header title="회원가입" />
       <h2 className="formPageTitle place-self-start ml-5 my-6">
         기록의 정원에<br></br> 당신을 기록해주세요

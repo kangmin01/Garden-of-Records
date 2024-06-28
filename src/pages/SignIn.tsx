@@ -8,6 +8,7 @@ import { useMessage } from "../context/MessageContext";
 import { Snackbar } from "../components/SnackBar";
 import axiosInstance from "../api/axiosInstance";
 import DangerIcon from "../components/ui/icons/DangerIcon";
+import useDeviceSize from "../hooks/useDeviceSize";
 
 interface SignInFormType {
   email: string;
@@ -23,6 +24,8 @@ const SignIn: React.FC = () => {
   const { login } = useAuthContext();
   const navigate = useNavigate();
   const { state, clearMessage, setMessage } = useMessage();
+
+  const { isDesktop } = useDeviceSize();
 
   useEffect(() => {
     if (state.message) {
@@ -71,7 +74,7 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="formPage">
+    <div className={`formPage bg-white ${isDesktop ? "h-full" : ""}`}>
       <div className="w-[140px] h-[74px] mt-[80px] mb-[95px]">
         <img src={logo_login} alt="기록의 정원 로고" />
       </div>
@@ -105,6 +108,18 @@ const SignIn: React.FC = () => {
               hasError={!!errors.password}
               register={register("password", {
                 required: "비밀번호를 입력해주세요.",
+                minLength: {
+                  value: 6,
+                  message: "영어+숫자 조합 6~10자",
+                },
+                maxLength: {
+                  value: 10,
+                  message: "영어+숫자 조합 6~10자",
+                },
+                pattern: {
+                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,10}$/,
+                  message: "영어+숫자 조합 6~10자",
+                },
               })}
             />
             {errors.password && (
