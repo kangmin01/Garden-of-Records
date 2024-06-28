@@ -74,7 +74,7 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className={`formPage bg-white ${isDesktop ? "h-full" : ""}`}>
+    <div className={`formPage ${isDesktop ? "h-full" : ""}`}>
       <div className="w-[140px] h-[74px] mt-[80px] mb-[95px]">
         <img src={logo_login} alt="기록의 정원 로고" />
       </div>
@@ -87,6 +87,7 @@ const SignIn: React.FC = () => {
               placeholder="이메일"
               hasLabel={false}
               hasError={!!errors.email}
+              height={50}
               register={register("email", {
                 required: "이메일을 입력해주세요.",
                 pattern: {
@@ -96,7 +97,9 @@ const SignIn: React.FC = () => {
               })}
             />
             {errors.email && (
-              <p className="errorText left-[16px]">{errors.email.message}</p>
+              <p className="absolute text-darkRed text-sm left-[16px] top-[32px]">
+                {errors.email.message}
+              </p>
             )}
           </div>
           <div className="inputContainer">
@@ -105,6 +108,7 @@ const SignIn: React.FC = () => {
               type="password"
               placeholder="비밀번호"
               hasLabel={false}
+              height={50}
               hasError={!!errors.password}
               register={register("password", {
                 required: "비밀번호를 입력해주세요.",
@@ -123,11 +127,13 @@ const SignIn: React.FC = () => {
               })}
             />
             {errors.password && (
-              <p className="errorText left-[16px]">{errors.password.message}</p>
+              <p className="absolute text-darkRed text-sm left-[16px] top-[32px]">
+                {errors.password.message}
+              </p>
             )}
           </div>
         </div>
-        <div className="authenticationButtonDiv mt-[112px]">
+        <div className="authenticationButtonDiv mt-[94px]">
           <button
             type="submit"
             className="w-full font-semibold text-[16px] min-w-70 h-[48px] flex items-center justify-center bg-main text-white rounded-xl"

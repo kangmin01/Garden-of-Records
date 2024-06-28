@@ -22,7 +22,7 @@ export default function RecordDetailList({ record }: Props) {
           </div>
         )}
         <div className="border-solid border-b-[1px] border-gray0 flex items-center px-[16px] justify-between w-[320px] h-[50px] font-medium text-[14px]">
-          <span className="text-gray2">결혼식 날짜</span>
+          <span className="text-gray2">날짜</span>
           <span className="text-gray4">{formatToKoreanDate(event_date)}</span>
         </div>
         {formatToKoreanTime(event_date) !== "00:00" && (

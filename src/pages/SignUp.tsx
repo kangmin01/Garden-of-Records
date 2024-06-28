@@ -152,7 +152,7 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className={`formPage bg-white ${isDesktop ? "h-full" : ""}`}>
+    <div className={`formPage ${isDesktop ? "h-full" : ""}`}>
       <Header title="회원가입" />
       <h2 className="formPageTitle place-self-start ml-5 my-6">
         기록의 정원에<br></br> 당신을 기록해주세요

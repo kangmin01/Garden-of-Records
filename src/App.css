@@ -35,7 +35,7 @@ body {
 }
 
 .formPage {
-  @apply max-w-[360px] min-w-80 mx-auto h-screen flex flex-col items-center;
+  @apply bg-white max-w-[360px] min-w-80 mx-auto h-screen flex flex-col items-center;
 
   .formPageTitle {
     @apply font-bold text-[24px];
@@ -50,7 +50,7 @@ body {
   }
 
   .inputContainer {
-    @apply w-full h-[64px] flex relative;
+    @apply w-full flex relative;
   }
 
   .formLabelRadio {

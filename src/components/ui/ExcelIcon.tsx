@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
+
 export default function ExcelIcon() {
   return (
-    <a href="/record/excel/upload">
+    <Link to="/record/excel/upload">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -19,6 +21,6 @@ export default function ExcelIcon() {
           </clipPath>
         </defs>
       </svg>
-    </a>
+    </Link>
   );
 }
