@@ -28,7 +28,7 @@ export default function FloatingButton() {
     <>
       {ready && (
         <div
-          className={`w-[360px] fixed ${isDesktop ? "h-[800px] top-[90px]" : "h-10 bottom-0"}`}
+          className={`w-[360px] fixed h-10 ${isDesktop ? "top-[850px]" : "bottom-0"}`}
           // style={{ top: `${displayHeight - 1}px` }}
         >
           {/* <div className="w-[360px] mx-auto relative h-10"> */}
