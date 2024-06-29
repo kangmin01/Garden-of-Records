@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { useMessage } from "../context/MessageContext";
 import CheckIcon from "../components/ui/icons/CheckIcon";
 import DangerIcon from "../components/ui/icons/DangerIcon";
-import { Snackbar } from "../components/SnackBar";
 import axiosInstance from "../api/axiosInstance";
 import useDeviceSize from "../hooks/useDeviceSize";
 
@@ -112,11 +111,7 @@ const SignUp: React.FC = () => {
 
   useEffect(() => {
     if (state.message) {
-      const timer = setTimeout(() => {
-        clearMessage();
-      }, 3000);
-
-      return () => clearTimeout(timer);
+      clearMessage();
     }
   }, [state]);
 
@@ -190,11 +185,6 @@ const SignUp: React.FC = () => {
           </button>
         </div>
       </form>
-      {state.message && state.message === "이미 등록된 이메일입니다." ? (
-        <Snackbar position="top" />
-      ) : (
-        <Snackbar />
-      )}
     </div>
   );
 };

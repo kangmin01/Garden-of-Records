@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import DangerIcon from "../components/ui/icons/DangerIcon";
 import { useMessage } from "../context/MessageContext";
 import CheckIcon from "../components/ui/icons/CheckIcon";
-import { Snackbar } from "../components/SnackBar";
 import axiosInstance from "../api/axiosInstance";
 
 export default function ChangePassword() {
@@ -25,13 +24,9 @@ export default function ChangePassword() {
 
   useEffect(() => {
     if (state.message) {
-      const timer = setTimeout(() => {
-        clearMessage();
-      }, 3000);
-
-      return () => clearTimeout(timer);
+      clearMessage();
     }
-  }, []);
+  }, [state]);
 
   const onSubmit: SubmitHandler<ChangePasswordType> = async (data) => {
     // console.log(data);
@@ -157,12 +152,6 @@ export default function ChangePassword() {
           </button>
         </form>
       </div>
-      {state.message &&
-      state.message === "현재 비밀번호가 일치하지 않습니다." ? (
-        <Snackbar position="top" />
-      ) : (
-        <Snackbar />
-      )}
     </section>
   );
 }

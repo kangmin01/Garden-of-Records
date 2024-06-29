@@ -59,7 +59,7 @@ export default function EditRecord() {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const navigate = useNavigate();
-  const { setMessage, state } = useMessage();
+  const { setMessage } = useMessage();
 
   const handleItemClick = (item: keyof FormValues, value: string) => {
     setValue(item, value);

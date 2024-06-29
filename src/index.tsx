@@ -15,11 +15,11 @@ const queryclient = new QueryClient();
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryclient}>
-      <MessageProvider>
-        <AuthContextProvider>
+      <AuthContextProvider>
+        <MessageProvider>
           <RouterProvider router={router} />
-        </AuthContextProvider>
-      </MessageProvider>
+        </MessageProvider>
+      </AuthContextProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );

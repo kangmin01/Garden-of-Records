@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
-import { Snackbar } from "@mui/material";
 import { useMessage } from "../context/MessageContext";
 import { useForm } from "react-hook-form";
 import Input from "../components/ui/Input";
@@ -108,7 +107,6 @@ export default function FindPassword() {
           <SubmitButton title="비밀번호 찾기" navigate={false} />
         </div>
       </form>
-      {state.message && <Snackbar />}
     </div>
   );
 }

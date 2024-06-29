@@ -26,7 +26,11 @@ export const MessageProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const clearMessage = () => {
-    setState({ message: null, icon: null });
+    if (state.message) {
+      setTimeout(() => {
+        setState({ message: null, icon: null });
+      }, 3000);
+    }
   };
 
   return (

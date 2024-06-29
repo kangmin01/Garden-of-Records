@@ -2,13 +2,10 @@ import axios from "axios";
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
 import { User } from "../types/user";
-import RightChevron from "../components/ui/icons/RightChevron";
 import { useAuthContext } from "../context/AuthContext";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RightChevronThin from "../components/ui/icons/RightChevronThin";
-import CheckIcon from "../components/ui/icons/CheckIcon";
 import { useMessage } from "../context/MessageContext";
-import { Snackbar } from "../components/SnackBar";
 import axiosInstance from "../api/axiosInstance";
 import useDeviceSize from "../hooks/useDeviceSize";
 
@@ -25,11 +22,7 @@ export default function Profile() {
 
   useEffect(() => {
     if (state.message) {
-      const timer = setTimeout(() => {
-        clearMessage();
-      }, 3000);
-
-      return () => clearTimeout(timer);
+      clearMessage();
     }
   }, [state]);
 
@@ -131,7 +124,6 @@ export default function Profile() {
           <span className="cursor-pointer">회원탈퇴</span>
         </div>
       </div>
-      {state.message && <Snackbar />}
     </section>
   );
 }

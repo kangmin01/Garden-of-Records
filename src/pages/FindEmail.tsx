@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
-import { Snackbar } from "@mui/material";
 import { useMessage } from "../context/MessageContext";
 import { useForm } from "react-hook-form";
 import Input from "../components/ui/Input";
@@ -97,7 +96,6 @@ export default function FindEmail() {
           </button>
         </div>
       </form>
-      {state.message && <Snackbar />}
     </div>
   );
 }

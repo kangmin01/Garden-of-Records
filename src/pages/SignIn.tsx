@@ -5,7 +5,6 @@ import Input from "../components/ui/Input";
 import logo_login from "../assets/image/logo_login.png";
 import { useAuthContext } from "../context/AuthContext";
 import { useMessage } from "../context/MessageContext";
-import { Snackbar } from "../components/SnackBar";
 import axiosInstance from "../api/axiosInstance";
 import DangerIcon from "../components/ui/icons/DangerIcon";
 import useDeviceSize from "../hooks/useDeviceSize";
@@ -28,25 +27,13 @@ const SignIn: React.FC = () => {
   const { isDesktop } = useDeviceSize();
 
   useEffect(() => {
-    if (state.message) {
-      const timer = setTimeout(() => {
-        clearMessage();
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [state]);
-
-  useEffect(() => {
     const tokenExpired = localStorage.getItem("token_expired");
     if (tokenExpired === "true") {
       setMessage("토큰이 만료되었습니다.", <DangerIcon />);
-      const timer = setTimeout(() => {
-        localStorage.removeItem("token_expired");
-        clearMessage();
-      }, 3000);
-
-      return () => clearTimeout(timer);
+      clearMessage();
+    }
+    if (state.message) {
+      clearMessage();
     }
   }, []);
 
@@ -184,7 +171,6 @@ const SignIn: React.FC = () => {
           회원가입
         </Link>
       </div>
-      {state.message && <Snackbar />}
     </div>
   );
 };

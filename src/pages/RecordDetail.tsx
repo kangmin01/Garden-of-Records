@@ -4,12 +4,10 @@ import RightChevron from "../components/ui/icons/RightChevron";
 import RecordDetailList from "../components/RecordDetailList";
 import TrashIcon from "../components/ui/icons/TrashIcon";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { recordInfoType } from "../types/record";
 import { formatNumber } from "../util/formatNumber";
 import DangerIcon from "../components/ui/icons/DangerIcon";
 import { useMessage } from "../context/MessageContext";
-import { Snackbar } from "../components/SnackBar";
 import axiosInstance from "../api/axiosInstance";
 
 type Params = {
@@ -22,7 +20,7 @@ export default function RecordDetail() {
   const token = localStorage.getItem("access_token");
 
   const navigate = useNavigate();
-  const { setMessage, state } = useMessage();
+  const { setMessage } = useMessage();
 
   const [record, setRecord] = useState<recordInfoType | null>(null);
 
@@ -134,7 +132,6 @@ export default function RecordDetail() {
           </div>
         </>
       )}
-      {state.message && <Snackbar />}
     </section>
   );
 }
