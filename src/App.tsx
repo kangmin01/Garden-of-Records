@@ -44,7 +44,7 @@ const App: React.FC = () => {
     <>
       {isDesktop ? (
         <>
-          <div className="App bg-backgroundColor w-full h-screen flex justify-center bg-background bg-contain bg-no-repeat bg-bottom">
+          <div className="App bg-backgroundColor w-full h-screen flex justify-center bg-background bg-contain bg-no-repeat bg-bottom overflow-auto">
             <div className="flex gap-[140px] mt-[60px] w-[1082px] h-[862px]">
               <div className="w-[524px] h-[798px] min-w-[524px] min-h-[798px] pt-[64px] flex flex-col">
                 <div className="mb-[80px] flex flex-col items-center">
