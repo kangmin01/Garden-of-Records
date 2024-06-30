@@ -1,6 +1,4 @@
 import Axios, { AxiosError } from "axios";
-import { useMessage } from "../context/MessageContext";
-import CheckIcon from "../components/ui/icons/CheckIcon";
 
 const axiosInstance = Axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
@@ -36,8 +34,11 @@ axiosInstance.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    console.log(error);
-    if (error.response.status === 401 && !originalRequest._retry) {
+    // console.log(error);
+    if (
+      (error.response.status === 401 || error.response.status === 400) &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
       const refreshToken = localStorage.getItem("refresh_token");
       if (refreshToken) {
@@ -63,6 +64,8 @@ axiosInstance.interceptors.response.use(
           }
         }
       } else {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
         window.location.href = "/signin";
       }
     }
