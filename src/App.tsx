@@ -4,11 +4,12 @@ import background_text1 from "./assets/image/background_text1.png";
 import background_text2 from "./assets/image/background_text2.png";
 import volumeBtn from "./assets/image/volume_btn.png";
 import statusBar from "./assets/image/status_bar.png";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DownloadIcon from "./components/ui/icons/DownloadIcon";
 import useDeviceSize from "./hooks/useDeviceSize";
-import { useMessage } from "./context/MessageContext";
-import { Snackbar } from "./components/SnackBar";
+import { Toast } from "./components/Toast";
+import { useSelector } from "react-redux";
+import { RootState } from "./store";
 
 const App: React.FC = () => {
   const [keyword, setKeyword] = useState("");
@@ -16,7 +17,7 @@ const App: React.FC = () => {
   const navigate = useNavigate();
 
   const { isDesktop } = useDeviceSize();
-  const { state } = useMessage();
+  const { message } = useSelector((state: RootState) => state.toast);
 
   const handleSearch = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -193,7 +194,7 @@ const App: React.FC = () => {
                   />
                   <div className="pt-[44px] w-[360px] min-w-[360px] h-[800px] min-h-[800px]">
                     <Outlet />
-                    {state.message && <Snackbar />}
+                    {message && <Toast />}
                   </div>
                 </div>
               </div>
@@ -203,7 +204,7 @@ const App: React.FC = () => {
       ) : (
         <>
           <Outlet />
-          {state.message && <Snackbar />}
+          {message && <Toast />}
         </>
       )}
     </>

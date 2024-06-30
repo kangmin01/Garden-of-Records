@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "../components/ui/Input";
 import Header from "../components/Header";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useMessage } from "../context/MessageContext";
 import CheckIcon from "../components/ui/icons/CheckIcon";
 import DangerIcon from "../components/ui/icons/DangerIcon";
 import axiosInstance from "../api/axiosInstance";
 import useDeviceSize from "../hooks/useDeviceSize";
+import { useDispatch } from "react-redux";
+import { setToast } from "../reducer/toast";
 
 interface SignUpFormType {
   name: string;
@@ -105,15 +106,9 @@ const SignUp: React.FC = () => {
   } = useForm<SignUpFormType>({ mode: "onBlur" });
 
   const navigate = useNavigate();
-  const { state, setMessage, clearMessage } = useMessage();
+  const dispatch = useDispatch();
 
   const { isDesktop } = useDeviceSize();
-
-  useEffect(() => {
-    if (state.message) {
-      clearMessage();
-    }
-  }, [state]);
 
   const onSubmit: SubmitHandler<SignUpFormType> = async (data) => {
     try {
@@ -133,9 +128,9 @@ const SignUp: React.FC = () => {
       );
       // console.log("회원가입 성공", response);
       navigate("/signin");
-      setMessage("회원가입이 완료 되었습니다.", <CheckIcon />);
+      dispatch(setToast("회원가입이 완료 되었습니다.", <CheckIcon />));
     } catch (error) {
-      setMessage("이미 등록된 이메일입니다.", <DangerIcon />);
+      dispatch(setToast("이미 등록된 이메일입니다.", <DangerIcon />));
       console.error("회원가입 오류:", error);
       // 오류 처리 로직 추가 (예: 사용자에게 오류 알림)
     }

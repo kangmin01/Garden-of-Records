@@ -5,9 +5,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import DangerIcon from "../components/ui/icons/DangerIcon";
-import { useMessage } from "../context/MessageContext";
 import CheckIcon from "../components/ui/icons/CheckIcon";
 import axiosInstance from "../api/axiosInstance";
+import { useDispatch } from "react-redux";
+import { setToast } from "../reducer/toast";
 
 export default function ChangePassword() {
   const {
@@ -19,14 +20,7 @@ export default function ChangePassword() {
 
   const token = localStorage.getItem("access_token");
   const navigate = useNavigate();
-
-  const { setMessage, clearMessage, state } = useMessage();
-
-  useEffect(() => {
-    if (state.message) {
-      clearMessage();
-    }
-  }, [state]);
+  const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<ChangePasswordType> = async (data) => {
     // console.log(data);
@@ -47,10 +41,12 @@ export default function ChangePassword() {
       );
       // console.log("비밀번호 변경 성공", response);
       navigate("/profile");
-      setMessage("비밀번호가 변경되었습니다.", <CheckIcon />);
+      dispatch(setToast("비밀번호가 변경되었습니다.", <CheckIcon />));
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        setMessage("현재 비밀번호가 일치하지 않습니다.", <DangerIcon />);
+        dispatch(
+          setToast("현재 비밀번호가 일치하지 않습니다.", <DangerIcon />)
+        );
         console.error("비밀번호 변경 오류", error.response?.data.detail);
       } else {
         console.error("비밀번호 변경 오류", error);

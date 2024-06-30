@@ -4,10 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/ui/Input";
 import logo_login from "../assets/image/logo_login.png";
 import { useAuthContext } from "../context/AuthContext";
-import { useMessage } from "../context/MessageContext";
 import axiosInstance from "../api/axiosInstance";
-import DangerIcon from "../components/ui/icons/DangerIcon";
 import useDeviceSize from "../hooks/useDeviceSize";
+import { useDispatch } from "react-redux";
+import { setToast } from "../reducer/toast";
+import DangerIcon from "../components/ui/icons/DangerIcon";
 
 interface SignInFormType {
   email: string;
@@ -22,20 +23,9 @@ const SignIn: React.FC = () => {
   } = useForm<SignInFormType>({ mode: "onBlur" });
   const { login } = useAuthContext();
   const navigate = useNavigate();
-  const { state, clearMessage, setMessage } = useMessage();
+  const dispatch = useDispatch();
 
   const { isDesktop } = useDeviceSize();
-
-  useEffect(() => {
-    const tokenExpired = localStorage.getItem("token_expired");
-    if (tokenExpired === "true") {
-      setMessage("토큰이 만료되었습니다.", <DangerIcon />);
-      clearMessage();
-    }
-    if (state.message) {
-      clearMessage();
-    }
-  }, []);
 
   const onSubmit: SubmitHandler<SignInFormType> = async (data) => {
     // console.log(data);
@@ -59,6 +49,13 @@ const SignIn: React.FC = () => {
       console.error("로그인 오류:", error);
     }
   };
+
+  useEffect(() => {
+    const tokenExpired = localStorage.getItem("token_expired");
+    if (tokenExpired === "true") {
+      dispatch(setToast("토큰이 만료되었습니다.", <DangerIcon />));
+    }
+  }, []);
 
   return (
     <div className={`formPage ${isDesktop ? "h-full" : ""}`}>

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
-import { useMessage } from "../context/MessageContext";
 import { useForm } from "react-hook-form";
 import Input from "../components/ui/Input";
 import logo_login from "../assets/image/logo_login.png";
@@ -16,7 +15,6 @@ export default function FindEmail() {
     handleSubmit,
     formState: { errors },
   } = useForm<FindEmailFormType>({ mode: "all" });
-  const { state, clearMessage, setMessage } = useMessage();
 
   const onSubmit = () => {};
 

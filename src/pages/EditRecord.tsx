@@ -24,9 +24,10 @@ import {
   PayloadType,
   recordInfoType,
 } from "../types/record";
-import { useMessage } from "../context/MessageContext";
 import CheckIcon from "../components/ui/icons/CheckIcon";
 import axiosInstance from "../api/axiosInstance";
+import { useDispatch } from "react-redux";
+import { setToast } from "../reducer/toast";
 
 const urlPattern = new RegExp(
   "^(https?:\\/\\/)?" +
@@ -59,7 +60,8 @@ export default function EditRecord() {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const navigate = useNavigate();
-  const { setMessage } = useMessage();
+
+  const dispatch = useDispatch();
 
   const handleItemClick = (item: keyof FormValues, value: string) => {
     setValue(item, value);
@@ -129,13 +131,15 @@ export default function EditRecord() {
     try {
       const response = await axiosInstance.put(`/invitation/expense`, payload, {
         headers: {
-          "access-token": token,
+          "access-token": "token",
           "Content-Type": "application/json",
         },
       });
       // console.log("기록 수정 결과", response.data);
-      navigate("/");
-      setMessage("수정 완료 되었습니다.", <CheckIcon />);
+      if (response.status === 200) {
+        navigate("/");
+        dispatch(setToast("수정 완료 되었습니다.", <CheckIcon />));
+      }
     } catch (error) {
       // console.log("기록 수정 실패");
       console.error("Error fetching data:", error);

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
-import { useMessage } from "../context/MessageContext";
 import { useForm } from "react-hook-form";
 import Input from "../components/ui/Input";
 import logo_login from "../assets/image/logo_login.png";
@@ -17,7 +16,6 @@ export default function FindPassword() {
     handleSubmit,
     formState: { errors },
   } = useForm<FindEmailFormType>({ mode: "all" });
-  const { state, clearMessage, setMessage } = useMessage();
 
   const handleInput: React.FormEventHandler<HTMLInputElement> = (e) => {
     const target = e.target as HTMLInputElement;

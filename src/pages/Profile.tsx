@@ -5,7 +5,6 @@ import { User } from "../types/user";
 import { useAuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import RightChevronThin from "../components/ui/icons/RightChevronThin";
-import { useMessage } from "../context/MessageContext";
 import axiosInstance from "../api/axiosInstance";
 import useDeviceSize from "../hooks/useDeviceSize";
 
@@ -16,15 +15,7 @@ export default function Profile() {
   const navigate = useNavigate();
   const { logout } = useAuthContext();
 
-  const { state, clearMessage } = useMessage();
-
   const { isDesktop } = useDeviceSize();
-
-  useEffect(() => {
-    if (state.message) {
-      clearMessage();
-    }
-  }, [state]);
 
   useEffect(() => {
     const fetchData = async () => {

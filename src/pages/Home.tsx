@@ -19,7 +19,6 @@ import HeadsetIcon from "../components/ui/icons/HeadsetIcon";
 import logo_ham from "../assets/image/logo_ham.png";
 import { useQueries } from "react-query";
 import { Oval } from "react-loader-spinner";
-import { useMessage } from "../context/MessageContext";
 import {
   fetchTotalReceiveAmounts,
   fetchTotalSendAmounts,
@@ -31,7 +30,6 @@ import {
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [keyword, setKeyword] = useState("");
-  const { state, clearMessage } = useMessage();
 
   const navigate = useNavigate();
 
@@ -47,12 +45,6 @@ export default function Home() {
       }
     }
   }, []);
-
-  useEffect(() => {
-    if (state.message) {
-      clearMessage();
-    }
-  }, [state]);
 
   const results = useQueries([
     {

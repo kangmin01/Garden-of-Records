@@ -23,10 +23,11 @@ import {
   InvalidState,
   PayloadType,
 } from "../types/record";
-import { useMessage } from "../context/MessageContext";
 import CheckIcon from "../components/ui/icons/CheckIcon";
 import axiosInstance from "../api/axiosInstance";
 import ExcelIcon from "../components/ui/ExcelIcon";
+import { useDispatch } from "react-redux";
+import { setToast } from "../reducer/toast";
 
 const urlPattern = new RegExp(
   "^(https?:\\/\\/)?" +
@@ -59,7 +60,7 @@ export default function AddRecord() {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const navigate = useNavigate();
-  const { setMessage } = useMessage();
+  const dispatch = useDispatch();
 
   const handleItemClick = (item: keyof FormValues, value: string) => {
     setValue(item, value);
@@ -135,7 +136,7 @@ export default function AddRecord() {
         }
       );
       navigate("/");
-      setMessage("기록이 완료 되었습니다.", <CheckIcon />);
+      dispatch(setToast("기록이 완료 되었습니다.", <CheckIcon />));
     } catch (error) {
       // console.log("등록 실패");
       console.error("Error fetching data:", error);

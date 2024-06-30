@@ -13,12 +13,14 @@ const AuthContext = createContext({
 
 export function AuthContextProvider({ children }: Props) {
   const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("access_token")
+    !!localStorage.getItem("access_token") &&
+      !!localStorage.getItem("refresh_token")
   );
 
   const login = (access: string, refresh: string) => {
     localStorage.setItem("access_token", access);
     localStorage.setItem("refresh_token", refresh);
+    localStorage.removeItem("token_expired");
     setIsAuthenticated(true);
   };
 
