@@ -1,6 +1,6 @@
 # 기록의 정원
 ### 축의금 기록 서비스
-![스크린샷 2024-05-28 182626](https://github.com/potenday-405/poten-fe/assets/57487175/9bb19d1d-3520-4891-a425-12fce32c8c04)
+![기록의 정원 스샷](https://github.com/potenday-405/poten-fe/assets/57487175/04a9a026-6909-4485-b878-ba8be5c019f8)
 
 - [기록의 정원→](https://www.gardenr.kr/)
 - [후기→](https://velog.io/@kangmin01/%EB%B9%84%EC%82%AC%EC%9D%B4%EB%93%9C-%ED%8F%AC%ED%85%90%EB%8D%B0%EC%9D%B4-405-%EC%99%84%EC%A3%BC-%ED%9B%84%EA%B8%B0)
