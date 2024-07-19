@@ -8,6 +8,7 @@ export interface recordInfoType {
   relation: string;
   user_id: string;
   link: string;
+  memo?: string;
 }
 
 export type FormValues = {

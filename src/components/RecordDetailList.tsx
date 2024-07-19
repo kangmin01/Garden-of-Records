@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function RecordDetailList({ record }: Props) {
-  const { is_attended, amount, relation, event_date } = record;
+  const { is_attended, amount, relation, event_date, memo } = record;
 
   return (
     <>
@@ -41,6 +41,12 @@ export default function RecordDetailList({ record }: Props) {
           <span className="text-gray2">축의금</span>
           <span className="text-gray4">{formatNumber(amount)}</span>
         </div>
+        {memo && memo.trim() !== "" && (
+          <div className="border-solid border-b-[1px] border-gray0 flex items-center px-[16px] justify-between w-[320px] h-[50px] font-medium text-[14px]">
+            <span className="text-gray2">메모</span>
+            <span className="text-gray4">{memo}</span>
+          </div>
+        )}
       </div>
     </>
   );

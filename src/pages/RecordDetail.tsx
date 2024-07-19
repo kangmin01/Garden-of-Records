@@ -117,7 +117,7 @@ export default function RecordDetail() {
             </div>
           </div>
           <RecordDetailList record={record} />
-          <div className="w-[320px] mt-[190px] mx-auto h-[48px] flex justify-between">
+          <div className="px-[20px] top-[670px] w-[360px] absolute mx-auto h-[48px] flex justify-between">
             <div
               onClick={handleDelete}
               className="w-[48px] h-full bg-gray1 rounded-lg flex justify-center items-center cursor-pointer"

@@ -9,7 +9,8 @@ type Props = {
 };
 
 export default function EventListCard({ record }: Props) {
-  const { amount, event_date, name, is_invited, event_id } = record;
+  const { amount, event_date, name, is_invited, event_id, memo } = record;
+
   return (
     <Link
       to={`/record/${event_id}`}
