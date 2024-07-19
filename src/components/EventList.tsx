@@ -1,3 +1,4 @@
+import useDeviceSize from "../hooks/useDeviceSize";
 import { recordInfoType } from "../types/record";
 import EventListCard from "./EventListCard";
 
@@ -10,11 +11,22 @@ export default function EventList({ records }: Props) {
     records = [];
   }
 
+  const { isDesktop } = useDeviceSize();
+
   return (
-    <div className="w-full px-5">
+    <div
+      className={`w-full px-5 overflow-y-auto ${isDesktop ? "h-[460px]" : ""}`}
+    >
       <div className="divide-y-[1px]">
         {records.map((record, index) => (
-          <EventListCard record={record} key={index} />
+          <>
+            <EventListCard record={record} key={index} />
+            <EventListCard record={record} key={index} />
+            <EventListCard record={record} key={index} />
+            <EventListCard record={record} key={index} />
+            <EventListCard record={record} key={index} />
+            <EventListCard record={record} key={index} />
+          </>
         ))}
       </div>
     </div>
