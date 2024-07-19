@@ -112,9 +112,13 @@ const App: React.FC = () => {
                       <div className="flex justify-between">
                         <div className="w-[102px] min-w-[102px] h-[28px] mt-[8px] flex items-center border-b-[1px] border-solid border-main">
                           <DownloadIcon />
-                          <span className="font-semibold text-[14px] text-main ml-[8px] cursor-pointer">
+                          <a
+                            href="/excelForm.xlsx"
+                            download="기록의 정원 엑셀 양식"
+                            className="font-semibold text-[14px] text-main ml-[8px] cursor-pointer"
+                          >
                             양식 다운로드
-                          </span>
+                          </a>
                         </div>
                         <form>
                           <label htmlFor="file" className="relative">
