@@ -19,14 +19,7 @@ export default function EventList({ records }: Props) {
     >
       <div className="divide-y-[1px]">
         {records.map((record, index) => (
-          <>
-            <EventListCard record={record} key={index} />
-            <EventListCard record={record} key={index} />
-            <EventListCard record={record} key={index} />
-            <EventListCard record={record} key={index} />
-            <EventListCard record={record} key={index} />
-            <EventListCard record={record} key={index} />
-          </>
+          <EventListCard record={record} key={index} />
         ))}
       </div>
     </div>

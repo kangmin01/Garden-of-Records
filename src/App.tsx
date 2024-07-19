@@ -4,12 +4,13 @@ import background_text1 from "./assets/image/background_text1.png";
 import background_text2 from "./assets/image/background_text2.png";
 import volumeBtn from "./assets/image/volume_btn.png";
 import statusBar from "./assets/image/status_bar.png";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import DownloadIcon from "./components/ui/icons/DownloadIcon";
 import useDeviceSize from "./hooks/useDeviceSize";
 import { Toast } from "./components/Toast";
 import { useSelector } from "react-redux";
 import { RootState } from "./store";
+import axiosInstance from "./api/axiosInstance";
 
 const App: React.FC = () => {
   const [keyword, setKeyword] = useState("");
@@ -25,7 +26,8 @@ const App: React.FC = () => {
     window.location.reload();
   };
 
-  const [fileName, setFileName] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const token = localStorage.getItem("access_token");
 
   const inputValue = useRef<HTMLInputElement | null>(null);
 
@@ -37,7 +39,77 @@ const App: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
-      setFileName(files[0].name);
+      setFile(files[0]);
+    }
+  };
+
+  const handleSubmitClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    if (!token) {
+      console.log("djqtd");
+      alert("로그인 먼저 해주세요.");
+    }
+
+    if (!file) {
+      alert("엑셀 파일을 업로드해주세요.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await axiosInstance.post(
+        "/invitation/expense/csv",
+        formData,
+        {
+          headers: {
+            "access-token": token,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.status === 200) {
+        navigate("/list/receive");
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  };
+
+  const handleExcelSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!token) {
+      alert("로그인 먼저 해주세요.");
+      return;
+    }
+
+    if (!file) {
+      alert("엑셀 파일을 업로드해주세요.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await axiosInstance.post(
+        "/invitation/expense/csv",
+        formData,
+        {
+          headers: {
+            "access-token": token,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.status === 200) {
+        navigate("/list/receive");
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
     }
   };
 
@@ -120,17 +192,17 @@ const App: React.FC = () => {
                             양식 다운로드
                           </a>
                         </div>
-                        <form>
+                        <form onSubmit={handleExcelSubmit}>
                           <label htmlFor="file" className="relative">
                             <div className="w-[270px] h-[48px] rounded-[12px] flex overflow-hidden mb-[24px]">
                               <span className="w-[172px] font-normal text-[14px] text-gray2 flex justify-center items-center bg-gray0">
-                                {fileName.length > 0
-                                  ? fileName
+                                {file && file.name.length > 0
+                                  ? file.name
                                   : "파일을 업로드해주세요."}
                               </span>
                               <button
                                 onClick={handleClick}
-                                className={`w-[98px] ${fileName ? "bg-gray2" : "bg-main"} text-white font-semibold text-[16px] flex justify-center items-center`}
+                                className={`w-[98px] ${file ? "bg-gray2" : "bg-main"} text-white font-semibold text-[16px] flex justify-center items-center`}
                               >
                                 업로드
                               </button>
@@ -141,6 +213,7 @@ const App: React.FC = () => {
                             type="file"
                             accept=".csv"
                             id="file"
+                            name="file"
                             className="hidden"
                             ref={inputValue}
                             onChange={handleChange}
@@ -148,7 +221,10 @@ const App: React.FC = () => {
                         </form>
                       </div>
                       <button
-                        className={`mt-[28px] w-[405px] h-[48px] font-semibold text-[16px] rounded-[12px]  ${fileName ? "bg-main text-white" : "bg-gray0 text-gray1"}`}
+                        type="button"
+                        onClick={handleSubmitClick}
+                        disabled={file ? false : true}
+                        className={`mt-[28px] w-[405px] h-[48px] font-semibold text-[16px] rounded-[12px]  ${file ? "bg-main text-white" : "bg-gray0 text-gray1"}`}
                       >
                         기록
                       </button>
