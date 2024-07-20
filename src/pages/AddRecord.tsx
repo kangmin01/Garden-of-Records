@@ -124,6 +124,10 @@ export default function AddRecord() {
       payload.link = data.mobileLink;
     }
 
+    if (data.memo) {
+      payload.memo = data.memo;
+    }
+
     try {
       const response = await axiosInstance.post(
         `/invitation/expense`,
@@ -478,6 +482,24 @@ export default function AddRecord() {
             />
           </div>
         </section>
+
+        {/* Memo */}
+        <div className="inputContainer">
+          <label
+            htmlFor="memo"
+            className="text-gray2 text-p absolute top-[22px]"
+          >
+            메모
+          </label>
+          <Input
+            id="memo"
+            type="text"
+            placeholder={"기억하고 싶은 부분을 기록해주세요."}
+            hasError={!!errors.memo}
+            maxLength={40}
+            register={register("memo")}
+          />
+        </div>
 
         {/* Submit Button */}
         <button

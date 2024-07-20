@@ -20,6 +20,7 @@ export type FormValues = {
   time: string;
   attendance: boolean;
   amount: string;
+  memo: string;
 };
 
 export type PayloadType = {
@@ -31,6 +32,7 @@ export type PayloadType = {
   expense: number;
   relation?: string;
   link?: string;
+  memo?: string;
 };
 
 export type FocusState = {
