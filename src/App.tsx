@@ -14,6 +14,7 @@ import axiosInstance from "./api/axiosInstance";
 
 const App: React.FC = () => {
   const [keyword, setKeyword] = useState("");
+  const token = localStorage.getItem("access_token");
 
   const navigate = useNavigate();
 
@@ -22,12 +23,17 @@ const App: React.FC = () => {
 
   const handleSearch = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
+    if (!token) {
+      alert("로그인 먼저 해주세요.");
+      setKeyword("");
+      return;
+    }
     navigate(`/search?keyword=${keyword}`);
     window.location.reload();
   };
 
   const [file, setFile] = useState<File | null>(null);
-  const token = localStorage.getItem("access_token");
 
   const inputValue = useRef<HTMLInputElement | null>(null);
 
