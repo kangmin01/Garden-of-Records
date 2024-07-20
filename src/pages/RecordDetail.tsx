@@ -80,9 +80,9 @@ export default function RecordDetail() {
         <>
           <div className="px-5">
             <div
-              className={`border-solid ${record.is_invited === 1 ? "border-orange" : "border-main"} border flex flex-col h-[150px] rounded-lg mt-[24px]`}
+              className={`border-solid ${record.is_invited === 1 ? "border-orange pt-[16px]" : "border-main py-[16px]"} border flex flex-col justify-between rounded-lg mt-[24px]`}
             >
-              <div className="h-[82px] flex flex-col items-center border-solid border-b-[1px] border-gray0 mt-[16px]">
+              <div className="h-[82px] flex flex-col items-center">
                 <div className="flex items-center justify-between w-[286px] h-[22px] mb-[20px]">
                   <span className="text-gray4 text-[18px] font-semibold">
                     {record.name}
@@ -91,29 +91,31 @@ export default function RecordDetail() {
                     축의금
                   </span>
                 </div>
-                <div className="text-gray4 h-[24px] flex items-center justify-center">
+                <div className="mb-[32px] text-gray4 h-[24px] flex items-center justify-center">
                   <span className="font-bold text-[24px] mr-[12px]">
                     {formatNumber(record.amount)}
                   </span>
                   <span className="font-semibold text-[18px]">원</span>
                 </div>
               </div>
-              <a
-                href={record.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex ${record.link === "" ? "cursor-default" : "cursor-pointer"} justify-center items-center h-[24px] mt-[16px]`}
-              >
-                <span
-                  className={`${record.link === "" ? "text-gray2" : record.is_invited === 1 ? "text-orange" : "text-main"} text-[14px] font-medium mr-[8px]`}
+              {record.is_invited === 1 && (
+                <a
+                  href={record.link ? record.link : "#"}
+                  target={record.link ? "_blank" : "_self"}
+                  rel="noopener noreferrer"
+                  className={`h-[52px] flex ${record.link === "" ? "cursor-default" : "cursor-pointer"} justify-center items-center h-[24px] border-solid border-t-[1px] border-gray0`}
                 >
-                  모바일 청첩장 확인
-                </span>
-                <RightChevron
-                  color={`${record.link === "" ? "#808080" : record.is_invited === 1 ? "#EF9509" : "#37A041"}`}
-                  size={13}
-                />
-              </a>
+                  <span
+                    className={`${record.link === "" ? "text-gray2" : record.is_invited === 1 ? "text-orange" : "text-main"} text-[14px] font-medium mr-[8px]`}
+                  >
+                    모바일 청첩장 확인
+                  </span>
+                  <RightChevron
+                    color={`${record.link === "" ? "#808080" : record.is_invited === 1 ? "#EF9509" : "#37A041"}`}
+                    size={13}
+                  />
+                </a>
+              )}
             </div>
           </div>
           <RecordDetailList record={record} />
