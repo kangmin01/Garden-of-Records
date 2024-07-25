@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "../components/ui/Input";
 import Header from "../components/Header";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CheckIcon from "../components/ui/icons/CheckIcon";
 import DangerIcon from "../components/ui/icons/DangerIcon";
 import axiosInstance from "../api/axiosInstance";
@@ -98,7 +98,23 @@ const inputFields = [
   },
 ];
 
+const checkBoxFields = [
+  {
+    id: 1,
+    name: "terms",
+    title: "(필수) 이용약관",
+    isChecked: false,
+  },
+  {
+    id: 2,
+    name: "privacyNotice",
+    title: "(필수) 개인정보 수집 및 이용 안내",
+    isChecked: false,
+  },
+];
+
 const SignUp: React.FC = () => {
+  const [check, setCheck] = useState(checkBoxFields);
   const {
     register,
     handleSubmit,
@@ -109,6 +125,26 @@ const SignUp: React.FC = () => {
   const dispatch = useDispatch();
 
   const { isDesktop } = useDeviceSize();
+
+  const handleCheckBox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    if (name === "all") {
+      setCheck(
+        check.map((item) => {
+          return {
+            ...item,
+            isChecked: checked,
+          };
+        })
+      );
+    } else {
+      setCheck(
+        check.map((item) =>
+          item.name === name ? { ...item, isChecked: checked } : item
+        )
+      );
+    }
+  };
 
   const onSubmit: SubmitHandler<SignUpFormType> = async (data) => {
     try {
@@ -170,11 +206,43 @@ const SignUp: React.FC = () => {
             </div>
           ))}
         </div>
-        <div className="authenticationButtonDiv mt-[170px]">
+        <div className="grid grid-cols-1 grid-rows-3 mt-[24px] w-full">
+          <div className="font-medium text-[14px] py-[12px] border-solid border-b-[1px] border-gray0 flex items-center gap-[12px]">
+            <input
+              type="checkbox"
+              name="all"
+              id="all"
+              onChange={handleCheckBox}
+              checked={check[0].isChecked && check[1].isChecked}
+            />
+            <label htmlFor="all">전체동의</label>
+          </div>
+          {check.map((item) => (
+            <div key={item.id} className="flex justify-between py-[12px]">
+              <div className="flex items-center text-[14px] text-gray2 gap-[12px]">
+                <input
+                  type="checkbox"
+                  checked={item.isChecked}
+                  onChange={handleCheckBox}
+                  name={item.name}
+                  id={item.name}
+                />
+                <label htmlFor={item.name}>{item.title}</label>
+              </div>
+              <Link
+                to={"/" + item.name}
+                className="underline text-[12px] text-gray1"
+              >
+                보기
+              </Link>
+            </div>
+          ))}
+        </div>
+        <div className="authenticationButtonDiv mt-[20px]">
           <button
             type="submit"
-            disabled={!isValid}
-            className={`w-full min-w-80 py-[14px] rounded-xl text-[16px] font-semibold ${isValid ? "bg-main text-white cursor-pointer" : "bg-gray0 text-gray1"}`}
+            disabled={!isValid || !check[0].isChecked || !check[1].isChecked}
+            className={`w-full min-w-80 py-[14px] rounded-xl text-[16px] font-semibold ${isValid && check[0].isChecked && check[1].isChecked ? "bg-main text-white cursor-pointer" : "bg-gray0 text-gray1"}`}
           >
             회원가입
           </button>

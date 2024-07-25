@@ -19,6 +19,8 @@ import FindEmail from "../pages/FindEmail";
 import FindEmailSuccess from "../pages/FindEmailSuccess";
 import FindPassword from "../pages/FindPassword";
 import FindPasswordSuccess from "../pages/FindPasswordSuccess";
+import Terms from "../pages/Terms";
+import PrivacyNotice from "../pages/PrivacyNotice";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,14 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "privacyNotice",
+        element: <PrivacyNotice />,
+      },
+      {
+        path: "terms",
+        element: <Terms />,
       },
       {
         element: <PublicOnlyRoutes />,
@@ -45,6 +55,7 @@ const router = createBrowserRouter([
             path: "signup",
             element: <SignUp />,
           },
+
           {
             path: "/find-email",
             element: <FindEmail />,

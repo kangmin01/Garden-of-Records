@@ -1,0 +1,40 @@
+.termsPage {
+  .terms-title {
+    font-weight: 700;
+    font-size: 19px;
+    margin-top: 22px;
+    margin-bottom: 6px;
+    justify-self: start;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .item {
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .sub-item {
+    margin-left: 16px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  td {
+    vertical-align: top;
+  }
+}

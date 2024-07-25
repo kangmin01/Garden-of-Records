@@ -83,7 +83,7 @@ export default function Profile() {
           약관
         </span>
         <Link
-          to="/"
+          to="/terms"
           className="mt-[16px] p-[16px] border-solid border-b-[1px] border-gray0 w-[320px] h-[50px] flex items-center justify-between"
         >
           <span className="text-[14px] font-medium text-gray2">이용약관</span>
@@ -92,7 +92,7 @@ export default function Profile() {
           </span>
         </Link>
         <Link
-          to="/"
+          to="/privacyNotice"
           className="p-[16px] border-solid border-b-[1px] border-gray0 w-[320px] h-[50px] flex items-center justify-between"
         >
           <span className="text-[14px] font-medium text-gray2">
