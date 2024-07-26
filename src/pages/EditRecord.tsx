@@ -252,281 +252,303 @@ export default function EditRecord() {
           )}
         />
 
-        {/* Name */}
-        <div className="inputContainer">
-          <label
-            htmlFor="name"
-            className="text-gray2 text-p absolute top-[22px]"
-          >
-            이름
-          </label>
-          <RequiredFieldMark />
-          <Input
-            id="name"
-            type="text"
-            placeholder="상대방 이름"
-            hasError={!!errors.name}
-            register={register("name", {
-              required: "이름을 입력해주세요.",
-            })}
-          />
-        </div>
-
-        {/* Relation*/}
-        <section className="relative">
-          <div>
+        <div className="h-[500px] overflow-y-auto overflow-x-hidden">
+          {/* Name */}
+          <div className="inputContainer">
             <label
-              htmlFor="relation"
-              className="text-gray2 text-p absolute top-[35px]"
+              htmlFor="name"
+              className="text-gray2 text-p absolute top-[22px]"
             >
-              관계
+              이름
             </label>
-            <Controller
-              name="relation"
-              control={control}
-              defaultValue=""
-              // rules={{ required: "관계를 입력해주세요." }}
-              render={({ field, fieldState }) => (
-                <>
-                  <input
-                    id="relation"
-                    type="text"
-                    {...field}
-                    value={field.value}
-                    onChange={(e) => {
-                      field.onChange(e.target.value);
-                      if (e.target.value) {
-                        clearErrors("relation");
-                        if (!(e.target.value in relationArray)) {
-                          setSelectedRelation(null);
-                        }
-                      }
-                    }}
-                    onBlur={() => {
-                      if (!field.value) {
-                        setError("relation", {
-                          type: "manual",
-                          message: "관계를 입력해주세요.",
-                        });
-                      }
-                    }}
-                    className={`w-full border-b placeholder:text-gray1 pl-[90px] pb-10 h-[100px] outline-none focus:border-main`}
-                    placeholder="관계를 선택해주세요"
-                  />
-                  <div className="w-full flex space-x-2 justify-end absolute bottom-3">
-                    {relationArray.map((relation) => (
-                      <button
-                        key={relation}
-                        type="button"
-                        onMouseDown={() => setIsButtonClicked(true)}
-                        onMouseUp={() => setIsButtonClicked(false)}
-                        onClick={() => handleItemClick("relation", relation)}
-                        className={`selectButton ${
-                          selectedRelation === relation ? "selectedButton" : ""
-                        }`}
-                      >
-                        {relation}
-                      </button>
-                    ))}
-                  </div>
-                </>
-              )}
+            <RequiredFieldMark />
+            <Input
+              id="name"
+              type="text"
+              placeholder="상대방 이름"
+              hasError={!!errors.name}
+              register={register("name", {
+                required: "이름을 입력해주세요.",
+              })}
             />
           </div>
-        </section>
 
-        {/* Mobile Link */}
-        <div className="inputContainer">
-          <label
-            htmlFor="mobileLink"
-            className="text-gray2 text-p absolute top-[12px]"
-          >
-            모바일<br></br>청첩장
-          </label>
-          <input
-            id="mobileLink"
-            type="text"
-            className={`w-full min-w-80 placeholder:text-gray1 text-p p-4 h-[64px] text-gray1 bg-white outline-none border-b-[1px] focus:outline-none pl-[90px] focus:border-main ${errors.mobileLink ? "border-darkRed" : "border-gray0 "}`}
-            placeholder="URL을 입력하세요."
-            {...register("mobileLink", {
-              pattern: {
-                value: urlPattern,
-                message: "유효한 URL을 입력해주세요.",
-              },
-            })}
-          />
-        </div>
-
-        {/* Date */}
-        <div className="w-full h-[65px] flex relative">
-          <label
-            htmlFor="date"
-            className="absolute h-[64px] w-[90px] flex items-center text-gray2 text-p z-20"
-            onClick={handleDateLabelClick}
-          >
-            날짜
-          </label>
-          <RequiredFieldMark />
-          <Controller
-            name="date"
-            control={control}
-            defaultValue={todayFormat()}
-            rules={{ required: "필수 입력요소" }}
-            render={({ field, fieldState }) => (
-              <input
-                {...field}
-                id="date"
-                type="date"
-                ref={dateInputRef}
-                className={`w-full border-b-[1px] absolute pl-[90px] z-0 h-[64px] max-h-[64px] outline-none ${
-                  isFocused["date"]
-                    ? "border-main"
-                    : fieldState.invalid
-                      ? "border-darkRed"
-                      : "border-gray0"
-                }`}
-                onChange={(e) => {
-                  setValue("date", e.target.value);
-                  setIsInvalid((prev) => ({
-                    ...prev,
-                    time: fieldState.invalid,
-                  }));
-                }}
-                onBlur={() => handleBlur("date", fieldState)}
-                onFocus={() => handleFocus("date")}
-              />
-            )}
-          />
-        </div>
-
-        {/* Time */}
-        <div className="w-full h-[65px] flex relative">
-          <label
-            htmlFor="time"
-            className="absolute h-[64px] w-[90px] flex items-center text-gray2 text-p z-20"
-            onClick={handleTimeLabelClick}
-          >
-            시간
-          </label>
-          <Controller
-            name="time"
-            control={control}
-            defaultValue=""
-            render={({ field, fieldState }) => (
-              <input
-                {...field}
-                id="time"
-                type="time"
-                ref={timeInputRef}
-                className={`w-full placeholder:text-gray0 border-b-[1px] absolute pl-[90px] z-0 h-[64px] max-h-[64px] outline-none ${
-                  isFocused["time"]
-                    ? "border-main"
-                    : fieldState.invalid
-                      ? "border-darkRed"
-                      : "border-gray0"
-                } `}
-                onChange={(e) => {
-                  setValue("time", e.target.value);
-                  setIsInvalid((prev) => ({
-                    ...prev,
-                    time: fieldState.invalid,
-                  }));
-                }}
-                onBlur={() => handleBlur("time", fieldState)}
-                onFocus={() => handleFocus("time")}
-              />
-            )}
-          />
-        </div>
-
-        {/* Attendance */}
-        <Controller
-          name="attendance"
-          control={control}
-          defaultValue={false}
-          render={({ field }) => (
-            <div className="relative flex w-full h-[60px] border-b-[1px] border-solid border-gray0 items-center justify-between">
-              <label className="text-gray2 text-p top-[35px]">참석여부</label>
-              <RequiredFieldMark top="17" left="51" />
-              <IOSSwitch
-                checked={field.value}
-                onChange={(e) => field.onChange(e.target.checked)}
-              />
-            </div>
-          )}
-        />
-
-        {/* Amount*/}
-        <section className="relative">
-          <div>
-            <label
-              htmlFor="amount"
-              className="text-gray2 text-p absolute top-[35px]"
-            >
-              축의금
-            </label>
-            <RequiredFieldMark top="33" left="39" />
-            <Controller
-              name="amount"
-              control={control}
-              defaultValue=""
-              rules={{
-                pattern: {
-                  value: /^\d*$/,
-                  message: "숫자만 입력 가능합니다.",
-                },
-              }}
-              render={({ field, fieldState }) => (
-                <>
-                  <input
-                    id="amount"
-                    type="text"
-                    {...field}
-                    value={formatNumber(+field.value)}
-                    onChange={(e) => {
-                      const rawValue = e.target.value.replace(/,/g, "");
-                      if (/^\d*$/.test(rawValue)) {
-                        field.onChange(rawValue);
-                        if (rawValue) {
-                          clearErrors("amount");
-                          if (!(rawValue in amountArray)) {
-                            setSelectedAmount(null);
+          {/* Relation*/}
+          <section className="relative">
+            <div>
+              <label
+                htmlFor="relation"
+                className="text-gray2 text-p absolute top-[35px]"
+              >
+                관계
+              </label>
+              <Controller
+                name="relation"
+                control={control}
+                defaultValue=""
+                // rules={{ required: "관계를 입력해주세요." }}
+                render={({ field, fieldState }) => (
+                  <>
+                    <input
+                      id="relation"
+                      type="text"
+                      {...field}
+                      value={field.value}
+                      onChange={(e) => {
+                        field.onChange(e.target.value);
+                        if (e.target.value) {
+                          clearErrors("relation");
+                          if (!(e.target.value in relationArray)) {
+                            setSelectedRelation(null);
                           }
                         }
-                      }
-                    }}
-                    onBlur={() => {
-                      if (!field.value) {
-                        setError("amount", {
-                          type: "manual",
-                          message: "금액을 입력해주세요.",
-                        });
-                      }
-                    }}
-                    className={`w-full border-b placeholder:text-gray1 pl-[90px] pb-10 h-[100px] outline-none focus:border-main ${!fieldState.error ? "border-gray0" : isButtonClicked ? "border-main" : "border-darkRed focus:border-darkRed"}`}
-                    placeholder="숫자만 입력해주세요."
-                  />
-                  <div className="w-full flex space-x-2 justify-end absolute bottom-3">
-                    {amountArray.map((amount) => (
-                      <button
-                        key={amount}
-                        type="button"
-                        onMouseDown={() => setIsButtonClicked(true)}
-                        onMouseUp={() => setIsButtonClicked(false)}
-                        onClick={() => handleItemClick("amount", amount)}
-                        className={`selectButton ${
-                          selectedAmount === amount ? "selectedButton" : ""
-                        }`}
-                      >
-                        {formatNumber(+amount)}
-                      </button>
-                    ))}
-                  </div>
-                </>
+                      }}
+                      onBlur={() => {
+                        if (!field.value) {
+                          setError("relation", {
+                            type: "manual",
+                            message: "관계를 입력해주세요.",
+                          });
+                        }
+                      }}
+                      className={`w-full border-b placeholder:text-gray1 pl-[90px] pb-10 h-[100px] outline-none focus:border-main`}
+                      placeholder="관계를 선택해주세요"
+                    />
+                    <div className="w-full flex space-x-2 justify-end absolute bottom-3">
+                      {relationArray.map((relation) => (
+                        <button
+                          key={relation}
+                          type="button"
+                          onMouseDown={() => setIsButtonClicked(true)}
+                          onMouseUp={() => setIsButtonClicked(false)}
+                          onClick={() => handleItemClick("relation", relation)}
+                          className={`selectButton ${
+                            selectedRelation === relation
+                              ? "selectedButton"
+                              : ""
+                          }`}
+                        >
+                          {relation}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              />
+            </div>
+          </section>
+
+          {/* Mobile Link */}
+          <div className="inputContainer">
+            <label
+              htmlFor="mobileLink"
+              className="text-gray2 text-p absolute top-[12px]"
+            >
+              모바일<br></br>청첩장
+            </label>
+            <input
+              id="mobileLink"
+              type="text"
+              className={`w-full min-w-80 placeholder:text-gray1 text-p p-4 h-[64px] text-gray1 bg-white outline-none border-b-[1px] focus:outline-none pl-[90px] focus:border-main ${errors.mobileLink ? "border-darkRed" : "border-gray0 "}`}
+              placeholder="URL을 입력하세요."
+              {...register("mobileLink", {
+                pattern: {
+                  value: urlPattern,
+                  message: "유효한 URL을 입력해주세요.",
+                },
+              })}
+            />
+          </div>
+
+          {/* Date */}
+          <div className="w-full h-[65px] flex relative">
+            <label
+              htmlFor="date"
+              className="absolute h-[64px] w-[90px] flex items-center text-gray2 text-p z-20"
+              onClick={handleDateLabelClick}
+            >
+              날짜
+            </label>
+            <RequiredFieldMark />
+            <Controller
+              name="date"
+              control={control}
+              defaultValue={todayFormat()}
+              rules={{ required: "필수 입력요소" }}
+              render={({ field, fieldState }) => (
+                <input
+                  {...field}
+                  id="date"
+                  type="date"
+                  ref={dateInputRef}
+                  className={`w-full border-b-[1px] absolute pl-[90px] z-0 h-[64px] max-h-[64px] outline-none ${
+                    isFocused["date"]
+                      ? "border-main"
+                      : fieldState.invalid
+                        ? "border-darkRed"
+                        : "border-gray0"
+                  }`}
+                  onChange={(e) => {
+                    setValue("date", e.target.value);
+                    setIsInvalid((prev) => ({
+                      ...prev,
+                      time: fieldState.invalid,
+                    }));
+                  }}
+                  onBlur={() => handleBlur("date", fieldState)}
+                  onFocus={() => handleFocus("date")}
+                />
               )}
             />
           </div>
-        </section>
+
+          {/* Time */}
+          <div className="w-full h-[65px] flex relative">
+            <label
+              htmlFor="time"
+              className="absolute h-[64px] w-[90px] flex items-center text-gray2 text-p z-20"
+              onClick={handleTimeLabelClick}
+            >
+              시간
+            </label>
+            <Controller
+              name="time"
+              control={control}
+              defaultValue=""
+              render={({ field, fieldState }) => (
+                <input
+                  {...field}
+                  id="time"
+                  type="time"
+                  ref={timeInputRef}
+                  className={`w-full placeholder:text-gray0 border-b-[1px] absolute pl-[90px] z-0 h-[64px] max-h-[64px] outline-none ${
+                    isFocused["time"]
+                      ? "border-main"
+                      : fieldState.invalid
+                        ? "border-darkRed"
+                        : "border-gray0"
+                  } `}
+                  onChange={(e) => {
+                    setValue("time", e.target.value);
+                    setIsInvalid((prev) => ({
+                      ...prev,
+                      time: fieldState.invalid,
+                    }));
+                  }}
+                  onBlur={() => handleBlur("time", fieldState)}
+                  onFocus={() => handleFocus("time")}
+                />
+              )}
+            />
+          </div>
+
+          {/* Attendance */}
+          <Controller
+            name="attendance"
+            control={control}
+            defaultValue={false}
+            render={({ field }) => (
+              <div className="relative flex w-full h-[60px] border-b-[1px] border-solid border-gray0 items-center justify-between">
+                <label className="text-gray2 text-p top-[35px]">참석여부</label>
+                {/* <RequiredFieldMark top="17" left="51" /> */}
+                <IOSSwitch
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e.target.checked)}
+                />
+              </div>
+            )}
+          />
+
+          {/* Amount*/}
+          <section className="relative">
+            <div>
+              <label
+                htmlFor="amount"
+                className="text-gray2 text-p absolute top-[35px]"
+              >
+                축의금
+              </label>
+              <RequiredFieldMark top="33" left="39" />
+              <Controller
+                name="amount"
+                control={control}
+                defaultValue=""
+                rules={{
+                  pattern: {
+                    value: /^\d*$/,
+                    message: "숫자만 입력 가능합니다.",
+                  },
+                }}
+                render={({ field, fieldState }) => (
+                  <>
+                    <input
+                      id="amount"
+                      type="text"
+                      {...field}
+                      value={formatNumber(+field.value)}
+                      onChange={(e) => {
+                        const rawValue = e.target.value.replace(/,/g, "");
+                        if (/^\d*$/.test(rawValue)) {
+                          field.onChange(rawValue);
+                          if (rawValue) {
+                            clearErrors("amount");
+                            if (!(rawValue in amountArray)) {
+                              setSelectedAmount(null);
+                            }
+                          }
+                        }
+                      }}
+                      onBlur={() => {
+                        if (!field.value) {
+                          setError("amount", {
+                            type: "manual",
+                            message: "금액을 입력해주세요.",
+                          });
+                        }
+                      }}
+                      className={`w-full border-b placeholder:text-gray1 pl-[90px] pb-10 h-[100px] outline-none focus:border-main ${!fieldState.error ? "border-gray0" : isButtonClicked ? "border-main" : "border-darkRed focus:border-darkRed"}`}
+                      placeholder="숫자만 입력해주세요."
+                    />
+                    <div className="w-full flex space-x-2 justify-end absolute bottom-3">
+                      {amountArray.map((amount) => (
+                        <button
+                          key={amount}
+                          type="button"
+                          onMouseDown={() => setIsButtonClicked(true)}
+                          onMouseUp={() => setIsButtonClicked(false)}
+                          onClick={() => handleItemClick("amount", amount)}
+                          className={`selectButton ${
+                            selectedAmount === amount ? "selectedButton" : ""
+                          }`}
+                        >
+                          {formatNumber(+amount)}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              />
+            </div>
+          </section>
+
+          {/* Memo */}
+          <div className="inputContainer">
+            <label
+              htmlFor="memo"
+              className="text-gray2 text-p absolute top-[22px]"
+            >
+              메모
+            </label>
+            <Input
+              id="memo"
+              type="text"
+              placeholder={"기억하고 싶은 부분을 기록해주세요."}
+              hasError={!!errors.memo}
+              maxLength={40}
+              register={register("memo")}
+            />
+          </div>
+        </div>
 
         {/* Submit Button */}
         <button
