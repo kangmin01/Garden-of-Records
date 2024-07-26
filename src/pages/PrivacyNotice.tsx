@@ -32,49 +32,51 @@ export default function PrivacyNotice() {
                 운영팀은 서비스 이용 시 고객으로부터 아래와 같은 개인 정보를
                 처리하고 있습니다.
               </li>
-              <table>
-                <thead>
-                  <tr>
-                    <th colSpan={4}>고객 개인정보 수집 목록</th>
-                  </tr>
-                  <tr>
-                    <th>목적</th>
-                    <th>구분</th>
-                    <th>항목</th>
-                    <th>보유 및 이용기간</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td rowSpan={2}>소셜로그인 - 카카오</td>
-                    <td>필수</td>
-                    <td>
-                      카카오계정(이메일), 프로필 사진, 닉네임, 카카오톡 채널
-                      추가 상태 및 내역, 카카오계정(전화번호)
-                    </td>
-                    <td rowSpan={2}>회원 탈퇴 시까지</td>
-                  </tr>
-                  <tr>
-                    <td>선택</td>
-                    <td>성별, 연령대, 출생 년도, 생일, 이름</td>
-                  </tr>
-                  <tr>
-                    <td>부정이용확인 및 방지</td>
-                    <td>필수</td>
-                    <td>
-                      웹사이트 접속 및 이용 기록(접속로그/IP 정보 등),
-                      기기정보(운영체제/브라우저 종류 OS 버전 등)
-                    </td>
-                    <td>수집 후 3개월 보관(통신비밀보호법)</td>
-                  </tr>
-                  <tr>
-                    <td>마케팅 정보 발송</td>
-                    <td>필수</td>
-                    <td>이름, 이메일</td>
-                    <td>동의 철회 후 6개월</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div className="w-full overflow-auto">
+                <table>
+                  <thead>
+                    <tr>
+                      <th colSpan={4}>고객 개인정보 수집 목록</th>
+                    </tr>
+                    <tr>
+                      <th>목적</th>
+                      <th>구분</th>
+                      <th>항목</th>
+                      <th>보유 및 이용기간</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td rowSpan={2}>소셜로그인 - 카카오</td>
+                      <td>필수</td>
+                      <td>
+                        카카오계정(이메일), 프로필 사진, 닉네임, 카카오톡 채널
+                        추가 상태 및 내역, 카카오계정(전화번호)
+                      </td>
+                      <td rowSpan={2}>회원 탈퇴 시까지</td>
+                    </tr>
+                    <tr>
+                      <td>선택</td>
+                      <td>성별, 연령대, 출생 년도, 생일, 이름</td>
+                    </tr>
+                    <tr>
+                      <td>부정이용확인 및 방지</td>
+                      <td>필수</td>
+                      <td>
+                        웹사이트 접속 및 이용 기록(접속로그/IP 정보 등),
+                        기기정보(운영체제/브라우저 종류 OS 버전 등)
+                      </td>
+                      <td>수집 후 3개월 보관(통신비밀보호법)</td>
+                    </tr>
+                    <tr>
+                      <td>마케팅 정보 발송</td>
+                      <td>필수</td>
+                      <td>이름, 이메일</td>
+                      <td>동의 철회 후 6개월</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               <li className="sub-item">
                 • 선택적 수집 · 이용에 대한 부분은 동의를 거부하시는 경우에도
                 기록의정원 서비스를 이용하실 수 있습니다.
@@ -158,45 +160,47 @@ export default function PrivacyNotice() {
                 경우는 아래와 같습니다.
               </li>
               <li>- 그 외 관계 법령에 따른 보유 및 이용기간</li>
-              <table>
-                <thead>
-                  <tr>
-                    <th colSpan={3}>개인정보의 파기</th>
-                  </tr>
-                  <tr>
-                    <th>보장 내용</th>
-                    <th>보유 및 이용기간</th>
-                    <th>관계 법령</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>계약 또는 청약철회 등의 공급기록</td>
-                    <td>5년</td>
-                    <td rowSpan={3}>
-                      전자상거래 등에서의 소비자 보호에 관한 법률
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>대금결제, 재화 등의 공급기록</td>
-                    <td>5년</td>
-                  </tr>
-                  <tr>
-                    <td>소비자 불만 또는 분쟁처리에 관한 기록</td>
-                    <td>5년</td>
-                  </tr>
-                  <tr>
-                    <td>전자금융에 관한 기록</td>
-                    <td>5년</td>
-                    <td>전자금융거래법</td>
-                  </tr>
-                  <tr>
-                    <td>웹사이트 방문기록</td>
-                    <td>3개월</td>
-                    <td>통신비밀보호법</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div className="w-full overflow-auto">
+                <table>
+                  <thead>
+                    <tr>
+                      <th colSpan={3}>개인정보의 파기</th>
+                    </tr>
+                    <tr>
+                      <th>보장 내용</th>
+                      <th>보유 및 이용기간</th>
+                      <th>관계 법령</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>계약 또는 청약철회 등의 공급기록</td>
+                      <td>5년</td>
+                      <td rowSpan={3}>
+                        전자상거래 등에서의 소비자 보호에 관한 법률
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>대금결제, 재화 등의 공급기록</td>
+                      <td>5년</td>
+                    </tr>
+                    <tr>
+                      <td>소비자 불만 또는 분쟁처리에 관한 기록</td>
+                      <td>5년</td>
+                    </tr>
+                    <tr>
+                      <td>전자금융에 관한 기록</td>
+                      <td>5년</td>
+                      <td>전자금융거래법</td>
+                    </tr>
+                    <tr>
+                      <td>웹사이트 방문기록</td>
+                      <td>3개월</td>
+                      <td>통신비밀보호법</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               <li>
                 3. 아이디인 이메일 주소는 부정이용 이슈 방지를 위해 탈퇴 DB에서
                 6개월 후 삭제
@@ -311,31 +315,33 @@ export default function PrivacyNotice() {
                 2. 정보주체는 「개인정보 보호법」 제35조에 따른 개인정보의 열람
                 청구를 아래의 부서에 할 수 있습니다.
               </li>
-              <table>
-                <thead>
-                  <tr>
-                    <th colSpan={4}>개인정보에 관한 민원서비스</th>
-                  </tr>
-                  <tr>
-                    <th>구분</th>
-                    <th>개인정보보호책임자</th>
-                    <th>개인정보 관리자</th>
-                    <th>고객만족센터</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>성명</td>
-                    <td>정재용</td>
-                    <td>김지한</td>
-                    <td>-</td>
-                  </tr>
-                  <tr>
-                    <td>고객센터</td>
-                    <td colSpan={3}>https://pf.kakao.com/_ZHaLG</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div className="w-full overflow-auto">
+                <table>
+                  <thead>
+                    <tr>
+                      <th colSpan={4}>개인정보에 관한 민원서비스</th>
+                    </tr>
+                    <tr>
+                      <th>구분</th>
+                      <th>개인정보보호책임자</th>
+                      <th>개인정보 관리자</th>
+                      <th>고객만족센터</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>성명</td>
+                      <td>정재용</td>
+                      <td>김지한</td>
+                      <td>-</td>
+                    </tr>
+                    <tr>
+                      <td>고객센터</td>
+                      <td colSpan={3}>https://pf.kakao.com/_ZHaLG</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               <li>
                 3. 기록의정원 서비스를 이용하며 발생하는 모든 개인정보보호 관련
                 민원을 개인정보관리자 혹은 담당부서로 신고할 수 있고, 운영팀은
